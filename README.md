@@ -1,6 +1,6 @@
 # PyNotes
 
-Welcome to PyNotes! 🎉 This repo is a collection of my coding solutions, algorithm implementations, and study notes, all aimed at helping me enhance my Python programming skills. 💻
+Welcome to my PyNotes! 🎉 Here, I store code and notes that I have written to strengthen my Python programming skills. 🔥 You'll find my solutions to programming problems, algorithm implementations, and study notes. 🤓 These resources help me solidify my learning, and I hope they can be helpful to you as well. Thank you for stopping by! 🙏
 
 ## Table of Contents
 
@@ -29,4 +29,4 @@ Contributions to this repo are welcome! If you notice a bug or have an idea for 
 
 ## License
 
-This repo is licensed under the [MIT License](https://github.com/Duguce/PyNotes/main/LICENSE).
+This repo is licensed under the [MIT License](https://github.com/Duguce/PyNotes/blob/main/LICENSE).
