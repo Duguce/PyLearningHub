@@ -21,9 +21,10 @@ git clone https://github.com/Duguce/PyNotes.git
 
 ## Structure
 
-| Index |              Filename               | Type  |                           Summary                            |
-| :---: | :---------------------------------: | :---: | :----------------------------------------------------------: |
-|   1   | [Linux学习笔记](./Linux学习笔记.md) | notes | This document summarizes some commonly used commands, tips, and techniques for learning Linux (Ubuntu 20.04) in daily life. |
+| Index |                           Name                           | Type  |                           Summary                            |
+| :---: | :------------------------------------------------------: | :---: | :----------------------------------------------------------: |
+|   1   | [AlgoSolutions](https://github.com/Duguce/AlgoSolutions) | repo  | This repo is used to store my solutions to algorithmic problems from various OJ platforms, all implemented in Python3, as well as related notes on algorithmic learning. |
+|   2   |           [Linux学习笔记](./Linux学习笔记.md)            | notes | This document summarizes some commonly used commands, tips, and techniques for learning Linux in daily life. |
 
 ## Contributing
 
