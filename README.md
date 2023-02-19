@@ -44,17 +44,17 @@ This README document was generated with the help of [ChatGPT](https://openai.com
 
 ## License
 
-This repository is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
-
-The GNU GPL is a copyleft license that requires anyone who distributes or modifies this work to make the source code available under the same terms.
-
-This ensures that any derived works will remain open and free. For more information about the GNU GPL, please visit the [GNU website](https://www.gnu.org/licenses/gpl-3.0.en.html).
+This repo is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 本仓库采用 [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) 开源协议。
 
+The GNU GPL is a copyleft license that requires anyone who distributes or modifies this work to make the source code available under the same terms.
+
 GNU GPL 是一种强制版权许可证，要求任何分发或修改此作品的人都需要在同样的条款下提供源代码。
 
-这确保了任何派生作品将保持开放和自由。更多关于 GNU GPL 的信息，请访问 [GNU 网站](https://www.gnu.org/licenses/gpl-3.0.en.html)。
+This ensures that any derived works will remain open and free. For more information about the GNU GPL, please visit the [GNU website](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+这确保了任何派生作品将保持开放和自由。更多关于 GNU GPL 的信息，请访问  [GNU website](https://www.gnu.org/licenses/gpl-3.0.en.html)。
 
 ---
 
