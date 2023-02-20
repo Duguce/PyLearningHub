@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-02-15 18:15 —— 2022-02-19 13:58
+Datetime:  2022-02-15 18:15 —— 2022-02-20 20:31
 
 ## 1 常用指令
 
@@ -455,7 +455,7 @@ sudo /etc/init.d/networking restart # 重启网络
 
 ```
 ssh-keygen # 生成公钥和私钥
-ssh-copy-id user@192.168.0.1 # 秘钥复制到服务器的 authorized_k
+ssh-copy-id user@192.168.0.1 # 秘钥复制到服务器的authorized_k
 ```
 
 ## 2 VIM编辑器
@@ -542,5 +542,92 @@ set fileencodings=utf-8,gbk,gb2312
 sed: 管道查找替换程序
 
 cat test.txt | sed 's/hello/world/' >test01.txt # 将test.txt中的hello替换成word并重定向输出到test01.txt中。
+```
+
+## 3 Linux效率提升技巧
+
+### 3.1 封装短命令
+
+为提高日常使用Linux进行工作的效率，我们可以封装一些短命令。这里我以封装一个"快速将内容复制到服务器上去"的短命令为例，展示短命令封装操作的基本步骤：
+
+- `vim qscp` # vim [#命令名称#]
+- 在vim编辑器中写入命令内容
+
+```
+scp -r $1 ubuntu@192.168.0.1:~/test
+```
+
+- 创建一个~/bin目录，并将qscp命令放到该目录下，同时添加可执行权限
+- 修改环境变量。首先，`vim ~/.bashrc`，然后，在适当的位置添加"PATH=~/bin:$PATH"
+
+### 3.2 便捷配置
+
+**软连接实现python指向python3**
+
+```
+sudo rm /usr/bin/python # 若系统中没有该命令配置，则不需要该操作
+sudo ln -s /usr/bin/python3.10 /usr/bin/python # 其中 3.10，可以替换为自己所使用的Ubuntu上python的版本号
+```
+
+**常用压缩解压命令总结**
+
+1. 压缩命令
+
+- `tar`：使用 tar 命令可以将多个文件或目录打包成一个归档文件，常用于文件备份和压缩。tar 可以配合其他压缩工具（例如 gzip 或 bzip2）一起使用来实现压缩效果。常用选项包括 `-c`（创建归档文件）、`-v`（显示详细信息）、`-f`（指定输出文件名）、`-z`（使用 gzip 压缩）等。
+
+```
+tar -cvf example.tar example_dir
+```
+
+- `zip`：zip 命令用于将多个文件和目录压缩成一个 zip 格式的压缩文件。常用选项包括 `-r`（递归处理子目录）、`-v`（显示详细信息）、`-q`（静默操作）、`-j`（仅压缩文件，不包括目录）等。
+
+```
+zip -r example.zip example_dir
+```
+
+- `gzip`：gzip 命令用于压缩文件，通常与 tar 命令结合使用。gzip 压缩后的文件名为原文件名加上 `.gz` 后缀。常用选项包括 `-v`（显示压缩比和压缩信息）、`-f`（强制覆盖已存在的文件）、`-d`（解压缩）等。
+
+```
+gzip example_file.txt
+```
+
+- `bzip2`：bzip2 命令也用于压缩文件，压缩比较高，但压缩速度较慢。通常与 tar 命令结合使用。bzip2 压缩后的文件名为原文件名加上 `.bz2` 后缀。常用选项包括 `-v`（显示压缩比和压缩信息）、`-f`（强制覆盖已存在的文件）、`-d`（解压缩）等。
+
+```
+bzip2 example_file.txt
+```
+
+2. 解压命令
+
+- `tar`：使用 tar 命令可以解压缩 tar 格式的归档文件。常用选项包括 `-x`（解包）、`-v`（显示详细信息）、`-f`（指定归档文件名）、`-z`（使用 gzip 解压缩）等。
+
+```
+tar -xvf example.tar
+```
+
+- `unzip`：unzip 命令用于解压缩 zip 格式的压缩文件。常用选项包括 `-l`（列出压缩文件内容）、`-t`（测试压缩文件完整性）、`-o`（覆盖已存在的文件）、`-q`（静默操作）等。
+
+```
+unzip example.zip
+```
+
+- `gzip`：gzip 命令用于解压缩以 gzip 格式压缩的文件。常用选项包括 `-d`（解压缩）、`-v`（显示解压缩信息）等。
+
+```
+gzip -d example_file.txt.gz
+```
+
+- `bzip2`：bzip2 命令用于解压缩以 bzip2 格式压缩的文件。常用选项包括 `-d`（解压缩）、`-v`（显示解压缩信息）等。
+
+```
+bzip2 -d example_file.txt.bz2
+```
+
+**Linux下运行Python代码**
+
+需要加shebang
+
+```
+#!/usr/bin/python
 ```
 
