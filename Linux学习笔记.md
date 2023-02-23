@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-02-15 18:15 —— 2022-02-21 15:59
+Datetime:  2022-02-15 18:15 —— 2022-02-23 22:58
 
 ## 1 常用指令
 
@@ -636,3 +636,16 @@ bzip2 -d example_file.txt.bz2
 例如，如果有一个名为 test.py 的 Python 脚本文件，有了 shebang 行，可以直接在终端中执行 ./test.py 命令来运行该脚本文件，而不需要在命令行中指定解释器。如果没有 shebang 行，需要在命令行中使用 python test.py 命令来运行该脚本文件。
 
 因此，shebang 行的应用场景是：在类 Unix 系统中，用来告诉操作系统应该使用哪个解释器来执行该脚本文件，从而使脚本文件可以像可执行程序一样执行。
+
+当在Windows系统上用IDE写好并放到Linux服务器上，使用vim修改py文件后，运行报错如下时：
+
+> /usr/bin/python^M: bad interpreter: No such file or directory
+
+这可能是由于在多个环境上编写，可能会因为字符、缩进等不一致导致的错误。
+
+解决方案如下，用vim打开文件，进入python脚本，执行如下操作，保存并退出。
+
+```
+:set ff=unix
+```
+
