@@ -17,9 +17,9 @@ In this repo, you will find my solutions to programming problems, algorithm impl
 
 在这个仓库中，你将会找到我的编程问题解决方案、算法实现和学习笔记。请随意探索不同的目录和文件，将它们作为增强你 Python 编程技能的资源。如果你有任何问题或建议，请随时联系我。
 
-If you'd like to use any of the code or notes in this repo, feel free to do so! You can either clone the entire repo using the command:
+You can either clone the entire repo using the command:
 
-如果你想使用这个仓库中的任何代码或笔记，请随意使用！你可以使用以下命令克隆整个仓库：
+你可以使用以下命令克隆整个仓库：
 
 ```shell
 git clone https://github.com/Duguce/PyNotes.git
