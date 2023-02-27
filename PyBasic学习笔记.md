@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-02-20 18:33 —— 2022-02-25 17:18
+Datetime:  2022-02-20 18:33 —— 2022-02-27 18:59
 
 --------
 - [1 Python初识](#1-python初识)
@@ -98,7 +98,7 @@ Python 的设计目标是成为一种易于学习、易于使用、可读性高�
 
 ### 1.4 Python代码风格
 
-Python官方提供了一系列PEP（Python Enhancement Proposals）文档，其中第8篇专门针对Python的代码风格给出了建议，即俗称的PEP8，文档地址为：https://peps.python.org/pep-0008/，另外，谷歌有对应的中文文档：https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/。
+Python官方提供了一系列PEP（Python Enhancement Proposals）文档，其中第8篇专门针对Python的代码风格给出了建议，即俗称的PEP8，文档地址为：https://peps.python.org/pep-0008/。另外，谷歌有对应的中文文档：https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/。
 
 ## 2 变量的基本使用
 
@@ -1504,3 +1504,573 @@ print(s1 is s2)  # 输出：True
 在上面的代码中，我们创建了两个 `Singleton` 类的实例 `s1` 和 `s2`，并判断它们是否是同一个实例。由于 `Singleton` 类只有一个实例，因此 `s1` 和 `s2` 实际上是同一个实例，它们引用的是同一个对象。这就是通过重写 `__new__` 方法来实现单例模式的一个例子。
 
 需要注意的是，`__new__` 方法是一个静态方法，它接受一个参数 `cls`，该参数表示要实例化的类。因此，在重写 `__new__` 方法时，需要使用 `cls` 参数来创建一个新的实例，而不是使用类名来创建实例。另外，`__new__` 方法在创建实例时需要返回实例的引用，如果不返回引用，则该类的实例将无法被创建。
+
+**Python中的单例**
+
+单例——让类创建的对象，在系统中只有唯一的一个实例。
+
+- 定义一个类属性，初始值是None，用于记录单例对象的引用；
+- 重写`__new__`方法；
+- 如果类属性is None，调用父类方法分配空间，并在类属性中记录结果；
+- 返回类属性中记录的对象引用；
+- 只执行一次初始化操作。
+
+```python
+class MusicPlayer():
+	# 记录第一个被创建对象的引用
+	instance = None
+	# 记录是否执行过初始化动作
+	init_flag = False
+	
+	def __new__(cls, *args, **kwargs):
+		# 判断类属性是否是空对象
+		if cls.instance is None:
+			# 调用父类的方法，为第一个对象分配空间
+			cls.instance = super().__new__(cls)
+		# 返回类属性保存的对象引用
+		return cls.instance
+	
+	def __init__(self):
+		if not MusicPlayer.init_flag:
+			print("初始化音乐播放器")
+			MusicPlayer.init_flag = True
+
+# 创建多个对象
+player1 = MusicPlayer()
+player2 = MusicPlayer()
+
+print(player1 is player2) # True
+```
+
+## 8 异常
+
+### 8.1 异常的概念
+
+> 程序开发时，很难将所有的特殊情况都处理的面面俱到，通过异常捕获可以针对突发事件做集中的处理，从而保证程序的稳定性和健壮性。
+
+- 程序在运行时，如果Python解释器遇到一个错误，会停止程序的执行，并且提示一些错误信息，这就是异常；
+- 程序停止执行并且提示错误信息，这个动作称之为：抛出（raise）异常。
+
+### 8.2 捕获异常
+
+在Python中，我们可以使用try-except语句来捕获和处理异常，从而让程序在出现异常的情况下能够继续运行，而不会崩溃。
+
+下面介绍几种常见的异常类型及其捕获方式：
+
+**捕获所有异常**
+
+有时候我们无法预知程序中会出现哪些异常，这时候可以使用except语句来捕获所有异常：
+
+```python
+try:
+    # some code here
+except:
+    # handle the exception
+```
+
+在这个示例中，try语句块中包含需要执行的代码，如果代码中出现了任何异常，都会被except语句块捕获并处理。
+
+**捕获指定类型的异常**
+
+如果我们知道程序中可能出现哪些异常，可以针对这些异常类型使用except语句来捕获它们：
+
+```python
+try:
+    # some code here
+except ValueError:
+    # handle ValueError
+except KeyError:
+    # handle KeyError
+```
+
+在这个示例中，如果try语句块中出现了ValueError异常，就会被第一个except语句块捕获并处理；如果出现了KeyError异常，就会被第二个except语句块捕获并处理。
+
+**捕获多个异常类型**
+
+我们也可以使用一个except语句块来捕获多个异常类型：
+
+```python
+try:
+    # some code here
+except (ValueError, KeyError):
+    # handle ValueError or KeyError
+```
+
+在这个示例中，如果try语句块中出现了ValueError或KeyError异常，就会被except语句块捕获并处理。
+
+**捕获异常并获取异常信息**
+
+当程序出现异常时，我们可以通过except语句块来获取异常信息，以便更好地理解程序出现了什么问题：
+
+```python
+try:
+    # some code here
+except ValueError as e:
+    print("ValueError:", e)
+except KeyError as e:
+    print("KeyError:", e)
+```
+
+在这个示例中，如果try语句块中出现了ValueError异常，就会被第一个except语句块捕获，并将异常信息存储在变量e中。我们可以使用print语句来输出异常信息。对于KeyError异常，也是同样的处理方式。
+
+**捕获异常完整语法**
+
+```python
+try:
+    # 代码块
+except [异常类型1]:
+    # 异常处理1
+except [异常类型2]:
+    # 异常处理2
+...
+except [异常类型n]:
+    # 异常处理n
+else:
+    # 代码块没有抛出异常时执行
+finally:
+    # 总是会执行的代码块，不论有无异常发生
+```
+
+其中，`try`语句块中包含需要执行的代码。当代码块中出现了某个异常时，Python会查找和异常类型匹配的`except`语句块，并执行该语句块中的代码。如果代码块中没有抛出任何异常，Python会跳过所有的`except`语句块，执行`else`语句块中的代码；最后，不论是否发生了异常，Python都会执行`finally`语句块中的代码。
+
+下面举一个简单的例子，说明Python中捕获异常的完整语法：
+
+```python
+try:
+    x = int(input("请输入一个整数："))
+    result = 10 / x
+except ValueError:
+    print("输入错误，请输入一个整数！")
+except ZeroDivisionError:
+    print("除数不能为0！")
+else:
+    print("计算结果：", result)
+finally:
+    print("程序执行完毕！")
+```
+
+Python 如何捕获异常发生的文件和具体行数呢？在Python中，我们可以通过`traceback`模块来获取异常发生的文件和行数。下面是一个示例，演示如何使用`traceback`模块来捕获异常并获取异常发生的文件和行数：
+
+```python
+try:
+	print(a)
+except Exception as e:
+	print(e)
+	print(e.__traceback__.tb_frame.f_globals["__file__"]) # 发生异常所在的文件
+	print(e.__traceback__.tb_lineno) # 发生异常所在的行数
+```
+
+**异常的传递**
+
+当函数/方法执行出现异常，会将异常传递给函数/方法的调用一方，如果传递到主程序，仍然没有异常处理，程序才会被终止。因此，在开发中，可以在主函数中增加异常捕获。而在主函数中调用的其他函数，只要出现异常，都会传递到主函数的异常捕获中。这样就不需要再代码中，增加大量的异常捕获，能够保证代码的简洁。
+
+```python
+def test():
+	return int(input("输入整数："))
+
+def main():
+	return test()
+	
+# 利用异常的传递性，在主程序中捕获异常
+try:
+	print(main())
+except Exception as e:
+	print(f"未知错误 {e}")
+```
+
+**抛出（raise）异常**
+
+Python中提供了一个Exception异常类，在开发时，如果满足特定业务需求时，希望抛出异常，可以创建一个Exception的对象，并使用raise关键字抛出异常对象。
+
+下面是一个简单的例子，演示如何使用`raise`语句来抛出异常：
+
+```python
+def divide(x, y):
+    if y == 0:
+        raise ZeroDivisionError("除数不能为0！")
+    return x / y
+
+try:
+    result = divide(10, 0)
+except ZeroDivisionError as e:
+    print(e) # 除数不能为0！
+```
+
+在这个例子中，我们定义了一个`divide()`函数，用于计算两个数的商。如果除数为0，我们会使用`raise`语句抛出一个`ZeroDivisionError`异常，同时可以自定义异常信息（在这里是“除数不能为0！”）。在主程序中，我们尝试调用`divide()`函数来计算10除以0，这会引发一个`ZeroDivisionError`异常。当程序捕获到这个异常时，会将异常信息输出到控制台。
+
+**assert语句**
+
+在Python中，`assert`语句用于在程序中检查某个条件是否满足。如果条件不满足，则`assert`语句会抛出`AssertionError`异常，程序会停止执行。`assert`语句的语法如下：`assert expression [, arguments]`
+
+其中，`expression`是需要检查的条件，如果这个条件为`False`，则`assert`语句会抛出`AssertionError`异常。`arguments`是可选的，用于指定抛出异常时的错误信息。
+
+下面是一个使用`assert`语句的示例：
+
+```python
+def divide(x, y):
+    assert y != 0, "除数不能为0"
+    return x / y
+
+print(divide(10, 2))  # 输出结果为 5.0
+print(divide(10, 0))  # 抛出AssertionError异常，提示除数不能为0
+```
+
+在这个示例中，我们定义了一个`divide()`函数，用于计算两个数的商。在函数内部，我们使用`assert`语句检查除数是否为0，如果除数为0，则抛出`AssertionError`异常。在第一次调用`divide()`函数时，除数不为0，程序正常执行，输出结果为5.0；在第二次调用`divide()`函数时，除数为0，`assert`语句会抛出`AssertionError`异常，提示除数不能为0。
+
+使用`assert`语句可以让我们在程序中快速检查某些条件是否满足，如果不满足则抛出异常。这样可以帮助我们更早地发现和解决问题。
+
+## 9 模块和包
+
+### 9.1 模块
+
+模块是Python程序家口的一个核心概念，一个以扩展名py结尾的Python源代码文件都是一个模块。模块名同样也是一个标识符，需要符合标识符的命名规则。在模块中定义的全局变量、函数、类都是提供给外界直接使用的工具。模块就好比是工具包，想要使用这个工具包中的工具，就需要先导入这个模块。
+
+**模块的导入方式**
+
+在Python中，我们可以使用两种方式导入模块，分别是：
+
+- `import`语句：使用`import`语句导入一个模块，语法如下：
+
+```python
+import module_name
+```
+
+这种方式会将整个模块导入到当前程序中，并赋值给一个变量`module_name`，我们可以通过这个变量来访问模块中的函数、类、变量等。
+
+- `from...import`语句：使用`from...import`语句从一个模块中导入指定的函数、类、变量等，语法如下：
+
+```python
+from module_name import name1, name2, ...
+```
+
+这种方式会将模块中指定的函数、类、变量等导入到当前程序中，并直接将它们的名字放入命名空间中，我们可以直接使用这些名字来访问它们。
+
+如果我们想要导入模块中所有的函数、类、变量等，可以使用`*`通配符，语法如下：
+
+```python
+from module_name import *
+```
+
+不过，这种方式并不推荐使用，因为它可能会导致命名空间中出现重名的情况，从而引发命名冲突的问题。
+
+两种方式各有优缺点，一般来说，如果我们只需要使用模块中的一部分功能，可以使用`from...import`语句来导入，这样可以减少代码量和命名空间的污染；如果我们需要使用模块中的大部分或全部功能，可以使用`import`语句来导入整个模块。
+
+**模块的搜索顺序**
+
+Python解释器在导入模块时，会搜索**当前目录**指定模块名的文件，如果有就直接导入。如果没有，再搜索系统目录。在开发时，给文件起名，不要和系统的模块文件重名。
+
+Python中每一个模块都有一内置属性`__file__`可以查看模块的完整路径。
+
+```python
+import random
+
+print(random.__file__)
+rand = random.randint(0, 10)
+print(rand)
+```
+
+**模块导入的原则**
+
+- 每一个文件都应该是可以被导入的；
+- 一个独立的Python文件就是一个模块；
+- 在导入文件时，文件中所有没有任何缩进的代码都会被执行一遍。
+
+### 9.2 包
+
+包是一个包含多个模块的**特殊目录**，目录下有一个特殊文件`__init__.py`，包名的命名方式和变量名一致，小写字母+_。我们可以通过import包名一次性导入包中的所有模块。
+
+`__init__.py`文件是Python中包的初始化文件，它的主要作用有以下几个：
+
+- 初始化包的状态：我们可以在`__init__.py`文件中执行一些初始化操作，比如定义变量、导入模块、注册插件等，用于初始化包的状态。
+
+```python
+# __init__.py
+
+# 定义一个变量
+version = "1.0"
+
+# 导入模块
+from . import module1
+from . import module2
+
+# 注册插件
+def register_plugin(plugin):
+    pass
+
+```
+
+- 控制包的导入：在`__init__.py`文件中，我们可以通过代码控制包的导入行为，比如根据不同的条件导入不同的模块、根据平台选择不同的实现等。
+
+```python
+# __init__.py
+
+import sys
+
+# 根据平台选择实现
+if sys.platform == "win32":
+    from . import win32_impl as impl
+else:
+    from . import unix_impl as impl
+
+# 导入默认的实现
+from . import default_impl as default
+
+# 导入接口
+from .api import *
+```
+
+- 限制包的导入：在`__init__.py`文件中，我们可以通过代码限制包的导入行为，比如防止包被导入到不支持的平台、防止包被导入到不安全的环境等。
+
+```python
+# __init__.py
+
+import os
+
+# 检查是否在安全环境中运行
+if os.environ.get("ENV") != "prod":
+    raise RuntimeError("This package can only be used in production environment!")
+```
+
+- 提供包的接口：我们可以在`__init__.py`文件中定义包的接口，以便其他模块可以方便地使用包的功能。例如，我们可以在`__init__.py`文件中定义一个名为`__all__`的变量，来指定包中哪些模块、类、函数等是公开的，可以被其他模块直接使用。
+
+```python
+# __init__.py
+
+__all__ = ["module1", "module2", "class1", "function1"]
+
+# 导入模块
+from . import module1
+from . import module2
+
+# 导入类和函数
+from .module1 import Class1
+from .module2 import function1
+```
+
+## 10 文件
+
+### 10.1 文件的概念
+
+- 计算机的**文件**就是存储在某种长期储存设备上的一段数据；
+- 长期存储设备包括：硬盘、U盘、移动硬盘、光盘...
+- 文件是用来将数据长期保存下来，并在需要的时候使用；
+- 在计算机中，文件是以**二进制**的方式保存在磁盘上的。
+
+**文件的类型**
+
+- 文本文件
+  - 可以使用文本编辑软件查看；
+  - 本质上还是二进制文件。
+- 二进制文件
+  - 保存的内容不是给人直接阅读的，而是提供给其他软件使用的。例如：图片文件、音频文件、视频文件等；
+  - 二进制文件不能使用文件编辑软件查看。
+
+### 10.2 文件的基本操作
+
+在计算机中操作文件一般包含三个步骤：
+
+- 打开文件；
+- 读、写文件；
+  - 读 将文件内容读入内存
+  - 写 将内容内容写入文件
+- 关闭文件。
+
+**操作文件的函数/方法**
+
+| 序号 | 函数/方法 |             说明             |
+| :--: | :-------: | :--------------------------: |
+|  01  |   open    | 打开文件，并返回文件操作对象 |
+|  02  |   read    |     将文件内容读取到内存     |
+|  03  |   write   |      将指定内容写入文件      |
+|  04  |   close   |           关闭文件           |
+
+:star:read方法——读取文件
+
+在 Python 中，我们可以使用 `open()` 函数来打开一个文件，并返回一个文件对象。文件对象提供了多种方法来读取、写入和管理文件。其中，`read()` 方法可以用来读取文件的内容。
+
+`read()` 方法有一个可选参数 `size`，用于指定要读取的字节数。如果不指定 `size`，则会一次性读取整个文件的内容。
+
+以下是一个读取文件的示例：
+
+```python
+# 打开文件
+with open("example.txt", "r") as file:
+    # 读取整个文件内容
+    content = file.read()
+
+# 输出文件内容
+print(content)
+```
+
+如果文件过大，一次性读取整个文件可能会导致内存不足。此时，我们可以使用 `read(size)` 方法分多次读取文件的内容，每次读取指定字节数。
+
+以下是一个分批读取文件的示例：
+
+```python
+# 打开文件
+with open("example.txt", "r") as file:
+    # 每次读取 10 个字节，直到文件末尾
+    while True:
+        content = file.read(10)
+        if not content:
+            break
+        # 处理每一批读取的内容
+        print(content)
+```
+
+在上面的代码中，我们每次读取 10 个字节的内容，如果文件到达末尾，则 `read()` 方法返回空字符串。通过 `while` 循环和判断语句，我们可以分批读取整个文件的内容。在每次读取一批内容后，我们可以对内容进行处理，比如输出到控制台、写入其他文件等。
+
+:star:open方法——打开文件
+
+在 Python 中，`open()` 函数用于打开文件，并返回一个文件对象。文件对象提供了多种方法来读取、写入和管理文件。`open()` 函数接受两个参数：文件名和打开模式。其中，打开模式包括读取模式、写入模式、追加模式等，具体模式如下：
+
+|  模式  |                             说明                             |
+| :----: | :----------------------------------------------------------: |
+| `"r"`  |         读取模式，只能读取文件，不能修改或者写入文件         |
+| `"w"`  |       写入模式，只能写入文件，如果文件不存在则创建文件       |
+| `"x"`  |     排他模式，用于写入文件，如果文件已存在则无法创建文件     |
+| `"a"`  |       追加模式，用于写入文件，如果文件不存在则创建文件       |
+| `"b"`  |     二进制模式，用于处理二进制数据，如图片、音频、视频等     |
+| `"t"`  |         文本模式，用于处理文本数据，如字符、字符串等         |
+| `"+"`  |               读写模式，用于同时读取和写入文件               |
+| `"r+"` | 以读写方式打开文件。文件的指针将会放在文件的开头。如果文件不存在，抛出异常 |
+| `"w+"` | 以读写方式打开文件。如果文件存在会被覆盖。如果文件不存在，创建新文件 |
+| `"a+"` | 以读写方式打开文件。如果该文件已存在，文件指针将会放在文件的结尾。如果文件不存在，创建新文件进行写入 |
+
+以下是打开文件的示例：
+
+```python
+# 以只读模式打开文件
+file = open("example.txt", "r")
+# 以写入模式打开文件，如果文件不存在则创建文件
+file = open("example.txt", "w")
+# 以追加模式打开文件，如果文件不存在则创建文件
+file = open("example.txt", "a")
+```
+
+当我们成功打开一个文件后，就可以使用文件对象的方法来访问文件了。常用的文件访问方法包括：
+
+| 方法            | 说明                                                         |
+| --------------- | ------------------------------------------------------------ |
+| `read(size)`    | 读取指定字节数的内容                                         |
+| `readline()`    | 读取一行内容                                                 |
+| `readlines()`   | 读取所有行的内容，返回一个列表                               |
+| `write(string)` | 将字符串写入文件                                             |
+| `writelines()`  | 将多行字符串写入文件，参数是一个字符串列表，每个字符串代表一行 |
+
+以下是以表格的形式展示不同的访问方式和说明：
+
+| 方法                          | 说明                                                         |
+| ----------------------------- | ------------------------------------------------------------ |
+| `file.read()`                 | 读取整个文件的内容                                           |
+| `file.read(n)`                | 读取前 n 个字符/字节的内容                                   |
+| `file.readline()`             | 读取文件中的一行内容                                         |
+| `file.readlines()`            | 读取文件中所有行的内容，返回列表                             |
+| `file.write(s)`               | 将字符串 s 写入文件                                          |
+| `file.writelines(lines)`      | 将字符串列表 lines 写入文件，每个字符串表示一行              |
+| `file.seek(offset, whence=0)` | 将文件指针移动到指定位置。offset 表示相对于 whence 的偏移量，whence 的默认值是 0，即从文件开头开始计算偏移量。 |
+| `file.tell()`                 | 返回当前文件指针的位置                                       |
+
+使用这些方法，我们可以方便地读取和写入文件中的内容。下面是一些示例：
+
+```python
+# 以只读模式打开文件
+file = open("example.txt", "r")
+# 读取整个文件的内容
+content = file.read()
+print(content)
+# 读取前10个字节的内容
+content = file.read(10)
+print(content)
+# 读取文件的第一行
+line = file.readline()
+print(line)
+# 读取所有行的内容
+lines = file.readlines()
+print(lines)
+# 关闭文件
+file.close()
+
+# 以写入模式打开文件
+file = open("example.txt", "w")
+# 写入一行文本
+file.write("Hello, world!")
+# 关闭文件
+file.close()
+
+# 以追加模式打开文件
+file = open("example.txt", "a")
+# 写入多行文本
+file.writelines(["This is the first line.\n", "This is the second line.\n"])
+# 关闭文件
+file.close()
+```
+
+在这个例子中，我们首先以只读模式打开了一个名为 `example.txt` 的文件，并使用 `read()` 方法读取了整个文件的内容。接着我们又使用 `read(10)` 方法只读取了前10个字节的内容，使用 `readline()` 方法读取了文件的第一行内容，使用 `readlines()` 方法读取了所有行的内容并返回一个列表。在写入文件方面，我们以写入模式打开文件，使用 `write()` 方法写入了一行文本，然后以追加模式打开文件，使用 `writelines()` 方法写入了多行文本。在每个操作完成之后，我们都调用了 `close()` 方法来关闭文件。
+
+:star:seek的使用
+
+在 Python 中，我们可以使用 `seek()` 方法改变当前文件的指针位置，以便读取或写入文件中的内容。`seek()` 方法的语法如下：
+
+```python
+file.seek(offset[, whence])
+```
+
+其中 `offset` 表示要移动的字节数，`whence` 表示从哪里开始移动。`whence` 的取值可以是以下几种：
+
+- `0`：表示从文件开头开始计算。
+- `1`：表示从当前位置开始计算。
+- `2`：表示从文件末尾开始计算。
+
+`whence` 参数可以省略，默认为 `0`。以下是一些示例：
+
+```python
+# 以只读模式打开文件
+file = open("example.txt", "r")
+
+# 读取文件的前5个字节
+content = file.read(5)
+print(content)
+
+# 将文件指针移动到文件开头
+file.seek(0)
+
+# 读取文件的第一行
+line = file.readline()
+print(line)
+
+# 将文件指针移动到文件末尾
+file.seek(0, 2)
+
+# 写入一行文本
+file.write("This is a new line.")
+
+# 关闭文件
+file.close()
+```
+
+### 10.3 文件/目录的常用管理操作
+
+在终端/文件浏览器中可以执行常规的文件/目录管理操作，例如：创建、重命名、删除、改变路径、查看目录内容…… 但在Python中，如果希望通过程序实现上述功能，需要导入 os 模块。
+
+**文件操作**
+
+| 序号 |        方法名         |                             说明                             |                    示例                     |
+| :--: | :-------------------: | :----------------------------------------------------------: | :-----------------------------------------: |
+|  1   | `os.rename(src, dst)` | 重命名文件，将原文件名 `src` 修改为新文件名 `dst`。如果 `dst` 已经存在，则会抛出 `FileExistsError` 异常。 | `os.rename('old_name.txt', 'new_name.txt')` |
+|  2   |   `os.remove(path)`   | 删除指定路径下的文件。如果文件不存在或没有删除权限，则会抛出 `FileNotFoundError` 或 `PermissionError` 异常。 |           `os.remove('file.txt')`           |
+
+**目录操作**
+
+| 序号 |       方法名       |          说明          |                     示例                      |
+| :--: | :----------------: | :--------------------: | :-------------------------------------------: |
+|  1   |    `os.mkdir()`    |        创建目录        |           `os.mkdir('example_dir')`           |
+|  2   |    `os.rmdir()`    |        删除目录        |           `os.rmdir('example_dir')`           |
+|  3   |   `os.listdir()`   |    列出目录中的文件    |           `files = os.listdir('.')`           |
+|  4   |   `os.rename()`    |    重命名文件或目录    | `os.rename('example.txt', 'new_example.txt')` |
+|  5   |   `os.remove()`    |        删除文件        |          `os.remove('example.txt')`           |
+|  6   | `os.path.exists()` | 判断文件或目录是否存在 |    `if os.path.exists('example.txt'): ...`    |
+|  7   | `os.path.isfile()` |     判断是否是文件     |    `if os.path.isfile('example.txt'): ...`    |
+|  8   | `os.path.isdir()`  |     判断是否是目录     |    `if os.path.isdir('example_dir'): ...`     |
+
+这些操作包括了常见的文件和目录的创建、删除、重命名、读取和写入等操作，也包括了判断文件和目录是否存在，以及判断给定的路径是文件还是目录等操作。其中 `os` 模块提供了许多有用的文件和目录操作函数。当然，这里只是列出了一些常见的操作，实际上还有很多其他的操作，具体使用时需要查阅文档。
