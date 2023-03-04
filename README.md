@@ -13,9 +13,9 @@ Welcome to my PyNotes! 🎉 Here, I store code and notes that I have written to 
 
 ## Usage
 
-In this repo, you will find my solutions to programming problems, algorithm implementations, and study notes. Please feel free to explore the different directories and files, and use them as a resource to enhance your own Python programming skills. If you have any questions or suggestions, please don't hesitate to reach out. 
+In this repo, you will find my solutions to programming problems, algorithm implementations, programming project, and study notes. Please feel free to explore the different directories and files, and use them as a resource to enhance your own Python programming skills. If you have any questions or suggestions, please don't hesitate to reach out. 
 
-在这个仓库中，你将会找到我的编程问题解决方案、算法实现和学习笔记。请随意探索不同的目录和文件，将它们作为增强你 Python 编程技能的资源。如果你有任何问题或建议，请随时联系我。
+在这个仓库中，你将会找到我的编程问题解决方案、算法实现、编程项目和学习笔记。请随意探索不同的目录和文件，将它们作为增强你 Python 编程技能的资源。如果你有任何问题或建议，请随时联系我。
 
 You can either clone the entire repo using the command:
 
@@ -27,11 +27,14 @@ git clone https://github.com/Duguce/PyNotes.git
 
 ## Structure
 
-| Index |                           Name                           | Type  |                           Summary                            |
-| :---: | :------------------------------------------------------: | :---: | :----------------------------------------------------------: |
-|   1   | [AlgoSolutions](https://github.com/Duguce/AlgoSolutions) | repo  | This repo is used to store my solutions to algorithmic problems from various OJ platforms, all implemented in Python3, as well as related notes on algorithmic learning. |
-|   2   |           [Linux学习笔记](./Linux学习笔记.md)            | notes | This document summarizes some commonly used commands, tips, and techniques for learning Linux in daily life. |
-|   3   |         [PyBasic学习笔记](./PyBasic学习笔记.md)          | notes | This document summarizes some of the code and notes I wrote while consolidating my knowledge of Python fundamentals. |
+| Index |                           Name                           |  Type   |                           Summary                            |
+| :---: | :------------------------------------------------------: | :-----: | :----------------------------------------------------------: |
+|   1   | [AlgoSolutions](https://github.com/Duguce/AlgoSolutions) |  repo   | This repo is used to store my solutions to algorithmic problems from various OJ platforms, all implemented in Python3, as well as related notes on algorithmic learning.<br />该仓库用来存储我所做过的来自各大题库的OJ算法题的题解（当前均使用***Python3***实现），以及算法学习的相关笔记。 |
+|   2   |           [Linux学习笔记](./Linux学习笔记.md)            |  notes  | This document summarizes some commonly used commands, tips, and techniques for learning Linux in daily life.<br />本文总结了一些日常生活中常用的命令、提示和学习Linux的技巧。 |
+|   3   |         [PyBasic学习笔记](./PyBasic学习笔记.md)          |  notes  | This document summarizes some of the code and notes I wrote while consolidating my knowledge of Python fundamentals.<br />本文总结了我在巩固Python基础知识时写的一些代码和笔记。 |
+|   4   |              [MiniPlaneWar](./MiniPlaneWar)              | project | This project is a simplified and modified version of the official Plane War game project from pygame. It aims to enhance your Python programming skills and your ability to use the pygame library.<br />本项目是一个简化改编自pygame官方的飞机大战游戏项目，旨在锻炼Python基础技能和pygame库的使用能力。 |
+
+
 
 ## Contributing
 

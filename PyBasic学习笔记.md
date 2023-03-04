@@ -1528,7 +1528,7 @@ print(s1 is s2)  # 输出：True
 - 只执行一次初始化操作。
 
 ```python
-class MusicPlayer():
+class MusicPlayer:
 	# 记录第一个被创建对象的引用
 	instance = None
 	# 记录是否执行过初始化动作
