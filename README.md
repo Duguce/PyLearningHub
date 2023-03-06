@@ -30,9 +30,10 @@ git clone https://github.com/Duguce/PyNotes.git
 | Index |                           Name                           |  Type   |                           Summary                            |
 | :---: | :------------------------------------------------------: | :-----: | :----------------------------------------------------------: |
 |   1   | [AlgoSolutions](https://github.com/Duguce/AlgoSolutions) |  repo   | This repo is used to store my solutions to algorithmic problems from various OJ platforms, all implemented in Python3, as well as related notes on algorithmic learning.<br />该仓库用来存储我所做过的来自各大题库的OJ算法题的题解（当前均使用***Python3***实现），以及算法学习的相关笔记。 |
-|   2   |           [Linux学习笔记](./Linux学习笔记.md)            |  notes  | This document summarizes some commonly used commands, tips, and techniques for learning Linux in daily life.<br />本文总结了一些日常生活中常用的命令、提示和学习Linux的技巧。 |
-|   3   |         [PyBasic学习笔记](./PyBasic学习笔记.md)          |  notes  | This document summarizes some of the code and notes I wrote while consolidating my knowledge of Python fundamentals.<br />本文总结了我在巩固Python基础知识时写的一些代码和笔记。 |
-|   4   |              [MiniPlaneWar](./MiniPlaneWar)              | project | This project is a simplified and modified version of the official Plane War game project from pygame. It aims to enhance your Python programming skills and your ability to use the pygame library.<br />本项目是一个简化改编自pygame官方的飞机大战游戏项目，旨在锻炼Python基础技能和pygame库的使用能力。 |
+|   2   |       [Linux基础学习笔记](./Linux基础学习笔记.md)        |  notes  | This document summarizes some commonly used commands, tips, and techniques for learning Linux in daily life.<br />该文总结了一些日常生活中常用的命令、提示和学习Linux的技巧。 |
+|   3   |      [Python基础学习笔记](./Python基础学习笔记.md)       |  notes  | This document summarizes some of the code and notes I wrote while consolidating my knowledge of Python fundamentals.<br />该文总结了我在巩固Python基础知识时写的一些代码和笔记。 |
+|   4   |              [MiniPlaneWar](./MiniPlaneWar)              | project | This project is a simplified and modified version of the official Plane War game project from pygame. It aims to enhance your Python programming skills and your ability to use the pygame library.<br />该项目简化改编自pygame官方的飞机大战游戏项目，旨在锻炼Python基础技能和pygame库的使用能力。 |
+|   5   |  [Python网络编程学习笔记](./Python网络编程学习笔记.md)   |  notes  | This document summarizes the notes I have taken while studying Python network programming.<br />该文总结了我在学习Python网络编程相关知识所作的笔记。 |
 
 
 
@@ -62,6 +63,6 @@ This ensures that any derived works will remain open and free. For more informat
 
 ---
 
-Thanks for checking out PyNotes! Happy coding! 😄
+Thanks for checking out PyNotes! If you find it helpful, please give it a star on GitHub. Your support is appreciated! Happy coding! 😄
 
-感谢您查看 PyNotes！祝您编程愉快！ 😄
+感谢查看 PyNotes！如果您觉得它有用，请在 GitHub 上为其点赞。感谢您的支持！祝编程愉快！😄
