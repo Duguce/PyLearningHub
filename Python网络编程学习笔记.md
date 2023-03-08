@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-03-06 22:45 —— 2022-03-07 23:04
+Datetime:  2022-03-06 22:45 —— 2022-03-08 23:29
 
 ## 1 UDP与TCP通信
 
@@ -161,7 +161,7 @@ socket.socket(AddressFamily, Type)
 
 ### 1.5 UDP简介
 
-**UDP（User Datagram Protocol）**是一种无连接、无状态的传输层协议，它不像TCP那样提供可靠的数据传输和错误检测机制，而是提供了一种简单的数据传输机制，可以快速地发送数据包。UDP通信具有传输快速、开销小的优点，适用于对数据可靠性要求不高的场合，例如音视频数据传输、DNS查询等。
+**UDP**（User Datagram Protocol）是一种无连接、无状态的传输层协议，它不像TCP那样提供可靠的数据传输和错误检测机制，而是提供了一种简单的数据传输机制，可以快速地发送数据包。UDP通信具有传输快速、开销小的优点，适用于对数据可靠性要求不高的场合，例如音视频数据传输、DNS查询等。
 
 UDP通信的特点如下：
 
@@ -173,9 +173,10 @@ UDP通信的特点如下：
 
 UDP协议通信时，每个数据包都包含源端口和目的端口，用于标识数据包的发送方和接收方。**UDP没有连接建立和断开的过程**，因此数据包发送和接收的过程非常快速和简单。然而，由于UDP不提供可靠性保证，因此在实际应用中需要进行一些额外的机制设计，以保证数据传输的正确性和完整性。
 
-<img src=".\images\UDP通信结构图.JPG" alt="UDP通信结构图" style="zoom: 50%;" />
-
-<center>图1-1 UDP通信结构图</center>
+<div style="text-align: center;">
+    <img src=".\images\UDP通信结构图.JPG" alt="UDP通信结构图" width="50%">   
+    <p>图1-1 UDP通信结构图</p>
+</div>
 
 如图1-1所示是UDP通信结构图，创建一个基于UDP的网络程序流程具体步骤如下：
 
@@ -245,7 +246,7 @@ client_socket.close()
 
 ### 1.6 TCP简介
 
-**TCP (Transmission Control Protocol)**是一种常用的互联网传输协议，它是互联网协议栈中的一部分，用于在网络中传输数据。TCP是一种面向连接的协议，它提供可靠的、有序的、基于字节流的数据传输服务，适用于各种不同类型的应用程序。
+**TCP**（Transmission Control Protocol）是一种常用的互联网传输协议，它是互联网协议栈中的一部分，用于在网络中传输数据。TCP是一种面向连接的协议，它提供可靠的、有序的、基于字节流的数据传输服务，适用于各种不同类型的应用程序。
 
 TCP通过建立连接、传输数据和断开连接三个步骤来进行通信。在建立连接时，TCP使用**三次握手**的方式进行，确保双方都能够正常收发数据。在传输数据时，TCP将数据划分为若干个数据段，并对每个数据段进行编号和校验，以保证数据的可靠性和有序性。在断开连接时，TCP使用**四次握手**的方式进行，以确保数据传输的完整性。
 
@@ -269,8 +270,228 @@ TCP协议广泛应用于各种不同类型的应用程序，例如网页浏览�
 - 重发丢失的数据包
 - 舍弃重复的数据包
 - 无差错的数据传输
-- 阻塞/流浪控制
+- 阻塞/流量控制
 
-<img src=".\images\image-20230307230049285.png" alt="image-20230307230049285" style="zoom: 33%;" />
+<div style="text-align: center;">
+    <img src=".\images\image-20230307230049285.png" alt="TCP通信结构图" width="40%">   
+    <p>图1-2 TCP通信结构图</p>
+</div>
 
-<center>图1-2 TCP通信结构图</center>
+下面是Python中使用TCP协议实现服务器端和客户端的代码简述。
+
+- 服务器端
+
+```python
+import socket
+import select
+import sys
+
+# 创建套接字
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# 设置 server_socket 选项，允许地址复用
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+# 绑定端口并开始监听
+server_socket.bind(('', 2000))
+server_socket.listen(10)
+
+# 创建 epoll 对象，并将 stdin 和 server_socket 套接字注册到其中
+epoll = select.epoll()
+epoll.register(sys.stdin.fileno(), select.EPOLLIN)
+epoll.register(server_socket.fileno(), select.EPOLLIN)
+
+while True:
+    # 等待事件发生
+    events = epoll.poll(-1)
+    for event in events:
+        # 有新的连接请求
+        if event[0] == server_socket.fileno():
+            # 接受连接请求，获取客户端套接字和地址
+            client_socket, client_address = server_socket.accept()
+            print(f"{client_address}连接成功...")
+
+            # 将客户端套接字注册到 epoll 中
+            epoll.register(client_socket.fileno(), select.EPOLLIN)
+
+        # 标准输入有输入
+        elif event[0] == sys.stdin.fileno():
+            input_data = input()
+            client_socket.send(input_data.encode('utf8'))
+        # 客户端有数据发送
+        elif event[0] == client_socket.fileno():
+            # 接收客户端发送的数据
+            recv_data = client_socket.recv(1000)
+            if recv_data:
+                print(recv_data.decode('utf8'))
+            else:
+                # 客户端断开连接
+                print(f"{client_address}断开了...")
+                # 从 epoll 中取消客户端套接字的注册
+                epoll.unregister(client_socket.fileno())
+                # 关闭客户端套接字
+                client_socket.close()
+                # 跳出当前循环，继续处理下一个事件
+                break
+```
+
+- 客户端
+
+```python
+import socket
+import select
+import sys
+
+if len(sys.argv) != 2:  # 确保脚本参数数量为2，即指定了服务器的IP地址
+    print('错误的参数')
+    exit(-1)
+
+# 创建一个客户端 server_socket，并连接到指定的服务器地址和端口
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = (sys.argv[1], 2000)  # 将第一个脚本参数作为服务器IP地址
+client_socket.connect(server_address)
+
+# 创建一个 epoll 对象，并将标准输入和客户端 server_socket 的文件描述符注册到 epoll 中
+epoll = select.epoll()
+epoll.register(sys.stdin.fileno(), select.EPOLLIN)
+epoll.register(client_socket.fileno(), select.EPOLLIN)
+
+# 进入主循环，等待 epoll 返回事件
+while True:
+    events = epoll.poll(-1, 2)
+    for event in events:
+        # 如果客户端 server_socket 有数据可读，就将数据接收并打印
+        if event[0] == client_socket.fileno():
+            if recv_data := client_socket.recv(1000):
+                print(recv_data.decode('utf8'))
+            else:  # 如果服务端 server_socket 关闭，就退出程序
+                print('再见！')
+                client_socket.close()
+                exit(0)
+        # 如果标准输入有数据可读，就将数据发送给服务器
+        elif event[0] == sys.stdin.fileno():
+            input_data = input()
+            client_socket.send(input_data.encode('utf8'))
+```
+
+**TCP注意事项**
+
+- TCP服务器需要绑定，否则客户端找不到这个服务器；
+- TCP客户端不绑定，因为是主动链接服务器，所以只要确定好服务器的IP、PORT等信息，本地客户端可以随机；
+- TCP服务器中通过listen可以将socket创建出来的主动套接字变为被动的，这是做TCP服务器时必须要做的；
+- 当客户端需要链接服务器时，就需要使用connect进行链接，UDP是不需要链接的而是直接发送，但是TCP必须先链接，只有链接成功才能通信；
+- 当一个TCP客户端链接服务器时，服务器端会有一个新的套接字，这个套接字用来标记这个客户端，单独为这个客户端服务；
+- listen后的套接字是被动套接字，用来接收新的客户端的链接请求的，而accept返回的新的套接字是标记这个新客户端的；
+- 关闭listen后的套接字意味着被动套接字关闭了，会导致新的客户端不能够链接服务器，但是之前的已经链接成功的客户端正常通信；
+- 关闭accept返回的套接字意味着这个客户端已经服务完毕；
+- 当客户端的套接字调用close后，服务器端会recv解堵塞，并且返回的长度为0，因此服务器可以通过返回数据的长度来区别客户端是否已经下线。
+
+**TCP的三次握手**
+
+TCP的三次握手是TCP建立连接的过程，其流程如下：
+
+1. 第一次握手（SYN）：客户端发送一个SYN（同步）数据包，其中包含自己的初始序列号（ISN），并设置SYN标志位为1。此时，客户端进入SYN_SEND状态。
+2. 第二次握手（SYN+ACK）：服务器收到客户端发送的SYN数据包后，会向客户端回复一个ACK（确认）数据包，其中包含服务器的初始序列号（ISN），并将SYN和ACK标志位都设置为1。此时，服务器进入SYN_RECV状态。
+3. 第三次握手（ACK）：客户端收到服务器的SYN+ACK数据包后，会向服务器回复一个ACK数据包，其中将ACK标志位设置为1。此时，客户端进入ESTABLISHED状态，表示连接已经建立。
+
+需要注意的是，在这个过程中，如果某个阶段的数据包丢失或超时，会触发TCP的重传机制，直到连接建立成功或失败。而如果客户端和服务器在建立连接前有数据传输，那么在连接建立后，之前传输的数据包将被丢弃并需要重新发送。
+
+<div style="text-align: center;">
+    <img src=".\images\tcp的三次握手.JPG" width="50%">   
+    <p>图1-3 TCP的三次握手</p>
+</div>
+
+为什么两次握手不行呢？
+
+比如是A（client）机要连到B（server）机，结果发送的连接信息由于某种原因没有到达B机；于是，A机又发了一次，结果这次B收到了，于是就发送信息回来，两机就连接。传完东西后断开。结果这个时候，原先没有到达的连接信息突然又传到了B机，于是B机发信息给A，然后B机就以为和A连上了，这个时候B机就在等待A传东西过去。永远的等待在recv接口上。
+
+**TCP的四次挥手**
+
+<div style="text-align: center;">
+    <img src=".\images\tcp的四次挥手.JPG" width="50%">   
+    <p>图1-4 TCP的四次挥手</p>
+</div>
+
+有4个缓冲区，所以需要4个缓冲区
+
+**TCP短连接（无状态）**
+
+<div style="text-align: center;">
+    <img src=".\images\短连接的操作步骤.JPG" width="50%">   
+    <p>图1-5 短连接的操作步骤</p>
+</div>
+
+模拟一种TCP短连接的情况：
+
+- client向server发送连接请求
+- server接收到请求，双方建立连接
+- client向server发送消息
+- server回应client
+- 一次读写完成，此时双方任何一个都可以发起close操作
+
+**TCP长连接（游戏，即时通信）**
+
+<div style="text-align: center;">
+    <img src=".\images\长连接的操作步骤.JPG" width="50%">   
+    <p>图1-6 长连接的操作步骤</p>
+</div>
+
+再模拟一种长连接的情况：
+
+- client向server发送连接请求
+- server接收到请求，双方建立连接
+- client向server发送消息
+- server回应client
+- 一次读写完成，连接不关闭
+- 后续读写操作...
+- 长时间操作之后client发起关闭请求
+
+**TCP长/短连接的优缺点**
+
+- 长连接可以省去较多的TCP建立和关闭的操作，减少浪费，节约时间。对于频繁请求资源的客户端来说，较适用长连接；
+- client与server之间的连接如果一直不关闭的话，会存在一个问题，随着客户端连接越来越多，server早晚有扛不住的时候，这时候server端需要采取一些策略，如关闭一些长时间没有读写事件发生的连接，这样可以避免一些恶意连接导致server端服务受损；如果条件允许就可以以客户端机器为颗粒度，限制每个客户端的最大长连接数，这样就可以完全避免某个客户端连累后端服务；
+- 短连接对于服务器来说管理较为简单，存在的链接都是有用的链接，不需要额外的控制手段；
+- 但如果客户端请求频繁，将在TCP的建立和关闭操作上浪费时间和带宽。
+
+**TCP长/短连接的应用场景**
+
+- 长连接多用于操作频繁，点对点的通讯，而且连接数不能太多情况。每个TCP连接都需要三次握手，这需要时间，如果每个操作都是先连接，再操作的话那么处理速度会降低很多，所以每个操作完后都不断开，再次处理时直接发送数据包就OK了，不用建立TCP连接。例如：数据库的连接用长连接，如果用短连接频繁的通信会造成socket错误，而且频繁的socket创建也是对资源的浪费。
+- 而像WEB网站的http服务一般都用短链接，因为长连接对于服务端来说会耗费一定的资源，而像WEB网站这么频繁的成千上万甚至上亿客户端的连接用短连接会更省一些资源，如果用长连接，而且同时有成千上万的用户，如果每个用户都占用一个连接的话，那可想而知吧。所以并发量大，但每个用户无需频繁操作情况下需用短连好。
+
+### 1.7 TCP/IP协议
+
+TCP/IP协议是Internet上最常用的协议族之一，也是计算机网络通信的基础。TCP/IP协议族包括了一系列协议，其中最常用的有TCP（传输控制协议）和IP（互联网协议），因此也称为TCP/IP协议栈。
+
+TCP/IP协议是一种分层协议，分为四层：应用层、传输层、网络层和数据链路层。每一层都有自己的功能和协议。
+
+- 应用层
+
+应用层是TCP/IP协议的最高层，它为应用程序提供了接口，应用程序可以使用该接口进行网络通信。常见的应用层协议有HTTP、FTP、SMTP、POP3等。
+
+- 传输层
+
+传输层是TCP/IP协议的第二层，主要负责提供可靠的数据传输服务。它包括TCP协议和UDP协议两种。TCP协议提供了可靠的数据传输服务，可以保证数据的完整性、顺序性和可靠性；而UDP协议则提供了不可靠的数据传输服务，但是速度更快。
+
+- 网络层
+
+网络层是TCP/IP协议的第三层，它主要负责数据包的路由和转发。该层的协议主要是IP协议，它定义了数据包的格式和传输方式。IP协议可以实现不同网络之间的通信，同时也可以在同一网络内实现数据包的传输。
+
+- 数据链路层
+
+数据链路层是TCP/IP协议的最底层，它主要负责将数据包转换为比特流，并在物理媒介上传输。该层的协议有以太网协议、令牌环协议等。
+
+总体来说，TCP/IP协议族提供了一个可靠、通用的网络协议，使得不同类型的计算机和网络可以相互通信和交流。它是现代计算机网络通信的基础。
+
+### 1.8 DDos攻击
+
+**DDoS**（Distributed Denial of Service）攻击，又称分布式拒绝服务攻击，是一种通过大量的流量、请求或数据包来淹没目标计算机或网络，使其无法正常工作的网络攻击行为。
+
+DDoS攻击一般由大量的计算机或设备组成的“僵尸网络”发起，这些计算机或设备被黑客控制，并被指令攻击目标。攻击者通过在这些计算机或设备上安装特定的恶意软件，使它们自动向目标服务器发送大量的请求或数据包。这些请求或数据包会占用目标服务器的网络带宽、处理能力或存储空间等资源，导致目标服务器无法正常响应合法的请求，从而使得正常用户无法访问或使用该服务。
+
+DDoS攻击具有以下特点：
+
+- 攻击范围广泛：可以针对任何拥有网络连接的目标进行攻击，包括网站、服务器、路由器等。
+- 攻击手段多样：可以利用各种协议和技术进行攻击，如TCP协议、UDP协议、ICMP协议等。
+- 攻击方式复杂：攻击者可以通过伪造IP地址、利用反射攻击、构造大量的数据包等方式来增强攻击效果。
+
+DDoS攻击对互联网和企业的安全和稳定性造成了严重威胁。防御DDoS攻击的方法包括增加网络带宽、使用反DDoS设备和软件、合理规划网络架构等。同时，网络管理员也需要定期更新安全措施，以确保网络的安全和稳定性。
