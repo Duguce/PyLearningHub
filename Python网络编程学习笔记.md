@@ -1,12 +1,12 @@
 # Python网络编程学习笔记
 
-Abstract：本文是根据作者日常学习Python网络编程相关知识所作的笔记，主要目的是为了方便日常的工作学习，同时也希望可以为其他小伙伴带来一些帮助。
+Abstract：本文是根据作者日常学习Python网络编程相关知识所作的笔记，主要目的是为了方便日常的工作学习。
 
 Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-03-06 22:45 —— 2022-03-08 23:29
+Datetime:  2022-03-06 22:45 —— 2022-03-10 21:20
 
 ## 1 UDP与TCP通信
 
@@ -596,9 +596,11 @@ Python中，可以使用异步编程框架（如 asyncio、Twisted、Tornado等�
 
 需要注意的是，在不同的芯片架构之间进行数据传输时，需要进行字节序转换，以保证数据传输的正确性。此外，在一些应用中，也可以采用网络字节序（Network Byte Order）作为统一的字节序格式，以便跨平台数据传输。在网络字节序中，使用大端序（Big Endian）作为标准字节序，因此在进行网络通信时，需要将本地字节序转换为网络字节序，再将接收到的数据从网络字节序转换为本地字节序。在Python中，可以使用 `socket` 模块中的 `htonl()`、`htons()`、`ntohl()`、`ntohs()` 函数来进行字节序的转换。
 
-## 2 进程以及状态
+## 2 多进程编程
 
-### 2.1 进程的概述
+### 2.1 进程以及状态
+
+**进程的概述**
 
 **程序：**例如 ×××.py 这是一个程序，是一个静态的
 
@@ -606,7 +608,7 @@ Python中，可以使用异步编程框架（如 asyncio、Twisted、Tornado等�
 
 CPU，内存，文件，socket对象不仅可以通过线程完成多任务，进程也是可以的。
 
-### 2.2 进程的状态
+**进程的状态**
 
 工作中，任务数往往大于CPU的核数，即一定有一些任务正在执行，而另外一些任务在等待CPU进行执行，因此导致了有不同的状态。
 
@@ -617,7 +619,7 @@ CPU，内存，文件，socket对象不仅可以通过线程完成多任务，�
 - 执行态：CPU正在执行其功能；
 - 等待态：等待某些条件满足，例如一个程序sleep了，此时就处于等待态。
 
-### 2.3 Linux下的进程管理
+**Linux下的进程管理**
 
 |   命令    |                             含义                             |                            示例                            |
 | :-------: | :----------------------------------------------------------: | :--------------------------------------------------------: |
@@ -638,3 +640,181 @@ CPU，内存，文件，socket对象不仅可以通过线程完成多任务，�
 |   nohup   |                在后台运行命令，并忽略挂起信号                | `nohup command &` 在后台运行 command 命令，并忽略挂起信号  |
 |  screen   | 为终端提供一个多窗口环境，用于在多个窗口或终端上运行多个命令 |                  `screen` 打开一个新窗口                   |
 |   tmux    | 为终端提供一个多窗口环境，用于在多个窗口或终端上运行多个命令 |             `tmux new-session` 打开一个新会话              |
+
+**设置定时任务**
+
+`crontab -e` 设置当前用户定时任务
+
+`vim /etc/crontab` 设置定时任务
+
+`crontab -l` 查看当前自己设置的定时任务
+
+如果目录是777，任何用户都可以创建文件，并且删除其他用户的文件。如果目录有t权限，那么删除文件时，每个人只能删除属于自己的文件。
+
+### 2.2 进程的创建
+
+multiprocessing模块是跨平台版本的多进程模块，提供了一个Process类来代表一个进程对象，这个对象可以理解为是一个独立的进程，可以执行另外的事情。
+
+下面是一个使用多进程的两个while循环一起执行的代码示例：
+
+```python
+import time
+from multiprocessing import Process
+
+
+def run_proc():
+    """子进程要执行的代码"""
+    while True:
+        print('------2------')
+        time.sleep(1)
+
+
+if __name__ == '__main__':
+    p = Process(target=run_proc)
+    p.start()
+    while True:
+        print('------1------')
+        time.sleep(1)
+```
+
+备注：创建子进程时，只需要传入一个执行函数和函数的参数，创建一个Process实例，用start()方法启动。
+
+- 孤儿进程——父进程退出（kill杀死父进程），子进程变为孤儿；
+- 僵尸进程——子进程退出，父进程在忙碌，没有回收它（要避免僵尸）。
+
+Python进程变为僵尸进程后，名字会改变。
+
+**获取进程pid**
+
+- `os.getpid()` 获得当前进程的进程号
+- `os.getppid()` 获得父进程的进程号
+
+**Process语法结构**
+
+Process(group, target, name, args, kwargs)
+
+- target: 如果传递了函数的引用，可以让这个子进程就执行这里的代码；
+- args: 给target指定的函数传递的参数，以元组的方式传递；
+- kwargs: 给target指定的函数传递命名参数，keyword参数；
+- name: 给进程指定一个名字（可选）；
+- group: 指定进程组（大多数情况下用不到）。
+
+Process创建的实例对象的常用方法：
+
+- start(): 启动子进程实例（创建子进程）；
+- is_alive(): 判断进程子进程是否还活着；
+- join([timeout]): 是否等待子进程执行结束，或者等待多少秒——回收子进程；
+- terminate(): 不管任务是否完成，立即终止子进程。
+
+Process创建的实例对象的常用属性：
+
+- name: 当前进程的别名，默认为Process-N，N为从1开始递增的整数；
+- pid: 当前进程的进程号
+
+进程间**不共享**全局变量
+
+### 2.3 进程间通信-Queue
+
+Process之间有时需要通信，操作系统提供了很多机制来实现进程间的通信（queue、管道、共享内存等）。
+
+**Queue的使用**
+
+可以使用multiprocessing模块的Queue实现多进程之间的数据传递，Queue本身是一个消息列队程序。下面是一个简单的代码示例：
+
+```python
+import time
+from multiprocessing import Queue, Process
+
+
+def write(q):
+    for i in "beautiful":
+        print(f"I'm writer put {i}")
+        q.put(i)
+        time.sleep(1)
+
+
+def read(q):
+    while True:
+        time.sleep(1)
+        if not q.empty():
+            print(f"I'm reader get {q.get()}")
+        else:
+            break
+
+
+if __name__ == '__main__':
+    q = Queue()
+    pw = Process(target=write, args=(q,))
+    pr = Process(target=read, args=(q,))
+    pw.start()
+    time.sleep(1)
+    pr.start()
+    pw.join()
+    pr.join()
+```
+
+初始化Queue()对象时，若括号中没有指定最大可接受的消息数量，或者数量为负值，那么就代表可以接受的消息数量没有上限（直到内存的尽头）：
+
+- `Queue.qsize()`: 返回当前队列包含的消息数量；
+- `Queue.empty()`: 如果队列为空，返回 True，反之 False；
+- `Queue.full()`: 如果队列满了，返回 True，反之 False；
+- `Queue.get([block[, timeout]])`: 获取队列中的一条消息，然后将其从列队中移除，block默认值为True。
+  - 如果block使用默认值，且没有设置timeout（单位秒），消息列队如果为空，此时程序将被阻塞（停在读取状态），直到从消息列队读到消息为止，如果设置了timeout，则会等待timeout秒，若还没有读取到任何信息，则抛出“Queue.Empty”异常；
+  - 如果block值为 False，消息列队如果为空，则会立刻抛出“Queue.Empty”异常。
+- `Queue.get_nowait()`: 相当于Queue.get(block=False)；
+- `Queue.put(item, [block[, timeout]])`: 将item消息写入队列，block默认值为 True ；
+- `Queue.put_nowait()`: 相当于Queue.put(item, False)。
+
+### 2.4 进程池Pool
+
+当需要创建的子进程数量不多时，可以直接利用multiprocessing中的Process动态成生多个进程，但如果是上百甚至上千个目标，手动的去创建进程的工作量巨大，此时就可以用到multiprocessing模块提供的Pool方法。
+初始化Pool时，可以指定一个最大进程数，当有新的请求提交到Pool中时，如果池还没有满，那么就会创建一个新的进程用来执行该请求；但如果池中的进程数已经达到指定的最大值，那么该请求就会等待，直到池中有进程结束，才会用之前的进程来执行新的任务。
+
+下面是一个代码实例：
+
+```python
+mport time, os
+from multiprocessing import Manager, Pool
+
+
+def write(q):
+    print("writer启动(%s),父进程为(%s)" % (os.getpid(), os.getppid()))
+    for i in "beautiful":
+        print(f"I'm writer put {i}")
+        q.put(i)
+        time.sleep(1)
+
+
+def read(q):
+    print("reader启动(%s),父进程为(%s)" % (os.getpid(), os.getppid()))
+    while True:
+        time.sleep(1)
+        if not q.empty():
+            print(f"I'm reader get {q.get()}")
+        else:
+            break
+
+
+if __name__ == '__main__':
+    q = Manager().Queue()
+    pool = Pool()
+    pool.apply_async(write, (q,))
+    time.sleep(1)
+    pool.apply_async(read, (q,))
+    pool.close()
+    pool.join()
+    print("(%s) End" % os.getpid())
+```
+
+multiprocessing.Pool常用函数解析：
+
+- apply_async(func[，args[，kwds]])：使用非阻塞方式调用func（并行执行，堵塞方式必须等待上一个进程退出才能执行下一个进程），args为传递给func的参数列表，kwds为传递给func的关键字参数列表；
+- close()：关闭Pool，使其不再接受新的任务；
+- terminate()：不管任务是否完成，立即终止；
+- join()：主进程阻塞，等待子进程的退出，必须在close或terminate之后使用。
+
+## 3 多线程编程
+
+### 3.1 多任务的概念
+
+多任务是指操作系统上可以同时运行多个任务。现在，多核CPU已经非常普及了，但是，即时过去的单核CPU，也可以执行多任务。由于CPU执行代码都是顺序执行的，那么，单核CPU是怎么执行多任务的呢？对于单核CPU是通过操作系统轮流让各个任务交替执行，任务1执行0.01秒，切换到任务2，任务2执行0.01秒，在切换到任务3，执行0.01秒......这样反复执行下去。

@@ -1,8 +1,8 @@
-# PyNotes
+# PyLearningHub
 
-Welcome to my PyNotes! 🎉 Here, I store code and notes that I have written to strengthen my Python programming skills. 🔥 You'll find my solutions to programming problems, algorithm implementations, and study notes. 🤓 These resources help me solidify my learning, and I hope they can be helpful to you as well. Thank you for stopping by! 🙏
+Welcome to my PyLearningHub! 🎉 Here, I store code and notes that I have written to strengthen my Python programming skills. 🔥 You'll find my solutions to programming problems, algorithm implementations, and study notes. 🤓 These resources help me solidify my learning, and I hope they can be helpful to you as well. Thank you for stopping by! 🙏
 
-欢迎来到我的 PyNotes！🎉 这里我存储了我写的代码和笔记，以加强我的 Python 编程技能。🔥 你会找到我对编程问题的解决方案、算法实现和学习笔记。🤓 这些资源有助于巩固我的学习，我希望它们也能对你有所帮助。感谢你的光临！🙏
+欢迎来到我的 PyLearningHub！🎉 这里我存储了我写的代码和笔记，以加强我的 Python 编程技能。🔥 你会找到我对编程问题的解决方案、算法实现和学习笔记。🤓 这些资源有助于巩固我的学习，我希望它们也能对你有所帮助。感谢你的光临！🙏
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ You can either clone the entire repo using the command:
 你可以使用以下命令克隆整个仓库：
 
 ```shell
-git clone https://github.com/Duguce/PyNotes.git
+git clone https://github.com/Duguce/PyLearningHub.git
 ```
 
 ## Structure
@@ -63,6 +63,6 @@ This ensures that any derived works will remain open and free. For more informat
 
 ---
 
-Thanks for checking out PyNotes! If you find it helpful, please give it a star on GitHub. Your support is appreciated! Happy coding! 😄
+Thanks for checking out PyLearningHub! Happy coding! 😄
 
-感谢查看 PyNotes！如果您觉得它有用，请在 GitHub 上为其点赞。感谢您的支持！祝编程愉快！😄
+感谢查看 PyLearningHub！祝编程愉快！😄
