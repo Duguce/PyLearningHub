@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-03-12 10:12 —— 2022-03-13 20:46
+Datetime:  2022-03-12 10:12 —— 2022-03-14 19:35
 
 ## 1 数据库概述
 
@@ -831,4 +831,379 @@ from OrderItems
 group by order_num
 having sum(item_price * quantity) >= 1000
 order by order_num
+```
+
+## 11 使用子查询
+
+本节主要介绍什么是子查询，以及如何使用它们。SQL允许创建子查询，即嵌套在其他查询中的查询。
+
+### 11.1 利用子查询进行过滤
+
+假如需要列出订购物品 RGAN01 的所有顾客，应该怎样检索？下面列出具体的步骤。
+
+- 检索包含物品 RGAN01 的所有订单的编号。
+- 检索具有前一步骤列出的订单编号的所有顾客的 ID。
+- 检索前一步骤返回的所有顾客 ID 的顾客信息。
+
+```sql
+select cust_name, cust_contact
+from Customers
+where cust_id in (
+    select cust_id
+    from Orders
+    where order_num in (
+        select distinct order_num
+        from OrderItems
+        where prod_id = 'RGAN01'));
+```
+
+### 11.2 作为计算字段使用子查询
+
+使用子查询的另一方法是创建计算字段。假如需要显示 Customers 表中每个顾客的订单总数。订单与相应的顾客 ID 存储在 Orders 表中。执行这个操作，要遵循下面的步骤：
+
+- 从 Customers 表中检索顾客列表；
+- 对于检索出的每个顾客，统计其在 Orders 表中的订单数目。
+
+```sql
+select cust_name,
+       cust_state,
+       (select count(*)
+        from Orders
+        where Orders.cust_id = Customers.cust_id) as orders
+from Customers
+order by cust_name;
+```
+
+### 11.3 挑战题
+
+- 使用子查询，返回购买价格为 10 美元或以上产品的顾客列表。你需要使用 OrderItems 表查找匹配的订单号（order_num），然后使用 Order 表检索这些匹配订单的顾客 ID（cust_id）。
+- 你想知道订购 BR01 产品的日期。编写 SQL 语句，使用子查询来确定哪些订单（在 OrderItems 中）购买了 prod_id 为 BR01 的产品，然后从 Orders 表中返回每个产品对应的顾客 ID（cust_id）和订单日期（order_date）。按订购日期对结果进行排序。
+- 现在我们让它更具挑战性。在上一个挑战题，返回购买 prod_id 为 BR01 的产品的所有顾客的电子邮件（Customers 表中的 cust_email）。提示：这涉及 SELECT 语句，最内层的从 OrderItems 表返回 order_num， 中间的从 Customers 表返回 cust_id。
+- 我们需要一个顾客 ID 列表，其中包含他们已订购的总金额。编写 SQL 语句，返回顾客 ID（Orders 表中的 cust_id），并使用子查询返回 total_ordered 以便返回每个顾客的订单总数。将结果按金额从大到小排序。提示：你之前已经使用 SUM()计算订单总数。
+- 再来。编写 SQL 语句，从 Products 表中检索所有的产品名称（prod_name），以及名为 quant_sold 的计算列，其中包含所售产品的总数（在 OrderItems 表上使用子查询和 SUM(quantity)检索）。
+
+```sql
+# 第一题
+select cust_id
+from Orders
+where order_num in (
+    select order_num
+    from OrderItems
+    where item_price >= 10);
+# 第二题
+select cust_id, order_date
+from Orders
+where order_num in (
+    select order_num
+    from OrderItems
+    where prod_id = 'BR01')
+order by order_date;
+# 第三题
+select cust_email
+from Customers
+where cust_id in (
+    select cust_id
+    from Orders
+    where order_num in (
+        select order_num
+        from OrderItems
+        where prod_id = 'BR01'));
+# 第四题
+select cust_id,
+       (select sum(quantity * item_price)
+        from OrderItems
+        where OrderItems.order_num = Orders.order_num) as total_ordered
+from Orders
+order by total_ordered desc;
+# 第五题
+select prod_name,
+       (select sum(quantity)
+        from OrderItems
+        where OrderItems.prod_id = Products.prod_id) as quant_sold
+from Products
+```
+
+## 12 联结表
+
+本节介绍什么是联结，为什么使用联结，以及如何编写使用联结的SELECT语句。
+
+### 12.1 联结
+
+SQL 最强大的功能之一就是能在数据查询的执行中联结（join）表。联结是利用 SQL 的 SELECT 能执行的最重要的操作，很好地理解联结及其语法是学习 SQL 的极为重要的部分。 
+
+**关系表**
+
+理解关系表，最好是来看个例子。
+
+有一个包含产品目录的数据库表，其中每类物品占一行。对于每一种物品，要存储的信息包括产品描述、价格，以及生产该产品的供应商。
+
+现在有同一供应商生产的多种物品，那么在何处存储供应商名、地址、联系方法等供应商信息呢？将这些数据与产品信息分开存储的理由是：
+
+- 同一供应商生产的每个产品，其供应商信息都是相同的，对每个产品重复此信息既浪费时间又浪费存储空间；
+- 如果供应商信息发生变化，例如供应商迁址或电话号码变动，只需修改一次即可；
+- 如果有重复数据（即每种产品都存储供应商信息），则很难保证每次输入该数据的方式都相同。不一致的数据在报表中就很难利用。
+
+关键是，**相同的数据出现多次决不是一件好事**，这是关系数据库设计的基础。关系表的设计就是要把信息分解成多个表，一类数据一个表。各表通过某些共同的值互相关联（所以才叫关系数据库）。
+
+这样做的好处是： 
+
+- 供应商信息不重复，不会浪费时间和空间；
+- 如果供应商信息变动，可以只更新 Vendors 表中的单个记录，相关表中的数据不用改动；
+- 由于数据不重复，数据显然是一致的，使得处理数据和生成报表更简单。
+
+**为什么使用联结**
+
+如前所述，将**数据分解为多个表**能更**有效地存储**，更方便地处理，并且**可伸缩性更好**。但这些好处是**有代价的**。
+
+如果数据存储在多个表中，怎样用一条 SELECT 语句就检索出数据呢？
+
+答案是使用联结。简单说，联结是一种机制，用来在一条 SELECT 语句中关联表，因此称为联结。使用特殊的语法，可以联结多个表返回一组输出，联结在运行时关联表中正确的行。
+
+### 12.2 创建联结
+
+创建联结非常简单，指定要联结的所有表以及关联它们的方式即可。
+
+```sql
+select vend_name, prod_name, prod_price
+from Vendors,
+     Products
+where Vendors.vend_id = Products.vend_id;
+```
+
+**WHERE子句的重要性**
+
+使用 WHERE 子句建立联结关系似乎有点奇怪，但实际上是有个很充分的理由的。要记住，在一条 SELECT 语句中联结几个表时，相应的关系是在运行中构造的。在联结两个表时，实际要做的是将第一个表中的每一行与第二个表中的每一行配对。WHERE 子句作为过滤条件，只包含那些匹配给定条件（这里是联结条件）的行。没有 WHERE子句，第一个表中的每一行将与第二个表中的每一行配对，而不管它们逻辑上是否能配在一起。
+
+**内联结**
+
+目前为止使用的联结称为等值联结（equijoin），它基于两个表之间的相等测试。这种联结也称为内联结（inner join）。其实，可以对这种联结使用稍微不同的语法，明确指定联结的类型。
+
+```sql
+select vend_name, prod_name, prod_price
+from Vendors
+         inner join Products on Vendors.vend_id = Products.vend_id;
+```
+
+此语句中的 SELECT 与前面的 SELECT 语句相同，但 FROM 子句不同。这里，两个表之间的关系是以 INNER JOIN 指定的部分 FROM 子句。在使用这种语法时，联结条件用特定的 ON 子句而不是 WHERE 子句给出。
+
+**联结多个表**
+
+SQL 不限制一条 SELECT 语句中可以联结的表的数目。创建联结的基本规则也相同。首先列出所有表，然后定义表之间的关系。
+
+```sql
+select prod_name, vend_name, prod_price, quantity
+from OrderItems,
+     Products,
+     Vendors
+where Products.vend_id = Vendors.vend_id
+  and OrderItems.prod_id = Products.prod_id
+  and order_num = 20007;
+```
+
+注意：性能考虑
+
+DBMS 在运行时关联指定的每个表，以处理联结。这种处理可能非常耗费资源，因此应该注意，不要联结不必要的表。联结的表越多，性能下降越厉害。
+
+注意：联结中表的最大数目 
+
+虽然 SQL 本身不限制每个联结约束中表的数目，但实际上许多 DBMS 都有限制。请参阅具体的 DBMS 文档以了解其限制。
+
+### 12.3 挑战题
+
+- 编写 SQL 语句，返回 Customers 表中的顾客名称（cust_name）和 Orders 表中的相关订单号（order_num），并 按顾客名称再按订单号对结果进行排序。实际上是尝试两次，一次使用简单的等联结语法，一次使用 INNER JOIN。
+- 我们来让上一题变得更有用些。除了返回顾客名称和订单号，添加第三列 OrderTotal，其中包含每个订单的总价。有两种方法可以执行此操作：使用 OrderItems 表的子查询来创建 OrderTotal 列，或者将 OrderItems 表与现有表联结并使用聚合函数。提示：请注意需要使用完全限定列名的地方。
+- 我们重新看一下第 11 节的挑战题 2。编写 SQL 语句，检索订购产品 BR01 的日期，这一次使用联结和简单的等联结语法。输出应该与第 11 节的输出相同。
+- 很有趣，我们再试一次。重新创建为第 11 节挑战题 3 编写的 SQL 语句，这次使用 ANSI 的 INNER JOIN 语法。在之前编写的代码中使用了两个嵌套的子查询。要重新创建它，需要两个 INNER JOIN 语句，每个语句的格式类似于本课讲到的 INNER JOIN 示例，而且不要忘记 WHERE 子句可以通过 prod_id 进行过滤。
+- 再让事情变得更加有趣些，我们将混合使用联结、聚合函数和分组。准备好了吗？回到第 10 节，当时的挑战是要求查找值等于或大于 1000 的所有订单号。这些结果很有用，但更有用的是订单数量至少达到这个数的顾客名称。因此，编写 SQL 语句，使用联结从 Customers 表返回顾客名称（cust_name），并从 OrderItems 表返回所有订单的总价。提示：要联结这些表，还需要包括 Orders 表（因为 Customers 表与 OrderItems 表不直接相关，Customers 表与 Orders 表相关，而Orders 表与 OrderItems 表相关）。不要忘记 GROUP BY 和 HAVING，并按顾客名称对结果进行排序。你可以使用简单的等联结或 ANSI 的 INNER JOIN 语法。或者，如果你很勇敢，请尝试使用两种方式编写。
+
+```sql
+# 第一题
+select cust_name, order_num
+from Customers,
+     Orders
+where Customers.cust_id = Orders.cust_id
+order by cust_name, order_num;
+
+select cust_name, order_num
+from Customers
+         inner join Orders on Customers.cust_id = Orders.cust_id
+order by cust_name, order_num;
+# 第二题
+select cust_name,
+       order_num,
+       (select sum(quantity * item_price)
+        from OrderItems
+        where OrderItems.order_num = Orders.order_num) as order_total
+from Customers
+         inner join Orders on Customers.cust_id = Orders.cust_id;
+# 第三题
+select cust_id, order_date
+from OrderItems,
+     Orders
+where OrderItems.order_num = Orders.order_num
+  and prod_id = 'BR01'
+order by cust_id, order_date;
+
+select cust_id, order_date
+from Orders
+         inner join OrderItems on Orders.order_num = OrderItems.order_num
+where prod_id = 'BR01'
+order by cust_id, order_date;
+# 第四题
+select cust_email
+from Orders
+         inner join Customers on Orders.cust_id = Customers.cust_id
+         inner join OrderItems on OrderItems.order_num = Orders.order_num
+where prod_id = 'BR01';
+# 第五题
+select cust_name,
+       sum(quantity * item_price) as total_price
+from Orders
+         inner join Customers on Customers.cust_id = Orders.cust_id
+         inner join OrderItems on OrderItems.order_num = Orders.order_num
+group by cust_name
+having total_price >= 1000
+order by cust_name;
+
+select cust_name,
+       sum(quantity * item_price) as total_price
+from Orders,
+     Customers,
+     OrderItems
+where Customers.cust_id = Orders.cust_id
+  and OrderItems.order_num = Orders.order_num
+group by cust_name
+having total_price >= 1000
+order by cust_name;
+```
+
+## 13 创建高级联结
+
+本节主要讲述另外一些联结，介绍如何使用表别名，如何对被联结的表使用聚合函数。
+
+### 13.1 使用表别名
+
+SQL除了可以对列名和计算字段使用别名，还允许给表名起别名。这样做有两个主要理由：
+
+- 缩短SQL语句；
+- 允许在一条SELECT 语句中多次使用相同的表。
+
+```SQL
+select cust_name, cust_contact
+from Customers as C,
+     Orders as O,
+     OrderItems as OI
+where C.cust_id = O.cust_id
+  and OI.order_num = O.order_num
+  and prod_id = 'RGAN01';
+```
+
+### 13.2 使用不同类型的联结
+
+迄今为止，我们使用的只是内联结或等值联结的简单联结。现在来看三种其他联结：自联结（self-join）、自然联结（natural join）和外联结（outer join）。
+
+**自联结**
+
+自联结通常作为外部语句，用来替代从相同表中检索数据的使用子查询语句。虽然最终的结果是相同的，但许多DBMS处理联结远比处理子查询快得多。应该试一下两种方法，以确定哪一种的性能更好。
+
+```sql
+select cust_id, cust_name, cust_contact
+from Customers
+where cust_name = (select cust_name
+                   from Customers
+                   where cust_contact = 'John Smith');
+
+select c1.cust_id, c1.cust_name, c1.cust_contact
+from Customers c1,
+     Customers c2
+where c1.cust_name = c2.cust_name
+  and c2.cust_contact = 'John Smith';
+```
+
+**自然联结**
+
+无论何时对表进行联结，应该至少有一列不止出现在一个表中（被联结的列）。标准的联结（前一节中介绍的内联结）返回所有数据，相同的列甚至多次出现。自然联结排除多次出现，使每一列只返回一次。
+
+```SQL
+select C.*,
+       O.order_num,
+       O.order_date,
+       OI.prod_id,
+       OI.quantity,
+       OI.item_price
+from Customers C,
+     Orders O,
+     OrderItems OI
+where C.cust_id = O.cust_id
+  and OI.order_num = O.order_num
+  and prod_id = 'RGAN01';
+```
+
+**外联结**
+
+许多联结将一个表中的行与另一个表中的行相关联，但有时候需要包含没有关联行的那些行。要检索包括没有订单顾客在内的所有顾客，可如下进行：
+
+```sql
+select Customers.cust_id, Orders.order_num
+from Customers
+         left join Orders on Customers.cust_id = Orders.cust_id;
+```
+
+与内联结关联两个表中的行不同的是，外联结还包括没有关联行的行。在使用 OUTER JOIN 语法时，必须使用 RIGHT 或 LEFT 关键字指定包括其所有行的表（RIGHT 指出的是 OUTER JOIN 右边的表，而 LEFT 指出的是 OUTER JOIN 左边的表）。上面的例子使用 LEFT OUTER JOIN 从 FROM 子句左边的表（Customers 表）中选择所有行。为了从右边的表中选择所有行，需要使用 RIGHT OUTER JOIN，如下例所示：
+
+```sql
+select Customers.cust_id, Orders.order_num
+from Customers
+         right join Orders on Customers.cust_id = Orders.cust_id;
+```
+
+### 13.3 使用带聚集函数的联结
+
+虽然至今为止我们举的聚集函数的例子都只是从一个表中汇总数据，但这些函数也可以与联结一起使用。
+
+```sql
+select Customers.cust_id,
+       count(Orders.order_num) as num_ord
+from Customers
+         inner join Orders on Customers.cust_id = Orders.cust_id
+group by Customers.cust_id;
+
+select Customers.cust_id,
+       count(Orders.order_num) as num_ord
+from Customers
+         left join Orders on Customers.cust_id = Orders.cust_id
+group by Customers.cust_id;
+```
+
+### 13.4 挑战题
+
+- 使用INNER JOIN 编写SQL语句，以检索每个顾客的名称（Customers 表中的 cust_name）和所有的订单号（Orders 表中的 order_num）。
+- 修改刚刚创建的SQL语句，仅列出所有顾客，即使他们没有下过订单。
+- 使用 OUTER JOIN 联结 Products 表和 OrderItems 表，返回产品名称（prod_name）和与之相关的订单号（order_num）的列表，并按商品名称排序。
+- 修改上一题中创建的 SQL 语句，使其返回每一项产品的总订单数（不是订单号）。
+- 编写SQL语句，列出供应商（Vendors表中的vend_id）及其可供产品的数量，包括没有产品的供应商。你需要使用OUTER JOIN 和COUNT()聚合函数来计算 Products 表中每种产品的数量。注意：vend_id 列会显示在多个表中，因此在每次引用它时都需要完全限定它。
+
+```sql
+# 第一题
+select Customers.cust_name, Orders.order_num
+from Customers
+         inner join Orders on Customers.cust_id = Orders.cust_id;
+# 第二题
+select Customers.cust_name, Orders.order_num
+from Customers
+         left join Orders on Customers.cust_id = Orders.cust_id;
+# 第三题
+select Products.prod_name, OrderItems.order_num
+from Products
+         inner join OrderItems on Products.prod_id = OrderItems.prod_id;
+# 第四题
+select Products.prod_name, count(OrderItems.order_num) as num_ord
+from Products
+         inner join OrderItems on Products.prod_id = OrderItems.prod_id
+group by Products.prod_name;
+# 第五题
+select Vendors.vend_id, count(Products.prod_id)
+from Vendors
+         inner join Products on Vendors.vend_id = Products.vend_id
+group by Vendors.vend_id;
 ```
