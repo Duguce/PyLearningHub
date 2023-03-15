@@ -6,7 +6,115 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-03-12 10:12 —— 2022-03-14 19:35
+Datetime:  2022-03-12 10:12 —— 2022-03-15 20:21
+
+--------------------------
+
+- [1 数据库概述](#1-数据库概述)
+  - [1.1 关系型数据库](#11-关系型数据库)
+  - [1.2 RDBMS](#12-rdbms)
+  - [1.3 SQL](#13-sql)
+  - [1.4 MySQL简介](#14-mysql简介)
+- [2 检索数据](#2-检索数据)
+  - [2.1 SELECT语句](#21-select语句)
+  - [2.2 检索列](#22-检索列)
+  - [2.3 检索不同的值](#23-检索不同的值)
+  - [2.4 限制结果](#24-限制结果)
+  - [2.5 挑战题](#25-挑战题)
+- [3 排序检索数据](#3-排序检索数据)
+  - [3.1 按列名排序](#31-按列名排序)
+  - [3.2 按列位置排序](#32-按列位置排序)
+  - [3.3 指定排序方向](#33-指定排序方向)
+  - [3.4 挑战题](#34-挑战题)
+- [4 过滤数据](#4-过滤数据)
+  - [4.1 使用WHERE子句](#41-使用where子句)
+  - [4.2 WHERE子句操作符](#42-where子句操作符)
+  - [4.3 挑战题](#43-挑战题)
+- [5 高级数据过滤](#5-高级数据过滤)
+  - [5.1 组合WHERE子句](#51-组合where子句)
+  - [5.2 IN操作符](#52-in操作符)
+  - [5.3 NOT操作符](#53-not操作符)
+  - [5.4 挑战题](#54-挑战题)
+- [6 用通配符进行过滤](#6-用通配符进行过滤)
+  - [6.1 LIKE操作符](#61-like操作符)
+  - [6.2 使用通配符的技巧](#62-使用通配符的技巧)
+  - [6.3 挑战题](#63-挑战题)
+- [7 创建计算字段](#7-创建计算字段)
+  - [7.1 计算字段](#71-计算字段)
+  - [7.2 拼接字段](#72-拼接字段)
+  - [7.3 执行算术计算](#73-执行算术计算)
+  - [7.4 挑战题](#74-挑战题)
+- [8 使用函数处理数据](#8-使用函数处理数据)
+  - [8.1 函数](#81-函数)
+  - [8.2 挑战题](#82-挑战题)
+- [9 汇总数据](#9-汇总数据)
+  - [9.1 聚集函数](#91-聚集函数)
+  - [9.2 聚集不同值](#92-聚集不同值)
+  - [9.3 组合聚集函数](#93-组合聚集函数)
+  - [9.4 挑战题](#94-挑战题)
+- [10 分组数据](#10-分组数据)
+  - [10.1 创建分组](#101-创建分组)
+  - [10.2 过滤分组](#102-过滤分组)
+  - [10.3 分组和排序](#103-分组和排序)
+  - [10.4 SELECT 子句顺序](#104-select-子句顺序)
+  - [10.5 挑战题](#105-挑战题)
+- [11 使用子查询](#11-使用子查询)
+  - [11.1 利用子查询进行过滤](#111-利用子查询进行过滤)
+  - [11.2 作为计算字段使用子查询](#112-作为计算字段使用子查询)
+  - [11.3 挑战题](#113-挑战题)
+- [12 联结表](#12-联结表)
+  - [12.1 联结](#121-联结)
+  - [12.2 创建联结](#122-创建联结)
+  - [12.3 挑战题](#123-挑战题)
+- [13 创建高级联结](#13-创建高级联结)
+  - [13.1 使用表别名](#131-使用表别名)
+  - [13.2 使用不同类型的联结](#132-使用不同类型的联结)
+  - [13.3 使用带聚集函数的联结](#133-使用带聚集函数的联结)
+  - [13.4 挑战题](#134-挑战题)
+- [14 组合查询](#14-组合查询)
+  - [14.1 创建组合查询](#141-创建组合查询)
+  - [14.2 挑战题](#142-挑战题)
+- [15 插入数据](#15-插入数据)
+  - [15.1 数据插入](#151-数据插入)
+  - [15.2 从一个表复制到另一个表](#152-从一个表复制到另一个表)
+  - [15.3 挑战题](#153-挑战题)
+- [16 更新和删除数据](#16-更新和删除数据)
+  - [16.1 更新数据](#161-更新数据)
+  - [16.2 删除数据](#162-删除数据)
+  - [16.3 更新和删除的指导原则](#163-更新和删除的指导原则)
+  - [16.4 挑战题](#164-挑战题)
+- [17 创建和操纵表](#17-创建和操纵表)
+  - [17.1 创建表](#171-创建表)
+  - [17.2 更新表](#172-更新表)
+  - [17.3 删除表](#173-删除表)
+  - [17.4 重命名表](#174-重命名表)
+  - [17.5 挑战题](#175-挑战题)
+- [18 使用视图](#18-使用视图)
+  - [18.1 视图](#181-视图)
+  - [18.2 创建视图](#182-创建视图)
+  - [18.3 挑战题](#183-挑战题)
+- [19 使用存储过程](#19-使用存储过程)
+  - [19.1 存储过程](#191-存储过程)
+  - [19.2 为什么要使用存储过程](#192-为什么要使用存储过程)
+  - [19.3 执行存储过程](#193-执行存储过程)
+  - [19.4 创建存储过程](#194-创建存储过程)
+- [20 管理事务处理](#20-管理事务处理)
+  - [20.1 事务处理](#201-事务处理)
+  - [20.2 控制事务处理](#202-控制事务处理)
+- [21 使用游标](#21-使用游标)
+  - [21.1 游标](#211-游标)
+  - [21.2 使用游标](#212-使用游标)
+- [22 高级SQL特性](#22-高级sql特性)
+  - [22.1 约束](#221-约束)
+  - [22.2 索引](#222-索引)
+  - [22.3 触发器](#223-触发器)
+  - [22.4 数据库安全](#224-数据库安全)
+- [23 窗口函数](#23-窗口函数)
+- [24 Python连接MySQL](#24-python连接mysql)
+  - [24.1 增删改操作](#241-增删改操作)
+  - [24.2 查询操作](#242-查询操作)
+
+--------------------------
 
 ## 1 数据库概述
 
@@ -1207,3 +1315,1101 @@ from Vendors
          inner join Products on Vendors.vend_id = Products.vend_id
 group by Vendors.vend_id;
 ```
+
+## 14 组合查询
+
+本节讲述如果利用 UNION 操作符将多条 SELECT 语句组合成一个结果集。
+
+多数 SQL 查询只包含从一个或多个表中返回数据的单条 SELECT 语句。但是，SQL 也允许执行多个查询（多条 SELECT 语句），并将结果作为一个查询结果集返回。这些组合查询通常称为并（union）或复合查询（compound query）。
+
+主要有两种情况需要使用组合查询：
+
+- 在一个查询中从不同的表返回结构数据；
+- 对一个表执行多个查询，按一个查询返回数据。
+
+### 14.1 创建组合查询
+
+可用 UNION 操作符来组合数条 SQL 查询。利用 UNION，可给出多条SELECT 语句，将它们的结果组合成一个结果集。
+
+**使用UNION**
+
+使用 UNION 很简单，所要做的只是给出每条 SELECT 语句，在各条语句之间放上关键字 UNION。
+
+```sql
+select cust_name, cust_contact, cust_email
+from Customers
+where cust_state in ('IL', 'IN', 'MI')
+union
+select cust_name, cust_contact, cust_email
+from Customers
+where cust_name = 'Fun4All';
+```
+
+可以看到，UNION 非常容易使用，但在进行组合时需要注意几条规则。
+
+- UNION 必须由两条或两条以上的 SELECT 语句组成，语句之间用关键字 UNION 分隔（因此，如果组合四条 SELECT 语句，将要使用三个 UNION 关键字）。
+- UNION 中的每个查询必须包含相同的列、表达式或聚集函数（不过，各个列不需要以相同的次序列出）。
+- 列数据类型必须兼容：类型不必完全相同，但必须是 DBMS 可以隐含转换的类型（例如，不同的数值类型或不同的日期类型）。
+
+**包含或取消重复的行**
+
+UNION 从查询结果集中自动去除了重复的行；换句话说，它的行为与一条 SELECT 语句中使用多个 WHERE 子句条件一样。
+
+这是 UNION 的默认行为，如果愿意也可以改变它。事实上，如果想返回所有的匹配行，可使用 UNION ALL 而不是 UNION。
+
+**对组合查询结果排序**
+
+SELECT 语句的输出用 ORDER BY 子句排序。在**用 UNION 组合查询**时，**只能使用一条 ORDER BY 子句**，它**必须位于最后一条 SELECT 语句之后**。对于结果集，不存在用一种方式排序一部分，而又用另一种方式排序另一部分的情况，因此不允许使用多条 ORDER BY 子句
+
+### 14.2 挑战题
+
+- 编写 SQL 语句，将两个 SELECT 语句结合起来，以便从 OrderItems 表中检索产品 ID（prod_id）和 quantity。其中，一个 SELECT 语句过滤数量为 100 的行，另一个 SELECT 语句过滤 ID 以 BNBG 开头的产品。按产品 ID 对结果进行排序。
+- 重写刚刚创建的 SQL 语句，仅使用单个 SELECT 语句。
+- 我知道这有点荒谬，但这节课中的一个注释提到过。编写 SQL 语句，组合 Products 表中的产品名称（prod_name）和 Customers 表中的顾客名称（cust_name）并返回，然后按产品名称对结果进行排序。
+
+```sql
+# 第一题
+select prod_id, quantity
+from OrderItems
+where quantity = 100
+union
+select prod_id, quantity
+from OrderItems
+where prod_id like 'BNBG%'
+order by prod_id;
+# 第二题
+select prod_id, quantity
+from OrderItems
+where quantity = 100
+   or prod_id like 'BNBG%'
+order by prod_id;
+# 第三题
+select prod_name
+from Products
+union
+select cust_name
+from Customers
+order by prod_name; 
+```
+
+## 15 插入数据
+
+本节主要介绍如何利用 SQL 的 INSERT 语句将数据插入表中。
+
+### 15.1 数据插入
+
+INSERT 用来将行插入（或添加）到数据库表。插入有几种方式：
+
+- 插入完整的行；
+- 插入行的一部分；
+- 插入某些查询的结果。
+
+**插入完整的行**
+
+把数据插入表中的最简单方法是使用基本的 INSERT 语法，它要求指定表名和插入到新行中的值。
+
+```sql
+insert into Customers
+values (1000000006,
+        'Toy Land',
+        '123 Any Street',
+        'New York',
+        'NY',
+        '11111',
+        'USA',
+        NULL,
+        NULL);
+```
+
+虽然这种语法很简单，但并不安全，应该尽量避免使用。上面的 SQL 语句高度依赖于表中列的定义次序，还依赖于其容易获得的次序信息。即使可以得到这种次序信息，也不能保证各列在下一次表结构变动后保持完全相同的次序。
+
+编写 INSERT 语句的更安全（不过更烦琐）的方法如下：
+
+```sql
+insert into Customers(cust_id,
+                      cust_name,
+                      cust_address,
+                      cust_city,
+                      cust_state,
+                      cust_zip,
+                      cust_country,
+                      cust_contact,
+                      cust_email)
+values (1000000006,
+        'Toy Land',
+        '123 Any Street',
+        'New York',
+        'NY',
+        '11111',
+        'USA',
+        NULL,
+        NULL);
+```
+
+因为提供了列名，VALUES 必须以其指定的次序匹配指定的列名，不一定按各列出现在表中的实际次序。其优点是，即使表的结构改变，这条 INSERT 语句仍然能正确工作。
+
+**插入部分行**
+
+正如所述，使用 INSERT 的推荐方法是明确给出表的列名。使用这种语法，还可以省略列，这表示可以只给某些列提供值，给其他列不提供值。
+
+```sql
+insert into Customers(cust_id,
+                      cust_name,
+                      cust_address,
+                      cust_city,
+                      cust_state,
+                      cust_zip,
+                      cust_country)
+values (1000000006,
+        'Toy Land',
+        '123 Any Street',
+        'New York',
+        'NY',
+        '11111',
+        'USA');
+```
+
+**插入检索出的数据**
+
+INSERT 一般用来给表插入具有指定列值的行。INSERT 还存在另一种形式，可以利用它将 SELECT 语句的结果插入表中，这就是所谓的 INSERT SELECT。顾名思义，它是由一条 INSERT 语句和一条 SELECT 语句组成的。
+
+```sql
+insert into Customers(cust_id,
+                      cust_name,
+                      cust_address,
+                      cust_city,
+                      cust_state,
+                      cust_zip,
+                      cust_country)
+select cust_id,
+       cust_name,
+       cust_address,
+       cust_city,
+       cust_state,
+       cust_zip,
+       cust_country
+from CustNew;
+```
+
+### 15.2 从一个表复制到另一个表
+
+有一种数据插入不使用 INSERT 语句。要将一个表的内容复制到一个全新的表（运行中创建的表），可以使用 CREATE SELECT 语句。
+
+```sql
+create table CustCopy as
+select *
+from Customers;
+```
+
+这条 SELECT 语句创建一个名为 CustCopy 的新表，并把 Customers 表的整个内容复制到新表中。因为这里使用的是 SELECT \*，所以将在 CustCopy 表中创建（并填充）与 Customers 表的每一列相同的列。要想只复制部分的列，可以明确给出列名，而不是使用*通配符。
+
+在使用 SELECT INTO 时，需要知道一些事情：
+
+- 任何 SELECT 选项和子句都可以使用，包括 WHERE 和 GROUP BY；
+- 可利用联结从多个表插入数据；
+- 不管从多少个表中检索数据，数据都只能插入到一个表中。
+
+### 15.3 挑战题
+
+- 使用 INSERT 和指定的列，将你自己添加到 Customers 表中。明确列出要添加哪几列，且仅需列出你需要的列。
+- 备份 Orders 表和 OrderItems 表。
+
+```sql
+# 第一题
+insert into Customers(cust_id,
+                      cust_name,
+                      cust_address,
+                      cust_city,
+                      cust_state,
+                      cust_zip,
+                      cust_country,
+                      cust_contact,
+                      cust_email)
+values (1000000017,
+        'Duguce',
+        '123 Any Street',
+        'Shanghai',
+        'NY',
+        '10086',
+        'China',
+        NULL,
+        NULL);
+# 第二题
+create table OrdersCopy as
+select *
+from Orders;
+
+create table OrderItemsCopy as
+select *
+from OrderItems;
+```
+
+## 16 更新和删除数据
+
+本节介绍如何利用 UPDATE 和 DELETE 语句进一步操作表数据。 
+
+### 16.1 更新数据
+
+更新（修改）表中的数据，可以使用 UPDATE 语句。有两种使用 UPDATE 的方式：
+
+- 更新表中的特定行；
+- 更新表中的所有行。
+
+基本的 UPDATE 语句由三部分组成，分别是：
+
+- 要更新的表；
+- 列名和它们的新值；
+- 确定要更新哪些行的过滤条件。
+
+```sql
+update Customers
+set cust_email='kim@thetoystore.com'
+where cust_id = 1000000005;
+```
+
+在更新多个列时，只需要使用一条 SET 命令，每个“列=值”对之间用逗号分隔（最后一列之后不用逗号）。
+
+要删除某个列的值，可设置它为 NULL（假如表定义允许 NULL 值）。如下进行：
+
+```sql
+update Customers
+set cust_email=null
+where cust_id = 1000000005;
+```
+
+### 16.2 删除数据
+
+从一个表中删除（去掉）数据，使用 DELETE 语句。有两种使用 DELETE 的方式：
+
+- 从表中删除特定的行；
+- 从表中删除所有行。
+
+```sql
+delete
+from Customers
+where cust_id = 1000000006;
+```
+
+DELETE 不需要列名或通配符。DELETE 删除整行而不是删除列。要删除指定的列，请使用 UPDATE 语句。
+
+### 16.3 更新和删除的指导原则
+
+如果执行 UPDATE 而不带 WHERE 子句，则表中每一行都将用新值更新。类似地，如果执行 DELETE 语句而不带 WHERE 子句，表的所有数据都将被删除。
+
+下面是许多 SQL 程序员使用 UPDATE 或 DELETE 时所遵循的重要原则。
+
+- 除非确实打算更新和删除每一行，否则绝对不要使用不带 WHERE 子句的 UPDATE 或 DELETE 语句。
+- 保证每个表都有主键，尽可能像 WHERE 子句那样使用它（可以指定各主键、多个值或值的范围）。
+- 在 UPDATE 或 DELETE 语句使用 WHERE 子句前，应该先用 SELECT 进行测试，保证它过滤的是正确的记录，以防编写的 WHERE 子句不正确。
+- 使用强制实施引用完整性的数据库，这样 DBMS 将不允许删除其数据与其他表相关联的行。
+- 有的 DBMS 允许数据库管理员施加约束，防止执行不带 WHERE 子句的 UPDATE 或 DELETE 语句。如果所采用的 DBMS 支持这个特性，应该使用它。
+
+若是 SQL没有撤销（undo）按钮，应该非常小心地使用 UPDATE 和 DELETE，否则你会发现自己更新或删除了错误的数据。
+
+### 16.4 挑战题
+
+- 美国各州的缩写应始终用大写。编写 SQL语句来更新所有美国地址，包括供应商状态（Vendors 表中的 vend_state）和顾客状态（Customers 表中的 cust_state），使它们均为大写。
+- 第 15 节的挑战题 1 要求你将自己添加到 Customers 表中。现在请删除自己。确保使用 WHERE 子句（在 DELETE 中使用它之前，先用 SELECT 对其进行测试），否则你会删除所有顾客！
+
+```sql
+# 第一题
+update Vendors
+set vend_state=upper(vend_state)
+where vend_country = 'USA';
+
+update Customers
+set cust_state=upper(cust_state)
+where cust_country = 'USA';
+
+# 第二题
+select *
+from Customers
+where cust_id = 1000000017;
+
+delete
+from Customers
+where cust_id = 1000000017;
+```
+
+## 17 创建和操纵表
+
+本节主要讲述创建、更改和删除表的基本知识。
+
+### 17.1 创建表
+
+SQL 不仅用于表数据操纵，而且还用来执行数据库和表的所有操作，包括表本身的创建和处理。
+
+一般有两种创建表的方法：
+
+- 多数 DBMS 都具有交互式创建和管理数据库表的工具；
+- 表也可以直接用 SQL 语句操纵。
+
+**表创建基础**
+
+利用 CREATE TABLE 创建表，必须给出下列信息：
+
+- 新表的名字，在关键字 CREATE TABLE 之后给出；
+- 表列的名字和定义，用逗号分隔；
+- 有的 DBMS 还要求指定表的位置。
+
+```sql
+create table Products
+(
+    prod_id    char(10)      not null,
+    vend_id    char(10)      not null,
+    prod_name  char(254)     not null,
+    prod_price decimal(8, 2) not null,
+    prod_desc  varchar(1000) null
+)
+```
+
+**使用NULL值**
+
+NULL 值就是没有值或缺值。允许 NULL 值的列也允许在插入行时不给出该列的值。不允许 NULL 值的列不接受没有列值的行，换句话说，在插入或更新行时，该列必须有值。每个表列要么是 NULL 列，要么是 NOT NULL 列，这种状态在创建时由表的定义规定。
+
+```sql
+create table Orders
+(
+    order_num  integer  not null,
+    order_date datetime not null,
+    cust_id    char(10) not null
+);
+```
+
+**指定默认值**
+
+SQL 允许指定默认值，在插入行时如果不给出值，DBMS 将自动采用默认值。默认值在 CREATE TABLE 语句的列定义中用关键字 DEFAULT 指定。
+
+```sql
+create table OrderItems
+(
+    order_num  integer       not null,
+    order_item integer       not null,
+    prod_id    char(10)      not null,
+    quantity   integer       not null default 1,
+    item_price decimal(8, 2) not null
+);
+```
+
+### 17.2 更新表
+
+更新表定义，可以使用 ALTER TABLE 语句。虽然所有的 DBMS 都支持 ALTER TABLE，但它们所允许更新的内容差别很大。以下是使用 ALTER TABLE 时需要考虑的事情。
+
+- 理想情况下，不要在表中包含数据时对其进行更新。应该在表的设计过程中充分考虑未来可能的需求，避免今后对表的结构做大改动。
+- 所有的 DBMS 都允许给现有的表增加列，不过对所增加列的数据类型（以及 NULL 和 DEFAULT 的使用）有所限制。
+- 许多 DBMS 不允许删除或更改表中的列。
+- 多数 DBMS 允许重新命名表中的列。
+- 许多 DBMS 限制对已经填有数据的列进行更改，对未填有数据的列几乎没有限制。
+
+使用 ALTER TABLE 更改表结构，必须给出下面的信息：
+
+- 在 ALTER TABLE 之后给出要更改的表名（该表必须存在，否则将出错）；
+- 列出要做哪些更改。
+
+```sql
+alter table Vendors
+    add vend_phone char(20);
+```
+
+更改或删除列、增加约束或增加键，这些操作也使用类似的语法。
+
+```sql
+alter table Vendors
+    drop column vend_phone;
+```
+
+复杂的表结构更改一般需要手动删除过程，它涉及以下步骤：
+
+- 用新的列布局创建一个新表；
+- 使用 INSERT SELECT 语句从旧表复制数据到新表。有必要的话，可以使用转换函数和计算字段；
+- 检验包含所需数据的新表；
+- 重命名旧表（如果确定，可以删除它）；
+- 用旧表原来的名字重命名新表；
+- 根据需要，重新创建触发器、存储过程、索引和外键。
+
+### 17.3 删除表
+
+删除表（删除整个表而不是其内容）非常简单，使用 DROP TABLE 语句即可。
+
+```sql
+drop table CustCopy;
+```
+
+### 17.4 重命名表
+
+重命名表非常简单，使用 RENAME TABLE 语句即可。
+
+```sql
+rename table CustNew to CustomersNew;
+```
+
+### 17.5 挑战题
+
+- 在 Vendors 表中添加一个网站列（vend_web）。你需要一个足以容纳 URL 的大文本字段。
+- 使用 UPDATE 语句更新 Vendor 记录，以便加入网站（你可以编造任何地址）。
+
+```sql
+# 第一题
+alter table Vendors
+    add vend_web varchar(1000);
+# 第二题
+update Vendors
+set vend_web='https://www.baidu.com/'
+where vend_id = 'BRS01';
+```
+
+## 18 使用视图
+
+本节主要介绍什么是视图，它们是如何工作的，以及何时使用它们，如何利用视图简化某些 SQL 操作。
+
+### 18.1 视图
+
+视图是虚拟的表。与包含数据的表不一样，视图只包含使用时动态检索数据的查询。
+
+**为什么使用视图**
+
+下面是视图的一些常见应用。
+
+- 重用 SQL 语句。
+- 简化复杂的 SQL 操作。在编写查询后，可以方便地重用它而不必知道其基本查询细节。
+- 使用表的一部分而不是整个表。
+- 保护数据。可以授予用户访问表的特定部分的权限，而不是整个表的访问权限。
+- 更改数据格式和表示。视图可返回与底层表的表示和格式不同的数据。
+
+创建视图之后，可以用与表基本相同的方式使用它们。可以对视图执行 SELECT 操作，过滤和排序数据，将视图联结到其他视图或表，甚至添加和更新数据。
+
+**视图的限制和规则**
+
+创建视图前，应该知道它的一些限制。不过，这些限制随不同的 DBMS 而不同，因此在创建视图时应该查看具体的 DBMS 文档。
+
+下面是关于视图创建和使用的一些最常见的规则和限制。
+
+- 与表一样，视图必须唯一命名（不能给视图取与别的视图或表相同的名字）。
+- 对于可以创建的视图数目没有限制。
+- 创建视图，必须具有足够的访问权限。这些权限通常由数据库管理人员授予。
+- 视图可以嵌套，即可以利用从其他视图中检索数据的查询来构造视图。所允许的嵌套层数在不同的 DBMS中有所不同（嵌套视图可能会严重降低查询的性能，因此在产品环境中使用之前，应该对其进行全面测试）。
+- 许多 DBMS 禁止在视图查询中使用 ORDER BY 子句。
+- 有些 DBMS 要求对返回的所有列进行命名，如果列是计算字段，则需要使用别名。
+- 视图不能索引，也不能有关联的触发器或默认值。
+- 有些 DBMS 把视图作为只读的查询，这表示可以从视图检索数据，但不能将数据写回底层表。详情请参阅具体的 DBMS 文档。
+- 有些 DBMS 允许创建这样的视图，它不能进行导致行不再属于视图的插入或更新。
+
+### 18.2 创建视图
+
+理解了什么是视图以及管理它们的规则和约束后，我们来创建视图。
+
+视图用 CREATE VIEW 语句来创建。与 CREATE TABLE 一样，CREATE VIEW 只能用于创建不存在的视图。
+
+**利用视图简化复杂的联结**
+
+一个最常见的视图应用是隐藏复杂的 SQL，这通常涉及联结。请看下面的例子：
+
+```sql
+create view ProductCustomers as
+select cust_name, cust_contact, prod_id
+from Customers,
+     Orders,
+     OrderItems
+where Customers.cust_id = Orders.cust_id
+  and OrderItems.order_num = Orders.order_num;
+  
+# 检索订购了产品RGAN01的客户
+select cust_name, cust_contact
+from ProductCustomers
+where prod_id = 'RGAN01';
+```
+
+**用视图重新格式化检索出的数据**
+
+视图的另一常见用途是重新格式化检索出的数据。
+
+```sql
+select concat(vend_name, ' (', rtrim(vend_country), ')')
+           as vend_title
+from Vendors
+order by vend_name;
+```
+
+现在，假设经常需要这个格式的结果。我们不必在每次需要时执行这种拼接，而是创建一个视图，使用它即可。
+
+```sql
+create view VendorLocations as
+select concat(vend_name, ' (', rtrim(vend_country), ')')
+           as vend_title
+from Vendors;
+
+select *
+from VendorLocations;
+```
+
+**用视图过滤不想要的数据**
+
+视图对于应用普通的 WHERE 子句也很有用。例如，可以定义 CustomerEMailList 视图，过滤没有电子邮件地址的顾客。为此，可使用下面的语句：
+
+```sql
+create view CustomerEmailList as
+select cust_id, cust_name, cust_email
+from Customers
+where cust_email is not null;
+
+select *
+from CustomerEmailList;
+```
+
+ **使用视图与计算字段**
+
+在简化计算字段的使用上，视图也特别有用。下面是第 7 节中介绍的一条 SELECT 语句，它检索某个订单中的物品，计算每种物品的总价格：
+
+```sql
+select prod_id,
+       quantity,
+       item_price,
+       quantity * item_price as expanded_price
+from OrderItems
+where order_num = 20008;
+```
+
+要将其转换为一个视图，如下进行：
+
+```sql
+create view OrderItemsExpanded as
+select order_num,
+       prod_id,
+       quantity,
+       item_price,
+       quantity * item_price as expanded_price
+from OrderItems;
+
+select *
+from OrderItemsExpanded
+where order_num = 20008;
+```
+
+### 18.3 挑战题
+
+- 创建一个名为 CustomersWithOrders 的视图，其中包含 Customers 表中的所有列，但仅仅是那些已下订单的列。提示：可以在 Orders 表上使用 JOIN 来仅仅过滤所需的顾客，然后使用 SELECT 来确保拥有正确的数据。
+
+```sql
+# 第一题
+create view CustomersWithOrders as
+select Customers.cust_id,
+       cust_name,
+       cust_address,
+       cust_city,
+       cust_state,
+       cust_zip,
+       cust_country,
+       cust_contact,
+       cust_email
+from Customers
+         inner join Orders on Customers.cust_id = Orders.cust_id;
+```
+
+## 19 使用存储过程
+
+本节主要介绍什么是存储过程，为什么要使用存储过程，以及如何使用存储过程，创建和使用存储过程的基本语法。
+
+### 19.1 存储过程
+
+迄今为止，我们使用的大多数 SQL 语句都是针对一个或多个表的单条语句。并非所有操作都这么简单，经常会有一些复杂的操作需要多条语句才能完成，例如以下的情形。
+
+- 为了处理订单，必须核对以保证库存中有相应的物品。
+- 如果物品有库存，需要预定，不再出售给别的人，并且减少物品数据以反映正确的库存量。
+- 库存中没有的物品需要订购，这需要与供应商进行某种交互。
+- 关于哪些物品入库（并且可以立即发货）和哪些物品退订，需要通知相应的顾客。
+
+执行这个处理需要针对许多表的多条 SQL 语句。此外，需要执行的具体 SQL 语句及其次序也不是固定的，它们可能会根据物品是否在库存中而变化。
+
+这时我们就可以创建存储过程。简单来说，存储过程就是为以后使用而保存的一条或多条 SQL 语句。可将其视为批文件，虽然它们的作用不仅限于批处理。
+
+### 19.2 为什么要使用存储过程
+
+理由很多，下面列出一些主要的。
+
+- 通过把处理封装在一个易用的单元中，可以简化复杂的操作
+- 由于不要求反复建立一系列处理步骤，因而保证了数据的一致性。如果所有开发人员和应用程序都使用同一存储过程，则所使用的代码都是相同的。
+- 上一点的延伸就是防止错误。需要执行的步骤越多，出错的可能性就越大。防止错误保证了数据的一致性。
+- 简化对变动的管理。如果表名、列名或业务逻辑（或别的内容）有变化，那么只需要更改存储过程的代码。使用它的人员甚至不需要知道这些变化。
+- 上一点的延伸就是安全性。通过存储过程限制对基础数据的访问，减少了数据讹误（无意识的或别的原因所导致的数据讹误）的机会。
+- 因为存储过程通常以编译过的形式存储，所以 DBMS 处理命令所需的工作量少，提高了性能。
+- 存在一些只能用在单个请求中的 SQL 元素和特性，存储过程可以使用它们来编写功能更强更灵活的代码。
+
+换句话说，使用存储过程有三个主要的好处，即简单、安全、高性能。
+
+### 19.3 执行存储过程
+
+存储过程的执行远比编写要频繁得多，因此我们先介绍存储过程的执行。执行存储过程的 SQL 语句很简单，即 EXECUTE。EXECUTE 接受存储过程名和需要传递给它的任何参数。
+
+以下是存储过程所完成的工作：
+
+- 验证传递的数据，保证所有参数都有值；
+- 生成用作主键的唯一 ID；
+- 将新产品插入表，在合适的列中存储生成的主键和传递的数据。
+
+这就是存储过程执行的基本形式。对于具体的 DBMS，可能包括以下的执行选择。
+
+- 参数可选，具有不提供参数时的默认值。
+- 不按次序给出参数，以“参数=值”的方式给出参数值。
+- 输出参数，允许存储过程在正执行的应用程序中更新所用的参数。
+- 用 SELECT 语句检索数据。
+- 返回代码，允许存储过程返回一个值到正在执行的应用程序。
+
+### 19.4 创建存储过程
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE MailingListCount(OUT ListCount INT)
+BEGIN
+    DECLARE v_rows INT;
+    SELECT COUNT(*)
+    INTO v_rows
+    FROM Customers
+    WHERE cust_email IS NOT NULL;
+    SET ListCount = v_rows;
+END$$
+DELIMITER ;
+```
+
+注意：
+
+- MySQL的存储过程使用DELIMITER来指定语句分隔符，因为存储过程中包含多个语句块。在此示例中，我们将DELIMITER设置为\$\$，这意味着当遇到$$时，MySQL将解释整个存储过程。
+- 在MySQL中，OUT参数必须在括号中声明，并且类型必须在参数名之前指定。
+- MySQL使用DECLARE语句声明变量。
+- MySQL使用SET语句设置变量值。
+
+```sql
+SET @ReturnValue = NULL;
+CALL MailingListCount(@ReturnValue);
+SELECT @ReturnValue AS ReturnValue;
+```
+
+## 20 管理事务处理
+
+本节主要介绍什么是事务处理，如何利用 COMMIT 和 ROLLBACK 语句管理事务处理。
+
+### 20.1 事务处理
+
+使用事务处理（transaction processing），通过确保成批的 SQL 操作要么完全执行，要么完全不执行，来维护数据库的完整性。
+
+在使用事务处理时，有几个反复出现的关键词。下面是关于事务处理需要知道的几个术语：
+
+- 事务（transaction）指一组 SQL 语句；
+- 回退（rollback）指撤销指定 SQL 语句的过程；
+- 提交（commit）指将未存储的 SQL 语句结果写入数据库表；
+- 保留点（savepoint）指事务处理中设置的临时占位符（placeholder）可以对它发布回退（与回退整个事务处理不同）。
+
+### 20.2 控制事务处理
+
+管理事务的关键在于将 SQL 语句组分解为逻辑块，并明确规定数据何时应该回退，何时不应该回退。
+
+```sql
+START TRANSACTION
+...
+```
+
+**使用ROLLBACK**
+
+SQL 的 ROLLBACK 命令用来回退（撤销）SQL 语句，请看下面的语句：
+
+```sql
+start transaction;
+delete
+from Orders;
+rollback;
+```
+
+**使用COMMIT**
+
+一般的 SQL 语句都是针对数据库表直接执行和编写的。这就是所谓的隐式提交（implicit commit），即提交（写或保存）操作是自动进行的。
+
+```sql
+START TRANSACTION;
+DELETE
+FROM OrderItems
+WHERE order_num = 12345;
+DELETE
+FROM Orders
+WHERE order_num = 12345;
+COMMIT;
+```
+
+## 21 使用游标
+
+本节主要讲述什么是游标，如何使用游标
+
+### 21.1 游标
+
+SQL 检索操作返回一组称为结果集的行，这组返回的行都是与 SQL 语句相匹配的行（零行到多行）。简单地使用 SELECT 语句，没有办法得到第一行、下一行或前 10 行。但这是关系 DBMS 功能的组成部分。
+
+### 21.2 使用游标
+
+使用游标涉及几个明确的步骤。
+
+- 在使用游标前，必须声明（定义）它。这个过程实际上没有检索数据，它只是定义要使用的 SELECT 语句和游标选项。
+- 一旦声明，就必须打开游标以供使用。这个过程用前面定义的 SELECT 语句把数据实际检索出来。
+- 对于填有数据的游标，根据需要取出（检索）各行。
+- 在结束游标使用时，必须关闭游标，可能的话，释放游标（有赖于具体的 DBMS）。
+
+声明游标后，可根据需要频繁地打开和关闭游标。在游标打开时，可根据需要频繁地执行取操作。
+
+**创建游标**
+
+使用 DECLARE 语句创建游标，这条语句在不同的 DBMS 中有所不同。DECLARE 命名游标，并定义相应的 SELECT 语句，根据需要带 WHERE 和其他子句。为了说明，我们创建一个游标来检索没有电子邮件地址的所有顾客，作为应用程序的组成部分，帮助操作人员找出空缺的电子邮件地址。
+
+```sql
+declare CustCursor cursor
+for
+select *
+from Customers
+where cust_email is null;
+```
+
+**使用游标**
+
+```sql
+open cursor CustCursor
+```
+
+**关闭游标**
+
+```sql
+close CustCursor
+```
+
+## 22 高级SQL特性
+
+本节主要介绍 SQL 所涉及的几个高级数据处理特性：约束、索引和触发器。
+
+### 22.1 约束
+
+SQL 已经改进过多个版本，成为非常完善和强大的语言。许多强有力的特性给用户提供了高级的数据处理技术，如约束。
+
+正确地进行关系数据库设计，需要一种方法保证只在表中插入合法数据。
+
+**主键**
+
+主键是一种特殊的约束，用来保证一列（或一组列）中的值是唯一的，而且永不改动。换句话说，表中的一列（或多个列）的值唯一标识表中的每一行。这方便了直接或交互地处理表中的行。没有主键，要安全地 UPDATE 或 DELETE 特定行而不影响其他行会非常困难。
+
+表中任意列只要满足以下条件，都可以用于主键。
+
+- 任意两行的主键值都不相同。
+- 每行都具有一个主键值（即列中不允许 NULL 值）。
+-  主键值不能重用。如果从表中删除某一行，其主键值不分配给新行。
+
+```sql
+create table Vendors
+(
+    vend_id      char(10) not null primary key,
+    vend_name    char(50) not null,
+    vend_address char(50) null,
+    vend_city    char(50) null,
+    vend_state   char(5)  null,
+    vend_zip     char(10) null,
+    vend_country char(50) null
+);
+```
+
+**外键**
+
+外键是表中的一列，其值必须列在另一表的主键中。外键是保证引用完整性的极其重要部分。我们举个例子来理解外键。
+
+```sql
+create table Orders
+(
+    order_num  integer  not null primary key,
+    order_date datetime not null,
+    cust_id    char(10) not null references Customers (cust_id)
+);
+```
+
+相同的工作也可以在 ALTER TABLE 语句中用 CONSTRAINT 语法来完成：
+
+```sql
+alter table Orders
+    add constraint
+        foreign key (cust_id) references Customers (cust_id)
+```
+
+**唯一约束**
+
+唯一约束用来保证一列（或一组列）中的数据是唯一的。它们类似于主键，但存在以下重要区别。
+
+- 表可包含多个唯一约束，但每个表只允许一个主键。
+- 唯一约束列可包含 NULL 值。
+- 唯一约束列可修改或更新。
+- 唯一约束列的值可重复使用。
+- 与主键不一样，唯一约束不能用来定义外键。
+
+唯一约束的语法类似于其他约束的语法。唯一约束既可以用 UNIQUE 关键字在表定义中定义，也可以用单独的 CONSTRAINT 定义。
+
+**检查约束**
+
+检查约束用来保证一列（或一组列）中的数据满足一组指定的条件。检查约束的常见用途有以下几点。
+
+- 检查最小或最大值。例如，防止 0 个物品的订单（即使 0 是合法的数）
+- 指定范围。例如，保证发货日期大于等于今天的日期，但不超过今天起一年后的日期。
+- 只允许特定的值。例如，在性别字段中只允许 M 或 F。
+
+```sql
+CREATE TABLE OrderItems
+(
+    order_num  int           NOT NULL,
+    order_item int           NOT NULL,
+    prod_id    char(10)      NOT NULL,
+    quantity   int           NOT NULL check ( quantity > 0 ),
+    item_price decimal(8, 2) NOT NULL
+);
+```
+
+### 22.2 索引
+
+索引用来排序数据以加快搜索和排序操作的速度。
+
+- 索引改善检索操作的性能，但降低了数据插入、修改和删除的性能。
+- 索引数据可能要占用大量的存储空间。
+- 并非所有数据都适合做索引。取值不多的数据（如州）不如具有更多可能值的数据（如姓或名），能通过索引得到那么多的好处。
+- 索引用于数据过滤和数据排序。如果你经常以某种特定的顺序排序数据，则该数据可能适合做索引。
+- 可以在索引中定义多个列（例如，州加上城市）。这样的索引仅在以州加城市的顺序排序时有用。如果想按城市排序，则这种索引没有用处。
+
+```sqlite
+create index prod_name_ind on Products (prod_name);
+```
+
+### 22.3 触发器
+
+触发器是特殊的存储过程，它在特定的数据库活动发生时自动执行。触发器可以与特定表上的 INSERT、UPDATE 和 DELETE 操作（或组合）相关联。
+
+触发器内的代码具有以下数据的访问权：
+
+- INSERT 操作中的所有新数据；
+- UPDATE 操作中的所有新数据和旧数据；
+- DELETE 操作中删除的数据。
+
+下面是触发器的一些常见用途。
+
+- 保证数据一致。例如，在 INSERT 或 UPDATE 操作中将所有州名转换为大写。
+- 基于某个表的变动在其他表上执行活动。例如，每当更新或删除一行时将审计跟踪记录写入某个日志表。
+- 进行额外的验证并根据需要回退数据。例如，保证某个顾客的可用资金不超限定，如果已经超出，则阻塞插入。
+- 计算计算列的值或更新时间戳。
+
+```sql
+DELIMITER //
+CREATE TRIGGER customer_state
+    AFTER INSERT , UPDATE
+    ON Customers
+    FOR EACH ROW
+BEGIN
+UPDATE Customers
+SET cust_state = UPPER(NEW.cust_state)
+WHERE Customers.cust_id = NEW.cust_id;
+END//
+DELIMITER ;
+```
+
+### 22.4 数据库安全
+
+对于组织来说，没有什么比它的数据更重要了，因此应该保护这些数据，使其不被偷盗或任意浏览。当然，数据也必须允许需要访问它的用户访问，因此大多数 DBMS 都给管理员提供了管理机制，利用管理机制授予或限制对数据的访问。
+
+一般说来，需要保护的操作有：
+
+- 对数据库管理功能（创建表、更改或删除已存在的表等）的访问
+- 对特定数据库或表的访问；
+- 访问的类型（只读、对特定列的访问等）；
+- 仅通过视图或存储过程对表进行访问；
+- 创建多层次的安全措施，从而允许多种基于登录的访问和控制；
+- 限制管理用户账号的能力。
+
+## 23 窗口函数
+
+MySQL 中的窗口函数（Window Functions）是一种能够在结果集的行中进行计算和处理的函数。这些函数可以使用 OVER 子句来定义一个窗口或分析范围，然后在窗口内对行进行排序、分组或聚合操作。
+
+以下是 MySQL 支持的常见窗口函数：
+
+- RANK(): 计算行在窗口中的排名，DENSE_RANK(): 计算行在窗口中的密集排名，两者的区别在于如果有相同的值时，RANK()会跳过相同的排名，DENSE_RANK()则会把相同的排名视为同一名次。
+
+```sql
+SELECT cust_id,
+       order_total,
+       RANK() OVER (PARTITION BY cust_id ORDER BY order_total DESC) AS rank,
+  DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY order_total DESC) AS dense_rank
+FROM
+    orders
+```
+
+- ROW_NUMBER(): 计算行在窗口中的行号
+- NTILE(n): 将窗口分成 n 个区间，为每个行分配一个区间号
+- LEAD(expr, offset, default): 获取当前行后面第 offset 行的值，如果不存在则返回默认值 default
+
+```sql
+SELECT month, sales, (LEAD(sales) OVER (ORDER BY month) - sales) / sales AS growth_rate
+FROM sales
+ORDER BY month;
+```
+
+- LAG(expr, offset, default): 获取当前行前面第 offset 行的值，如果不存在则返回默认值 default
+- FIRST_VALUE(expr): 获取窗口中第一个行的 expr 值
+
+```sql
+SELECT customer_id,
+       order_date,
+       FIRST_VALUE(order_date) OVER (PARTITION BY customer_id ORDER BY order_date) AS first_order_date
+FROM orders;
+```
+
+- LAST_VALUE(expr): 获取窗口中最后一个行的 expr 值
+
+- SUM(expr), AVG(expr), MIN(expr), MAX(expr): 分别计算窗口内 expr 列的总和、平均值、最小值和最大值。
+
+## 24 Python连接MySQL
+
+在 Python 中，我们可以使用第三方库 `mysql-connector-python` 来连接 MySQL 数据库。下面是一些简单的示例代码：
+
+首先，确保已经安装了 `mysql-connector-python` 库。可以使用以下命令安装：
+
+```
+pip install mysql-connector-python
+```
+
+然后，在 Python 中使用以下代码连接 MySQL 数据库：
+
+```python
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="yourusername",
+  password="yourpassword",
+  database="mydatabase"
+)
+
+print(mydb)
+```
+
+### 24.1 增删改操作
+
+- 插入数据
+
+```python
+import pymysql
+
+mydb = pymysql.connect(
+  host="localhost",
+  user="yourusername",
+  password="yourpassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+val = ("John", "123 Main St")
+
+mycursor.execute(sql, val)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record inserted.")
+```
+
+在上面的代码中，我们创建了一个 `mysql.connector` 对象，并传入了连接 MySQL 所需的信息。然后，我们创建了一个游标（`mycursor`）并使用 `execute()` 方法执行 SQL 插入语句。我们使用 `%s` 占位符来指定值，然后在 `execute()` 方法中传入一个元组，包含要插入的实际值。
+
+- 修改数据
+
+```python
+import pymysql
+
+mydb = pymysql.connect(
+  host="localhost",
+  user="yourusername",
+  password="yourpassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "UPDATE customers SET address = '321 Main St' WHERE name = 'John'"
+
+mycursor.execute(sql)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) updated.")
+```
+
+在上面的代码中，我们创建了一个游标（`mycursor`）并使用 `execute()` 方法执行 SQL 更新语句。在这个例子中，我们更新了 `customers` 表中名为 `John` 的记录的地址字段。
+
+- 删除数据
+
+```python
+import pymysql
+mydb = pymysql.connect(
+  host="localhost",
+  user="yourusername",
+  password="yourpassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "DELETE FROM customers WHERE name = 'John'"
+
+mycursor.execute(sql)
+
+mydb.commit()
+
+print(mycursor.rowcount, "record(s) deleted.")
+```
+
+在上面的代码中，我们创建了一个游标（`mycursor`）并使用 `execute()` 方法执行 SQL 删除语句。在这个例子中，我们删除了 `customers` 表中名为 `John` 的记录。
+
+### 24.2 查询操作
+
+- 单行查询
+
+```sql
+import pymysql
+
+mydb = pymysql.connect(
+  host="localhost",
+  user="yourusername",
+  password="yourpassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers WHERE name = 'John'"
+
+mycursor.execute(sql)
+
+result = mycursor.fetchone()
+
+print(result)
+```
+
+在上面的代码中，我们创建了一个游标（`mycursor`）并使用 `execute()` 方法执行 SQL 查询语句。在这个例子中，我们查询了 `customers` 表中名为 `John` 的记录，并使用 `fetchone()` 方法返回查询结果的第一行。
+
+- 多行查询
+
+```python
+import pymysql
+
+mydb = pymysql.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+
+sql = "SELECT * FROM customers"
+
+mycursor.execute(sql)
+
+results = mycursor.fetchall()
+
+for result in results:
+    print(result)
+```
+
