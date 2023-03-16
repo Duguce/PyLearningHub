@@ -36,6 +36,7 @@ git clone https://github.com/Duguce/PyLearningHub.git
 |   5   |  [Python网络编程学习笔记](./Python网络编程学习笔记.md)   |  notes  | This document summarizes the notes I have taken while studying Python network programming.<br />该文总结了我在学习Python网络编程相关知识所作的笔记。 |
 |   6   |     [MySQL数据库学习笔记](./MySQL数据库学习笔记.md)      |  notes  | This document summarizes the notes I made while learning about MySQL database.<br />该文总结了我在学习MySQL数据库相关知识所作的笔记。 |
 |   7   |          [TeachYourselfSQL](./TeachYourselfSQL)          | project | This project is some practice code I wrote while studying the book *Sams Teach Yourself SQL in 10 Minutes (Fifth Edition).*<br />该项目是我在学习《SQL必知必会》一书所写的一些练习代码。 |
+|   8   |          [Django学习笔记](./Django学习笔记.md)           |  notes  | This document summarizes the notes I made while learning about the Django framework.<br />该文总结了我在学习Django框架相关知识所作的笔记。 |
 
 
 
