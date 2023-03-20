@@ -34,9 +34,10 @@ git clone https://github.com/Duguce/PyLearningHub.git
 |   3   |      [Python基础学习笔记](./Python基础学习笔记.md)       |  notes  | This document summarizes some of the code and notes I wrote while consolidating my knowledge of Python fundamentals.<br />该文总结了我在巩固Python基础知识时写的一些代码和笔记。 |
 |   4   |              [MiniPlaneWar](./MiniPlaneWar)              | project | This project is a simplified and modified version of the official Plane War game project from pygame. It aims to enhance your Python programming skills and your ability to use the pygame library.<br />该项目简化改编自pygame官方的飞机大战游戏项目，旨在锻炼Python基础技能和pygame库的使用能力。 |
 |   5   |  [Python网络编程学习笔记](./Python网络编程学习笔记.md)   |  notes  | This document summarizes the notes I have taken while studying Python network programming.<br />该文总结了我在学习Python网络编程相关知识所作的笔记。 |
-|   6   |     [MySQL数据库学习笔记](./MySQL数据库学习笔记.md)      |  notes  | This document summarizes the notes I made while learning about MySQL database.<br />该文总结了我在学习MySQL数据库相关知识所作的笔记。 |
-|   7   |          [TeachYourselfSQL](./TeachYourselfSQL)          | project | This project is some practice code I wrote while studying the book *Sams Teach Yourself SQL in 10 Minutes (Fifth Edition).*<br />该项目是我在学习《SQL必知必会》一书所写的一些练习代码。 |
-|   8   |          [Django学习笔记](./Django学习笔记.md)           |  notes  | This document summarizes the notes I made while learning about the Django framework.<br />该文总结了我在学习Django框架相关知识所作的笔记。 |
+|   6   |               [MiniNetdisk](./MiniNetdisk)               | project | This project is based on TCP protocol and multi-process technology to implement a simple netdisk, including upload, download and other basic functions.<br />该项目是基于TCP协议及多进程技术实现了一个简易的网盘，包括上传、下载等基本功能。 |
+|   7   |     [MySQL数据库学习笔记](./MySQL数据库学习笔记.md)      |  notes  | This document summarizes the notes I made while learning about MySQL database.<br />该文总结了我在学习MySQL数据库相关知识所作的笔记。 |
+|   8   |          [TeachYourselfSQL](./TeachYourselfSQL)          | project | This project is some practice code I wrote while studying the book *Sams Teach Yourself SQL in 10 Minutes (Fifth Edition).*<br />该项目是我在学习《SQL必知必会》一书所写的一些练习代码。 |
+|   9   |          [Django学习笔记](./Django学习笔记.md)           |  notes  | This document summarizes the notes I made while learning about the Django framework.<br />该文总结了我在学习Django框架相关知识所作的笔记。 |
 
 
 
