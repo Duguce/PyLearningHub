@@ -38,6 +38,7 @@ git clone https://github.com/Duguce/PyLearningHub.git
 |   7   |     [MySQL数据库学习笔记](./MySQL数据库学习笔记.md)      |  notes  | This document summarizes the notes I made while learning about MySQL database.<br />该文总结了我在学习MySQL数据库相关知识所作的笔记。 |
 |   8   |          [TeachYourselfSQL](./TeachYourselfSQL)          | project | This project is some practice code I wrote while studying the book *Sams Teach Yourself SQL in 10 Minutes (Fifth Edition).*<br />该项目是我在学习《SQL必知必会》一书所写的一些练习代码。 |
 |   9   |          [Django学习笔记](./Django学习笔记.md)           |  notes  | This document summarizes the notes I made while learning about the Django framework.<br />该文总结了我在学习Django框架相关知识所作的笔记。 |
+|  10   |      [Python高级学习笔记](./Python高级学习笔记.md)       |  notes  | This document summarizes some advanced features of Python that I have learned during my daily study, such as regular expressions, decorators, and so on. It provides a summary and organization of these topics.<br />该文总结了我在日常学习Python过程中所掌握的一些高级功能特性，例如正则表达式、装饰器等内容。 |
 
 
 
