@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-03-21 20:40 —— 2022-03-25 17:04
+Datetime:  2022-03-21 20:40 —— 2022-03-27 21:47
 
 ## 1 正则表达式
 
@@ -563,7 +563,9 @@ with file_open('test.txt') as f:
 
 总之，`contextmanager` 装饰器可以帮助我们快速创建上下文管理器，简化资源管理的代码。
 
-## 6 闭包
+## 6 闭包与装饰器
+
+### 6.1 闭包
 
 在 Python 中，闭包（closure）是指内部函数可以访问外部函数作用域中的变量，并将其保存在内存中，即使外部函数已经执行完毕，内部函数仍然可以访问和修改这些变量。
 
@@ -668,7 +670,7 @@ apply(add, 4, 5, callback) # Callback has been called 2 time(s), result is: 9
 
 在上述代码中，我们创建了一个make_callback函数，用于创建一个闭包函数inner。在内层函数inner中，我们使用了nonlocal关键字来访问外层函数的变量count，并在每次调用时将count加1，以便记录回调函数被调用的次数。最后，我们将闭包函数inner作为回调函数传递给apply函数，在apply函数中计算结果并将其传递给回调函数inner。
 
-## 7 装饰器
+### 6.2 装饰器
 
 装饰器是Python语言的一种特殊语法，它可以用来动态地修改函数或类的行为，而不需要对原始代码进行修改。简单来说，装饰器就是一个函数，它接受一个函数或类作为参数，然后返回一个新的函数或类，新的函数或类可以对原始函数或类进行增强或修改。
 
@@ -866,3 +868,108 @@ def my_function():
 在这个例子中，`my_function`被装饰器`decorator1`和`decorator2`装饰。当调用`my_function`时，`decorator2`将首先被应用，然后是`decorator1`。
 
 在这种情况下，每个装饰器将对函数进行修改或包装，以添加一些特殊的行为或功能。每个装饰器都可以通过将函数传递给下一个装饰器来进行链式调用，直到所有装饰器都被应用于函数。
+
+## 7 元类
+
+> "Metaclasses are deeper magic than 99% of users should ever worry about. If you wonder whether you need them, you don’t (the people who actually need them know with certainty that they need them, and don’t need an explanation about why."
+
+元类（metaclass）是一种高级的Python语言特性，它允许你动态地创建类或者修改类。在Python中，类也是一种对象，它是由元类来创建的。默认情况下，Python中所有的类都是type类的实例，而type本身就是一个元类。
+
+使用元类，你可以控制类的创建过程，例如你可以在类创建时自动为它添加某些属性或方法，也可以控制类的继承关系、属性和方法等。
+
+在Python中，你可以通过定义一个类的`__metaclass__`属性来指定该类的元类。例如，下面的代码定义了一个元类MyMeta，然后使用该元类来创建一个名为MyClass的类：
+
+```python
+class MyMeta(type):
+    def __new__(cls, name, bases, attrs):
+        # 在创建类时做一些处理
+        return super().__new__(cls, name, bases, attrs)
+
+class MyClass(metaclass=MyMeta):
+    pass
+```
+
+在这个例子中，我们定义了一个元类MyMeta，它继承自type类，并重载了它的`__new__`方法，在类创建时做一些处理。然后，我们定义了一个名为MyClass的类，并通过设置它的metaclass属性为MyMeta来指定使用我们自定义的元类来创建该类。
+
+当Python解释器遇到这段代码时，它会自动调用MyMeta类的`__new__`方法来创建MyClass类。在这个过程中，Python解释器会将类名、基类和类的属性等作为参数传递给元类的`__new__`方法，然后根据返回的结果来创建类对象。因此，我们可以在元类的`__new__`方法中对这些参数进行修改，从而实现自定义的类创建过程。
+
+**元类实现ORM框架**
+
+元类的一个常见用途是实现对象关系映射（ORM）框架，例如Django的ORM就是通过元类来实现的。
+
+```python
+# 定义字段类
+class Field:
+    def __init__(self, name, type):
+        self.name = name
+        self.type = type
+
+    def __str__(self):
+        return f'{self.name} {self.type}'
+
+# 定义整数字段类，继承自字段类
+class IntegerField(Field):
+    def __init__(self, name):
+        super().__init__(name, 'INTEGER')
+
+# 定义字符串字段类，继承自字段类
+class StringField(Field):
+    def __init__(self, name):
+        super().__init__(name, 'VARCHAR(100)')
+
+# 定义元类
+class ModelMeta(type):
+    # cls代表元类对象，name代表类名，bases代表父类元组，attrs代表属性字典
+    def __new__(cls, name, bases, attrs):
+        # 如果当前类是Model类本身，则直接返回
+        if name == 'Model':
+            return type.__new__(cls, name, bases, attrs)
+        # 将属性字典中的所有Field属性提取出来，并将其从属性字典中删除
+        fields = []
+        for k, v in attrs.items():
+            if isinstance(v, Field):
+                fields.append((k, v))
+        for k in fields:
+            attrs.pop(k)
+        # 生成一些实用的属性，如__table__、__fields__和__mapping__
+        attrs['__table__'] = name.lower()  # 表名默认为类名的小写形式
+        attrs['__fields__'] = [f[0] for f in fields]  # 字段列表
+        attrs['__mapping__'] = dict(fields)  # 字段映射字典
+        # 调用父类的__new__方法来创建新的类
+        return type.__new__(cls, name, bases, attrs)
+
+# 定义基础模型类
+class Model(metaclass=ModelMeta):
+    # 初始化方法，将传入的关键字参数设置为实例的属性
+    def __init__(self, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+    # 保存方法，将实例保存到数据库中
+    def save(self):
+        fields = []
+        params = []
+        for k, v in self.__mapping__.items():
+            fields.append(v.name)
+            params.append(getattr(self, k))
+        # 生成SQL语句和参数列表
+        sql = 'insert into %s (%s) values (%s)' % (self.__table__, ', '.join(fields), ', '.join(['?' for i in range(len(fields))]))
+        print('SQL:', sql)
+        print('PARAMS:', params)
+
+# 定义用户模型类，继承自基础模型类
+class User(Model):
+    id = IntegerField('id')  # 整数类型的id字段
+    name = StringField('name')  # 字符串类型的name字段
+    email = StringField('email')  # 字符串类型的email字段
+
+# 创建用户实例，并保存到数据库中
+u = User(id=1, name='Tom', email='tom@example.com')
+u.save()
+```
+
+在这个例子中，我们定义了三个字段类型：Field、IntegerField和StringField。Field是所有字段类型的基类，它包含了字段的基本属性（字段名和类型）。IntegerField和StringField分别继承自Field，并指定了它们各自的类型。
+
+我们还定义了一个元类ModelMeta，它用于创建ORM框架中的模型类。在该元类的`__new__`方法中，我们根据模型类中定义的字段来生成表结构，并且将这些字段从模型类的属性中移除。我们还定义了一些实用的属性和方法，如`__table__`、`__fields__`和`__mapping__`，以及save方法，该方法用于将模型实例保存到数据库中。
+
+最后，我们定义了一个用户模型类User，它继承自Model，并定义了三个字段id、name和email。我们创建了一个用户实例，并调用它的save方法将数据保存到数据库中。
