@@ -973,3 +973,96 @@ u.save()
 我们还定义了一个元类ModelMeta，它用于创建ORM框架中的模型类。在该元类的`__new__`方法中，我们根据模型类中定义的字段来生成表结构，并且将这些字段从模型类的属性中移除。我们还定义了一些实用的属性和方法，如`__table__`、`__fields__`和`__mapping__`，以及save方法，该方法用于将模型实例保存到数据库中。
 
 最后，我们定义了一个用户模型类User，它继承自Model，并定义了三个字段id、name和email。我们创建了一个用户实例，并调用它的save方法将数据保存到数据库中。
+
+## 8 抽象类&接口类
+
+### 8.1 抽象类
+
+抽象类是一种不能被实例化的类，它定义了一组接口和方法，但是没有具体的实现。Python 中的抽象类是通过 abc (Abstract Base Classes) 模块来实现的。抽象类的主要目的是为了强制子类必须实现特定的方法和属性，从而保证了子类的一致性和规范性。
+
+在Python中，定义抽象类需要使用 abc 模块中的 ABCMeta 类来创建。同时，必须在需要强制子类实现的方法和属性前加上 @abstractmethod 装饰器。这样，如果子类没有实现这些方法和属性，Python 解释器就会报错。
+
+下面是一个简单的示例，演示如何定义抽象类：
+
+```python
+from abc import ABCMeta, abstractmethod
+
+class Shape(metaclass=ABCMeta):
+    @abstractmethod
+    def area(self):
+        pass
+
+    @abstractmethod
+    def perimeter(self):
+        pass
+```
+
+在这个例子中，我们定义了一个抽象类 Shape，它有两个抽象方法 area 和 perimeter。任何继承 Shape 的子类都必须实现这两个方法。
+
+下面是一个示例子类 Circle，它继承了 Shape 抽象类：
+
+```python
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * 3.14 * self.radius
+```
+
+在这个例子中，我们定义了 Circle 类，它继承了 Shape 抽象类，并且实现了 area 和 perimeter 方法。这样，在实例化 Circle 类之前，我们必须保证它实现了 Shape 抽象类中的所有抽象方法。
+
+使用**抽象类的主要优点**是，它**能够帮助我们强制子类必须实现某些方法和属性**，从而**提高了代码的规范性和可维护性**。
+
+### 8.2 接口类
+
+Python 中没有显式的接口类，但是我们可以使用抽象类来实现接口的功能。一个接口类通常是一组抽象方法的集合，这些抽象方法没有实现，只是定义了方法名、参数和返回值。
+
+在 Python 中，可以使用 abc 模块中的 ABCMeta 类和 @abstractmethod 装饰器来定义抽象类和抽象方法，从而实现接口的功能。一个实现接口的类必须实现接口类中定义的所有抽象方法。
+
+下面是一个简单的示例，演示如何定义一个接口类：
+
+```python
+from abc import ABCMeta, abstractmethod
+
+class Logger(metaclass=ABCMeta):
+    @abstractmethod
+    def log(self, message):
+        pass
+```
+
+在这个例子中，我们定义了一个 Logger 接口类，它只有一个抽象方法 log，它没有具体的实现。任何实现 Logger 接口类的类都必须实现 log 方法。
+
+下面是一个示例实现类 FileLogger，它实现了 Logger 接口类：
+
+```python
+class FileLogger(Logger):
+    def log(self, message):
+        with open('logfile.txt', 'a') as f:
+            f.write(message + '\n')
+```
+
+在这个例子中，我们定义了 FileLogger 类，它实现了 Logger 接口类中的 log 方法。这样，我们可以将 FileLogger 类的对象传递给一个期望接口类型的函数或方法中，从而保证了代码的一致性和可维护性。
+
+使用**接口类的主要优点**是，它**能够帮助我们定义一组抽象方法**，从而**提高代码的规范性和可维护性**。同时，接口类也可以帮助我们约束实现类的行为，从而提高代码的安全性和可靠性。
+
+**抽象类和接口类的对比**
+
+Python 中的抽象类和接口类都是为了实现多态性和代码复用而设计的。它们都是一种抽象的概念，没有具体的实现，只定义了一组抽象方法。但是，它们之间有一些区别。
+
+联系：
+
+1. 都是一种抽象的概念，没有具体的实现。
+2. 都可以用来实现多态性和代码复用。
+
+区别：
+
+1. 实现方式不同：Python 中的抽象类是通过 ABCMeta 类和 @abstractmethod 装饰器来实现的，而接口类是没有显式的实现方式的。
+2. 抽象方法的实现方式不同：在抽象类中，抽象方法可以有默认实现，而在接口类中，抽象方法没有默认实现。
+3. 用途不同：抽象类主要用于定义一组抽象方法，强制子类实现这些方法，从而实现代码复用和多态性。而接口类主要用于定义一组抽象方法，规范类的行为，从而提高代码的规范性和可维护性。
+4. 继承关系不同：**一个类只能继承一个抽象类，但是可以实现多个接口类**。
+
+总之，抽象类和接口类都是为了实现多态性和代码复用而设计的，但是它们之间有一些区别，我们应该根据具体的需求来选择使用哪种方式。如果需要定义一组抽象方法，强制子类实现这些方法，那么可以使用抽象类。如果需要定义一组抽象方法，规范类的行为，那么可以使用接口类。
