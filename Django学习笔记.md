@@ -8,7 +8,13 @@ Email：zhgyqc@163.com
 
 Datetime:  2022-03-16 20:12 —— 2022-03-19 11:31
 
-## 1 Django简介
+**Django官方文档**：https://docs.djangoproject.com/en/4.1/
+
+**Django-REST-framework**：https://www.django-rest-framework.org/
+
+## 1 Django
+
+### 1.1 Django简介
 
 Django是一个基于MVC（Model-View-Controller）的Web框架，它采用了一些现代化的编程技术，如ORM（对象关系映射）、URL分发、模板渲染、表单处理等等，使得Web开发更加高效和易于维护。
 
@@ -22,7 +28,7 @@ Django的核心组件包括：
 
 此外，Django还提供了一些其他的功能，如中间件、信号、缓存、分页、静态文件处理等等，这些都使得Django成为一个功能强大且易于使用的Web框架。
 
-## 2 安装配置
+### 1.2 安装配置
 
 下面是在Ubuntu系统下安装和配置Django的基本步骤。
 
@@ -69,7 +75,15 @@ python manage.py runserver
 
 然后在Web浏览器中访问http://localhost:8000/，即可看到Django的默认欢迎页面。
 
-## 3 项目结构
+- 创建应用程序
+
+```
+python manage.py startapp snippets
+```
+
+其中，“snippets”是应用程序的名称。
+
+### 1.3 项目结构
 
 下面是一个Django项目的基本结构：
 
@@ -114,7 +128,7 @@ projectname/
   - views.py：应用程序的视图文件，包含了应用程序的视图函数定义。
 - db.sqlite3：数据库文件，存储项目使用的关系型数据库的数据。
 
-## 4 模型
+### 1.4 模型
 
 Django中的模型是用于定义数据结构的类，它们会自动映射到数据库中的表，可以用于实现数据的持久化存储和检索。Django的模型系统是基于ORM（Object-Relational Mapping，对象关系映射）的，它把数据库表映射成Python中的类，将表中的记录映射成Python对象。在Django中，我们通常会将每个模型定义为一个类，这个类继承自`django.db.models.Model`类。
 
@@ -173,7 +187,7 @@ class PublishedArticle(Article):
 - 然后，创建了一个名为 `PublishedArticle` 的代理模型，将 `ArticleManager` 模型管理器类指定为其管理器。代理模型的作用是不会创建新的数据库表，而是使用原来的表来做一些特殊的操作。
 - 最后，代理模型 `PublishedArticle` 重写了基类的 `delete` 方法，并调用了基类的 `delete` 方法，这是因为代理模型无法进行删除操作，需要通过基类来完成。同时，代理模型 `PublishedArticle` 可以继承基类 `Article` 的所有字段和方法，包括抽象基类中定义的 `update` 方法。
 
-## 5 视图
+### 1.5 视图
 
 视图是Django中用来处理HTTP请求并返回HTTP响应的函数或方法，主要负责处理URL映射、数据处理和模板渲染等任务。
 
@@ -223,7 +237,7 @@ urlpatterns = [
 
 上述代码中，当用户请求/myapp/路径时，会将请求交给myapp应用的urls.py文件进行处理。
 
-## 6 模板
+### 1.6 模板
 
 在Django中，模板是使用类似于HTML的语言编写的，称为Django模板语言（Django Template Language，简称DTL）。DTL提供了一些标签和过滤器，可以方便地渲染动态内容和控制HTML输出。
 
@@ -298,3 +312,6 @@ def hello(request):
     return render(request, 'hello.html', context)
 ```
 
+## 2 Django-REST-Framework
+
+待补充...
