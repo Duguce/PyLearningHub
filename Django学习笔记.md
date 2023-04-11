@@ -1,6 +1,6 @@
 # Django学习笔记
 
-Abstract：本文是根据作者学习Django数据库相关知识所作的笔记，主要目的是为了方便日常的工作学习。
+Abstract：本文是根据作者学习Django框架相关知识所作的笔记，主要目的是为了方便日常的工作学习。
 
 Author： Duguce
 

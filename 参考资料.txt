@@ -1,0 +1,19 @@
+本文档用于记录我在学习Python相关技能中所用到的并且认为质量较高的书籍资料。
+======================Python基础======================
+Python编程 https://book.douban.com/subject/35196328/
+
+======================Python高级======================
+流畅的Python（第2版） https://book.douban.com/subject/36342440/
+
+======================Python网络编程======================
+Python网络编程基础 https://book.douban.com/subject/2152386/
+TCP/IP详解 卷1：协议 https://book.douban.com/subject/1088054/
+TCP/IP详解 卷2：实现 https://book.douban.com/subject/1087767/
+
+======================MySQL数据库======================
+SQL必知必会（第5版） https://book.douban.com/subject/35167240/
+
+======================Django开发======================
+Django for beginners https://book.douban.com/subject/30389913/
+Django for Professionals https://book.douban.com/subject/34841233/
+Django for APIs https://book.douban.com/subject/34841257/
