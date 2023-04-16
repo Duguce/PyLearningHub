@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-04-11 19:41 —— 2022-04-11 20:26
+Datetime:  2022-04-11 19:41 —— 2022-04-16 19:21
 
 
 
@@ -121,3 +121,734 @@ $$
 Cost\ per\ Click=\frac{Total\ Cost\ of\ Clicks}{Number\ of\ Clicks}
 $$
 
+## 2 常用第三方库
+
+### 2.1 Matplotlib
+
+**Matplotlib**是一个Python的绘图库，用于创建各种静态，动态，交互式图形，包括线图、散点图、条形图、等高线图、热力图、3D图等等。该库提供了广泛的自定义选项和扩展能力，使其成为科学计算和数据可视化领域中最受欢迎的绘图库之一。
+
+Matplotlib的基本架构由三个层级组成：前端层，绘图层和后端层。前端层提供了用户接口，绘图层负责处理数据和生成绘图，后端层处理实际图形设备的输出。
+
+Matplotlib的使用方式很灵活，可以直接在Python脚本中使用，也可以在Jupyter Notebook或IPython Shell中使用。Matplotlib还提供了大量的例子和文档，帮助用户快速入门并深入了解绘图库的各种特性。
+
+**Matplotlib官方文档：**https://matplotlib.org/stable/tutorials/index.html
+
+**折线图代码示例**
+
+```python
+import matplotlib.pyplot as plt
+
+# 设置 x, y 值
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# 创建图形对象
+fig, ax = plt.subplots()
+
+# 绘制折线图
+ax.plot(x, y)
+
+# 设置图形标题和轴标签
+ax.set_title('Line Plot Example')
+ax.set_xlabel('X-Axis')
+ax.set_ylabel('Y-Axis')
+
+# 显示图形
+plt.show()
+```
+
+这个示例代码首先设置了 x, y 值，然后创建了一个图形对象，接着使用 `ax.plot()` 函数绘制了折线图，最后通过 `ax.set_title()`、`ax.set_xlabel()` 和 `ax.set_ylabel()` 设置了图形的标题和轴标签。最后调用 `plt.show()` 函数显示图形。
+
+**设置图片大小和保存的代码示例**
+
+```python
+import matplotlib.pyplot as plt
+
+# 设置 x, y 值
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# 创建图形对象
+fig, ax = plt.subplots(figsize=(8, 6)) # 设置图片大小为 8 x 6
+
+# 绘制折线图
+ax.plot(x, y)
+
+# 设置图形标题和轴标签
+ax.set_title('Line Plot Example')
+ax.set_xlabel('X-Axis')
+ax.set_ylabel('Y-Axis')
+
+# 保存图形到文件
+plt.savefig('line_plot.png', dpi=300) # 保存为 png 格式，分辨率为 300 dpi
+
+# 显示图形
+plt.show()
+```
+
+这个示例代码与前面的示例代码基本相同，不同的是在创建图形对象时添加了 `figsize=(8, 6)` 参数，以设置图形的大小为 8 x 6。另外，示例代码还添加了 `plt.savefig()` 函数，用于将图形保存为文件。在保存图形时，可以指定保存的文件名和分辨率。
+
+**绘制x轴和y轴刻度的代码示例**
+
+```python
+import matplotlib.pyplot as plt
+
+# 设置 x, y 值
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# 创建图形对象
+fig, ax = plt.subplots()
+
+# 绘制折线图
+ax.plot(x, y)
+
+# 设置 x 轴和 y 轴刻度
+ax.set_xticks([1, 2, 3, 4, 5]) # 设置 x 轴刻度
+ax.set_yticks([0, 2, 4, 6, 8, 10]) # 设置 y 轴刻度
+
+# 设置图形标题和轴标签
+ax.set_title('Line Plot Example')
+ax.set_xlabel('X-Axis')
+ax.set_ylabel('Y-Axis')
+
+# 显示图形
+plt.show()
+```
+
+这个示例代码与前面的示例代码基本相同，不同的是添加了 `ax.set_xticks()` 和 `ax.set_yticks()` 函数，分别用于设置 x 轴和 y 轴的刻度。这里设置 x 轴刻度为 [1, 2, 3, 4, 5]，y 轴刻度为 [0, 2, 4, 6, 8, 10]。设置刻度后，可以更直观地看到 x 轴和 y 轴的取值范围。
+
+**设置显示中文的代码示例**
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+# 设置字体文件的路径和名称
+font_path = '/path/to/simhei.ttf'  # 字体文件的路径
+font_name = fm.FontProperties(fname=font_path).get_name()  # 字体名称
+
+# 将字体名称设置为默认字体
+plt.rcParams['font.family'] = font_name
+
+# 设置 x, y 值
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# 创建图形对象和子图对象
+fig, ax = plt.subplots()
+
+# 绘制折线图
+ax.plot(x, y)
+
+# 设置图形标题和轴标签
+ax.set_title('线性关系示例')
+ax.set_xlabel('横坐标')
+ax.set_ylabel('纵坐标')
+
+# 显示图形
+plt.show()
+```
+
+在这个示例代码中，我们首先设置字体文件的路径和名称，然后通过 `fm.FontProperties` 函数获取字体名称。接着，将字体名称设置为默认字体，使用 `plt.rcParams['font.family']` 将字体名称设置为默认字体。
+
+最后，我们创建图形对象和子图对象，使用 `ax.set_title()` 和 `ax.set_xlabel()`、`ax.set_ylabel()` 函数设置图形标题和轴标签。因为我们已经将字体名称设置为默认字体，所以这里的标题和标签会使用中文显示。
+
+需要注意的是，在设置字体名称和路径时，需要使用本机上已经安装的字体文件。如果没有对应的字体文件，可以先下载字体文件，然后将字体文件路径设置为 `font_path` 变量的值。
+
+**一图多个坐标系子图的代码示例**
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 生成数据
+x = np.linspace(0, 10, 100)
+y1 = np.sin(x)
+y2 = np.cos(x)
+y3 = np.tan(x)
+
+# 创建图形对象和子图对象
+fig, (ax1, ax2, ax3) = plt.subplots(nrows=1, ncols=3, figsize=(12, 4))
+
+# 在子图 ax1 上绘制 sin 曲线
+ax1.plot(x, y1)
+ax1.set_title('Sin')
+
+# 在子图 ax2 上绘制 cos 曲线
+ax2.plot(x, y2)
+ax2.set_title('Cos')
+
+# 在子图 ax3 上绘制 tan 曲线
+ax3.plot(x, y3)
+ax3.set_title('Tan')
+
+# 显示图形
+plt.show()
+```
+
+在这个示例代码中，我们首先生成了三组数据，然后使用 `plt.subplots()` 函数创建包含三个子图的图形对象。`nrows=1` 和 `ncols=3` 参数指定了子图的排列方式，即一行三列。
+
+接着，我们分别在三个子图对象 `ax1`、`ax2`、`ax3` 上绘制了 sin、cos 和 tan 曲线，并设置了各自的标题。
+
+最后，使用 `plt.show()` 函数显示图形。由于我们将三个子图对象保存在一个元组 `(ax1, ax2, ax3)` 中，因此可以使用类似元组解包的方式，分别将三个子图对象赋值给 `ax1`、`ax2`、`ax3` 变量。
+
+**散点图代码示例**
+
+在 Matplotlib 中，可以使用 `plt.scatter()` 函数绘制散点图。下面是一个简单的示例代码，演示了如何绘制一个简单的散点图：
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 生成数据
+x = np.random.rand(50)
+y = np.random.rand(50)
+
+# 绘制散点图
+plt.scatter(x, y)
+
+# 设置图形标题和轴标签
+plt.title('散点图示例')
+plt.xlabel('X 轴')
+plt.ylabel('Y 轴')
+
+# 显示图形
+plt.show()
+```
+
+在这个示例代码中，我们首先使用 `np.random.rand()` 函数生成了两组随机数据，然后使用 `plt.scatter()` 函数绘制了散点图。`plt.scatter(x, y)` 中的 `x` 和 `y` 分别是横坐标和纵坐标的数据。接着，我们使用 `plt.title()`、`plt.xlabel()`、`plt.ylabel()` 函数设置了图形标题和轴标签。最后，使用 `plt.show()` 函数显示图形。
+
+**条形图代码示例**
+
+在 Matplotlib 中，可以使用 `plt.bar()` 函数绘制条形图。下面是一个简单的示例代码，演示了如何绘制一个简单的条形图：
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 生成数据
+labels = ['A', 'B', 'C', 'D', 'E']
+values = [5, 7, 3, 9, 11]
+
+# 绘制条形图
+plt.bar(labels, values)
+
+# 设置图形标题和轴标签
+plt.title('条形图示例')
+plt.xlabel('类别')
+plt.ylabel('数量')
+
+# 显示图形
+plt.show()
+```
+
+在这个示例代码中，我们首先定义了两个列表 `labels` 和 `values`，分别存储条形图的类别和数量数据。然后使用 `plt.bar()` 函数绘制了条形图。`plt.bar(labels, values)` 中的 `labels` 和 `values` 分别是条形图的类别和数量数据。接着，我们使用 `plt.title()`、`plt.xlabel()`、`plt.ylabel()` 函数设置了图形标题和轴标签。最后，使用 `plt.show()` 函数显示图形。
+
+**直方图代码示例**
+
+在 Matplotlib 中，可以使用 `plt.hist()` 函数绘制直方图。下面是一个简单的示例代码，演示了如何绘制一个简单的直方图：
+
+```
+pythonCopy codeimport matplotlib.pyplot as plt
+import numpy as np
+
+# 生成随机数据
+data = np.random.randn(1000)
+
+# 绘制直方图
+plt.hist(data, bins=30, edgecolor='black')
+
+# 设置图形标题和轴标签
+plt.title('直方图示例')
+plt.xlabel('数据范围')
+plt.ylabel('数据出现次数')
+
+# 显示图形
+plt.show()
+```
+
+在这个示例代码中，我们首先使用 `np.random.randn()` 函数生成了一组随机数据，然后使用 `plt.hist()` 函数绘制了直方图。`plt.hist(data, bins=30, edgecolor='black')` 中的 `data` 是数据，`bins=30` 指定了直方图的条数，`edgecolor='black'` 指定了直方图的边框颜色。接着，我们使用 `plt.title()`、`plt.xlabel()`、`plt.ylabel()` 函数设置了图形标题和轴标签。最后，使用 `plt.show()` 函数显示图形。
+
+**饼状图代码示例**
+
+在 Matplotlib 中，可以使用 `plt.pie()` 函数绘制饼状图。下面是一个简单的示例代码，演示了如何绘制一个简单的饼状图：
+
+```python
+import matplotlib.pyplot as plt
+
+# 定义饼状图的类别和数据
+labels = ['A', 'B', 'C', 'D', 'E']
+sizes = [15, 30, 25, 10, 20]
+
+# 绘制饼状图
+plt.pie(sizes, labels=labels)
+
+# 设置图形标题
+plt.title('饼状图示例')
+
+# 显示图形
+plt.show()
+```
+
+在这个示例代码中，我们首先定义了两个列表 `labels` 和 `sizes`，分别存储饼状图的类别和数据。然后使用 `plt.pie()` 函数绘制了饼状图。`plt.pie(sizes, labels=labels)` 中的 `sizes` 是数据，`labels=labels` 指定了每个类别的标签。接着，我们使用 `plt.title()` 函数设置了图形标题。最后，使用 `plt.show()` 函数显示图形。
+
+### 2.2 NumPy
+
+NumPy是Python的一个开源数学库，它为Python提供了高性能的多维数组和矩阵计算功能，以及用于处理数组的各种数学函数和工具。NumPy不仅能够高效地处理数值运算，还可以进行数组和矩阵运算、随机数生成、线性代数计算、傅里叶变换、数值积分和优化等各种数学计算。
+
+以下是NumPy的主要特点：
+
+- 强大的数组对象：NumPy的核心是 ndarray（N-dimensional array object）对象，它是一种高效、灵活的多维数组，可以支持任意维度的元素操作和计算。
+- 简单、灵活、高效的数组操作：NumPy提供了丰富的数组操作函数和方法，可以高效地对数组进行重构、切片、拼接、分裂、翻转、排序、查找、统计、计算等各种操作。
+- 数学函数库：NumPy提供了一组强大的数学函数库，包括线性代数、傅里叶变换、随机数生成、积分计算等，可以满足科学计算和数据分析的各种需求。
+- 兼容性：NumPy兼容其他科学计算和数据分析库，例如pandas、SciPy等，可以与它们无缝衔接，构建完整的数据处理和分析工具链。
+- 开源自由：NumPy是开源的，使用和修改都非常方便，而且拥有庞大的社区支持。
+
+**Matplotlib官方文档：**https://numpy.org/doc/stable/user/index.html
+
+**NumPy的`ndarray`对象**
+
+- 创建一维数组。以下是使用NumPy创建一维数组的示例代码：
+
+```python
+import numpy as np
+
+# 创建一维数组
+a = np.array([1, 2, 3, 4, 5])
+print(a)
+```
+
+在这个示例代码中，我们首先导入了NumPy库，并使用 `np.array()` 函数创建了一个一维数组 `a`。在函数的参数中，我们传入了一个Python列表 `[1, 2, 3, 4, 5]`，该列表中的元素就是数组 `a` 的各个元素。然后使用 `print()` 函数输出了数组 `a`。
+
+- 创建多维数组。以下是使用NumPy创建多维数组的示例代码：
+
+```python
+import numpy as np
+
+# 创建二维数组
+b = np.array([[1, 2, 3], [4, 5, 6]])
+print(b)
+
+# 创建三维数组
+c = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
+print(c)
+```
+
+- `ndarray`对象的常用属性
+
+  - `ndarray.ndim`: 数组的维数（即数组轴的个数），也称为数组的秩。
+
+  - `ndarray.shape`: 数组的维度。返回一个元组，表示每个维度上的数组大小。例如，一个n行m列的数组，其`shape`属性将返回元组`(n, m)`。
+
+  - `ndarray.size`: 数组中的元素总数，等于各个维度大小的乘积。
+
+  - `ndarray.dtype`: 描述数组中元素类型的对象，可以使用标准Python类型或NumPy提供的类型（例如`numpy.int32`、`numpy.int16`和`numpy.float64`等）。
+
+  - `ndarray.itemsize`: 数组中每个元素的字节大小。例如，一个元素类型为`float64`的数组，它的`itemsize`属性就是8（即8个字节）。
+
+  - `ndarray.data`: 包含数组实际元素的缓冲区。通常，我们不需要使用该属性，因为我们将使用索引访问数组中的元素。
+
+这些属性在创建、修改、操作和处理数组时都非常有用，特别是在处理大量数据时。通过这些属性，我们可以了解数组的大小、形状、元素类型、占用内存等各种信息，从而更好地管理和优化我们的代码。
+
+- 调整数组的形状
+
+以下是使用NumPy调整数组形状的示例代码：
+
+```python
+import numpy as np
+
+# 创建一个一维数组
+a = np.array([1, 2, 3, 4, 5, 6])
+print("一维数组 a 的形状：", a.shape)
+
+# 将一维数组转换为二维数组
+b = a.reshape((2, 3))
+print("二维数组 b 的形状：", b.shape)
+print(b)
+
+# 将二维数组展开成一维数组
+c = b.ravel()
+print("一维数组 c 的形状：", c.shape)
+print(c)
+
+# 使用resize()函数改变数组形状
+d = np.array([[1, 2], [3, 4], [5, 6]])
+print("二维数组 d 的形状：", d.shape)
+e = np.resize(d, (2, 4))
+print("改变形状后的二维数组 e：\n", e)
+```
+
+在这个示例代码中，我们首先创建了一个一维数组`a`，输出其形状，然后使用`reshape()`函数将其转换为一个二维数组`b`，输出其形状和元素，再使用`ravel()`函数将其展开成一维数组`c`，输出其形状和元素。最后，我们使用`resize()`函数将一个二维数组`d`的形状改变成`(2, 4)`，并输出其结果`e`。
+
+运行这段代码，输出结果为：
+
+```lua
+一维数组 a 的形状： (6,)
+二维数组 b 的形状： (2, 3)
+[[1 2 3]
+ [4 5 6]]
+一维数组 c 的形状： (6,)
+[1 2 3 4 5 6]
+二维数组 d 的形状： (3, 2)
+改变形状后的二维数组 e：
+ [[1 2 3 4]
+ [5 6 1 2]]
+```
+
+可以看到，我们通过`reshape()`函数将一维数组转换为了二维数组，通过`ravel()`函数又将其展开成一维数组。另外，我们还使用`resize()`函数改变了二维数组的形状。在使用NumPy时，我们可以灵活地改变数组的形状，以适应不同的数据处理需求。
+
+- 将数组转为list
+
+在NumPy中，可以通过tolist()函数将NumPy数组转换为Python列表。下面是一个示例代码：
+
+```python
+import numpy as np
+
+# 创建一个NumPy数组
+arr = np.array([1, 2, 3, 4, 5])
+
+# 将NumPy数组转换为Python列表
+arr_list = arr.tolist()
+
+# 输出转换后的Python列表
+print(arr_list)
+```
+
+在上面的示例代码中，我们首先创建了一个NumPy数组`arr`，然后使用tolist()函数将其转换为Python列表，并将转换后的列表存储在变量`arr_list`中。最后，我们输出`arr_list`，即可看到NumPy数组被成功转换为了Python列表。
+
+需要注意的是，将大型的NumPy数组转换为Python列表可能会占用较多内存，因此在实际应用中应谨慎使用。
+
+**NumPy的数据类型**
+
+NumPy的数据类型可以通过`dtype`属性进行访问或修改。常用的NumPy数据类型如下：
+
+- bool：布尔类型，True或False
+- int：整型，通常为int64或int32
+- float：浮点型，通常为float64或float32
+- complex：复数类型，由两个浮点型数组成
+- object：对象类型，可以是任意Python对象
+- string_：字符串类型，用于存储固定长度的字符串
+- unicode_：Unicode字符串类型，用于存储固定长度的Unicode字符串
+
+下面是一个示例代码，演示如何创建不同类型的NumPy数组：
+
+```python
+import numpy as np
+
+# 创建一个布尔类型的数组
+arr_bool = np.array([True, False, True])
+print(arr_bool.dtype)
+
+# 创建一个整型数组
+arr_int = np.array([1, 2, 3, 4, 5])
+print(arr_int.dtype)
+
+# 创建一个浮点型数组
+arr_float = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
+print(arr_float.dtype)
+
+# 创建一个复数类型的数组
+arr_complex = np.array([1+2j, 3+4j, 5+6j])
+print(arr_complex.dtype)
+
+# 创建一个对象类型的数组
+arr_obj = np.array([{'a': 1, 'b': 2}, {'a': 3, 'b': 4}])
+print(arr_obj.dtype)
+
+# 创建一个字符串类型的数组
+arr_str = np.array(['foo', 'bar', 'baz'])
+print(arr_str.dtype)
+
+# 创建一个Unicode字符串类型的数组
+arr_unicode = np.array(['中文', 'English'])
+print(arr_unicode.dtype)
+```
+
+在上面的示例代码中，我们分别创建了不同类型的NumPy数组，并通过`dtype`属性输出了每个数组的数据类型。需要注意的是，不同类型的NumPy数组占用的内存空间可能不同，因此在选择数据类型时应根据实际情况进行选择。
+
+**数组的计算**
+
+- 数组间的运算
+
+NumPy数组支持各种数学运算，例如加法、减法、乘法、除法等。下面是一些示例代码，演示如何对NumPy数组进行计算：
+
+```python
+import numpy as np
+
+# 创建两个数组
+arr1 = np.array([1, 2, 3, 4])
+arr2 = np.array([5, 6, 7, 8])
+
+# 数组加法
+arr_sum = arr1 + arr2
+print(arr_sum)
+
+# 数组减法
+arr_diff = arr2 - arr1
+print(arr_diff)
+
+# 数组乘法
+arr_prod = arr1 * arr2
+print(arr_prod)
+
+# 数组除法
+arr_quot = arr2 / arr1
+print(arr_quot)
+
+# 数组求幂
+arr_pow = arr1 ** 2
+print(arr_pow)
+
+# 数组求余数
+arr_mod = arr2 % arr1
+print(arr_mod)
+
+# 数组求正弦值
+arr_sin = np.sin(arr1)
+print(arr_sin)
+```
+
+在上面的示例代码中，我们首先创建了两个NumPy数组`arr1`和`arr2`，然后分别对它们进行加法、减法、乘法、除法、幂运算、求余数和求正弦值等运算，并输出了结果。需要注意的是，对于大型数组的计算，应尽可能使用NumPy的向量化操作，以提高运算速度。
+
+- 数组中的轴
+
+在NumPy中，轴（axis）是指数组的某个维度，例如对于一个二维数组，它有两个轴，分别是横轴和纵轴。下面是一些示例代码，演示如何在NumPy数组中使用轴：
+
+```python
+import numpy as np
+
+# 创建一个二维数组
+arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# 对所有元素求和，得到一个标量
+sum_all = np.sum(arr)
+print(sum_all)
+
+# 沿着横轴求和，得到一个一维数组
+sum_axis0 = np.sum(arr, axis=0)
+print(sum_axis0)
+
+# 沿着纵轴求和，得到一个一维数组
+sum_axis1 = np.sum(arr, axis=1)
+print(sum_axis1)
+
+# 沿着横轴计算平均值，得到一个一维数组
+mean_axis0 = np.mean(arr, axis=0)
+print(mean_axis0)
+
+# 沿着纵轴计算平均值，得到一个一维数组
+mean_axis1 = np.mean(arr, axis=1)
+print(mean_axis1)
+```
+
+在上面的示例代码中，我们首先创建了一个二维数组`arr`，然后对它进行了一些操作。首先我们对数组所有元素求和，得到一个标量`sum_all`；然后沿着横轴和纵轴分别对数组元素求和，得到一维数组`sum_axis0`和`sum_axis1`；最后沿着横轴和纵轴分别计算数组元素的平均值，得到一维数组`mean_axis0`和`mean_axis1`。需要注意的是，沿着某个轴进行计算时，该轴上的元素会被压缩成一个维度更低的数组，例如在上面的示例中，对于二维数组`arr`，沿着横轴求和时会得到一个一维数组，而沿着纵轴求和时也会得到一个一维数组。
+
+**数组的添加、删除和去重**
+
+- 数组的添加。NumPy提供了三个函数可以用于在数组中添加元素：
+
+  - `np.append(arr, values, axis=None)`: 在数组`arr`的末尾添加`values`元素，并返回一个新的数组。
+
+  - `np.concatenate((arr1, arr2, ...), axis=0)`: 沿着指定的轴拼接数组。
+
+  - `np.insert(arr, obj, values, axis=None)`: 在数组`arr`的指定位置`obj`插入`values`元素，并返回一个新的数组。
+
+以下是示例代码：
+
+```python
+import numpy as np
+
+# np.append()示例
+arr1 = np.array([1, 2, 3])
+arr2 = np.append(arr1, [4, 5, 6])
+print(arr2)  # [1 2 3 4 5 6]
+
+# np.concatenate()示例
+arr3 = np.array([[1, 2], [3, 4]])
+arr4 = np.array([[5, 6]])
+arr5 = np.concatenate((arr3, arr4), axis=0)
+print(arr5)  # [[1 2]
+             #  [3 4]
+             #  [5 6]]
+
+# np.insert()示例
+arr6 = np.array([1, 2, 3])
+arr7 = np.insert(arr6, 1, [4, 5])
+print(arr7)  # [1 4 5 2 3]
+```
+
+- 数组的删除。NumPy提供了两个函数可以用于删除数组中的元素：
+
+  - `np.delete(arr, obj, axis=None)`: 删除数组`arr`的指定位置`obj`的元素，并返回一个新的数组。
+
+  - `np.unique(arr, return_index=False, return_inverse=False, return_counts=False, axis=None)`: 返回数组中的唯一元素，并按照出现的顺序进行排序。
+
+以下是示例代码：
+
+```python
+import numpy as np
+
+# np.delete()示例
+arr1 = np.array([1, 2, 3, 4, 5])
+arr2 = np.delete(arr1, 1)
+print(arr2)  # [1 3 4 5]
+
+# np.unique()示例
+arr3 = np.array([1, 2, 3, 1, 2, 4, 5])
+arr4 = np.unique(arr3)
+print(arr4)  # [1 2 3 4 5]
+```
+
+- 数组的去重。在NumPy中，数组的去重操作可以通过np.unique()函数实现，它可以去掉数组中的重复元素并返回新的数组。np.unique()函数有三个主要参数：
+
+  - arr：要操作的数组
+
+  - return_index：如果为True，返回新列表元素在原列表中的位置下标
+
+  - return_inverse：如果为True，返回原列表元素在新列表中的位置下标
+
+示例代码如下：
+
+```python
+import numpy as np
+
+arr = np.array([1, 2, 2, 3, 3, 3, 4, 4, 5, 6, 6])
+
+unique_arr = np.unique(arr)
+
+print(unique_arr) # [1 2 3 4 5 6]
+```
+
+除了使用np.unique()函数进行数组去重之外，还可以使用np.setdiff1d()和np.intersect1d()函数实现对数组的去重操作。
+
+np.setdiff1d()函数可以返回第一个数组中存在，但是在第二个数组中不存在的元素，即差集。
+
+示例代码如下：
+
+```python
+import numpy as np
+
+arr1 = np.array([1, 2, 3, 4, 5, 6])
+arr2 = np.array([4, 5, 6, 7, 8, 9])
+
+diff_arr = np.setdiff1d(arr1, arr2)
+
+print(diff_arr) # [1 2 3]
+```
+
+np.intersect1d()函数可以返回两个数组中共同存在的元素，即交集。
+
+示例代码如下：
+
+```python
+import numpy as np
+
+arr1 = np.array([1, 2, 3, 4, 5, 6])
+arr2 = np.array([4, 5, 6, 7, 8, 9])
+
+intersect_arr = np.intersect1d(arr1, arr2)
+
+print(intersect_arr) # [4 5 6]
+```
+
+**数组的分割**
+
+在NumPy中，可以使用np.split()函数将一个数组分割成多个子数组，或者将多个数组合并成一个数组。np.split()函数的用法如下：
+
+```python
+numpy.split(ary, indices_or_sections, axis=0)
+```
+
+其中，参数ary表示要分割的数组，indices_or_sections可以是一个整数，表示将数组平均分成几个子数组，也可以是一个列表，表示以哪些索引位置分割数组，axis表示在哪个轴上进行分割，默认为0轴。
+
+示例代码如下：
+
+```python
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+
+arr1, arr2, arr3 = np.split(arr, [3, 7])
+
+print(arr1)  # [1 2 3]
+print(arr2)  # [4 5 6 7]
+print(arr3)  # [ 8  9 10]
+```
+
+上面的代码将原数组分成了3个子数组，分割点分别为3和7，得到了3个子数组arr1、arr2和arr3。
+
+除了np.split()函数，NumPy还提供了一些其他的数组分割函数，如np.hsplit()和np.vsplit()函数可以将数组水平和垂直方向上分割为多个子数组，np.array_split()函数可以将数组在不同的轴上分割为不同大小的子数组。
+
+**数组中的nan和inf**
+
+在NumPy中，nan和inf是特殊的浮点数，它们分别表示“Not a Number”和“正无穷”、“负无穷”。当进行某些计算时，可能会出现这些特殊的浮点数，它们在一些情况下可以作为合法的结果返回，但在其他情况下可能会导致错误的结果。
+
+nan可以通过np.nan来表示，它通常出现在无法确定结果的情况下，例如0/0、np.log(0)等操作。与任何其他数字相比，nan都不相等，包括它自己。在对包含nan的数组进行计算时，结果通常是nan，除非使用特殊的函数对nan进行处理。
+
+inf和-inf表示正无穷和负无穷，可以通过np.inf和-np.inf来表示。当对正数除以0或对负数除以0时，会得到np.inf和-np.inf。inf与任何大于0的数相乘或除以结果仍为inf，与任何小于0的数相乘或除以结果为-inf，与0相乘结果为nan。inf同样在计算中可能会出现错误的结果，因此在使用时需要注意。
+
+示例代码如下：
+
+```python
+import numpy as np
+
+# 创建含有nan和inf的数组
+arr = np.array([1, 2, np.nan, np.inf, -np.inf])
+
+# 判断数组中是否包含nan和inf
+print(np.isnan(arr))   # [False False True False False]
+print(np.isinf(arr))   # [False False False  True  True]
+
+# 替换数组中的nan和inf
+arr[np.isnan(arr)] = 0
+arr[np.isinf(arr)] = 1
+
+print(arr)   # [ 1.  2.  0.  1.  1.]
+```
+
+**二维数组的转置**
+
+在NumPy中，可以使用数组对象的T属性来对二维数组进行转置操作。转置操作会将数组的行和列交换，因此原来的行变为转置后的列，原来的列变为转置后的行。
+
+示例代码如下：
+
+```python
+import numpy as np
+
+# 创建一个2x3的二维数组
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+# 输出原数组
+print(arr)
+
+# 对数组进行转置操作
+transposed_arr = arr.T
+
+# 输出转置后的数组
+print(transposed_arr)
+```
+
+输出结果：
+
+```lua
+[[1 2 3]
+ [4 5 6]]
+[[1 4]
+ [2 5]
+ [3 6]]
+```
+
+在上述示例中，首先创建了一个2x3的二维数组，并使用print函数输出了该数组。接着，使用数组对象的T属性对数组进行转置操作，并将转置后的结果存储在transposed_arr变量中。最后，使用print函数输出了转置后的数组。
+
+需要注意的是，数组的转置是一种视图操作，不会改变原数组本身，而是返回一个新的数组。如果想要直接修改原数组，可以使用数组对象的transpose方法，或者直接对数组进行赋值操作。例如，可以使用下面的代码将原数组进行转置并直接赋值给自身：
+
+```python
+arr = arr.transpose()
+```
+
+或者：
+
+```python
+arr[:] = arr.T
+```
