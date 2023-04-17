@@ -6,7 +6,7 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-04-11 19:41 —— 2022-04-16 19:21
+Datetime:  2022-04-11 19:41 —— 2022-04-17 21:45
 
 
 
@@ -405,7 +405,7 @@ NumPy是Python的一个开源数学库，它为Python提供了高性能的多维
 - 兼容性：NumPy兼容其他科学计算和数据分析库，例如pandas、SciPy等，可以与它们无缝衔接，构建完整的数据处理和分析工具链。
 - 开源自由：NumPy是开源的，使用和修改都非常方便，而且拥有庞大的社区支持。
 
-**Matplotlib官方文档：**https://numpy.org/doc/stable/user/index.html
+**NumPy官方文档：**https://numpy.org/doc/stable/user/index.html
 
 **NumPy的`ndarray`对象**
 
@@ -851,4 +851,366 @@ arr = arr.transpose()
 
 ```python
 arr[:] = arr.T
+```
+
+**numpy读取数据**
+
+NumPy提供了多种读取数据的函数，其中最常用的是loadtxt函数和genfromtxt函数。
+
+loadtxt函数可以读取文本文件中的数据，并返回一个数组。它的基本用法如下：
+
+```python
+import numpy as np
+
+data = np.loadtxt('filename.txt')
+```
+
+其中，'filename.txt'是待读取的文本文件名，data是读取到的数据数组。loadtxt函数默认使用空格作为分隔符，并且会自动识别每一行的数据类型。
+
+如果待读取的文本文件中包含有缺失数据或非法数据，loadtxt函数可能会报错。为了避免这种情况，可以使用genfromtxt函数。
+
+genfromtxt函数和loadtxt函数类似，可以读取文本文件中的数据，并返回一个数组。**与loadtxt函数不同的是，genfromtxt函数可以处理包含缺失数据或非法数据的文件，还可以自定义数据类型等参数。**它的基本用法如下：
+
+```python
+import numpy as np
+
+data = np.genfromtxt('filename.txt', delimiter=',', dtype=float, missing_values='NaN', filling_values=0.0)
+```
+
+其中，'filename.txt'是待读取的文本文件名，delimiter参数指定分隔符，dtype参数指定数据类型，missing_values参数指定缺失数据的标识符，filling_values参数指定用来替代缺失数据的值。
+
+除了loadtxt函数和genfromtxt函数之外，NumPy还提供了多种读取其他格式数据的函数，如load函数、fromfile函数、frombuffer函数等，可以根据具体需求选择使用。
+
+### 2.3 Pandas
+
+Pandas是Python中一个开源的数据分析库，它提供了高效的数据操作工具和数据结构，可以用于数据清洗、数据转换、数据分析、数据可视化等方面的工作。Pandas的两个主要数据结构是Series和DataFrame。
+
+**Pandas官方文档：**https://pandas.pydata.org/docs/
+
+Series是一种一维的数据结构，类似于数组或列表，其中的每个元素都有一个标签（index），可以用于快速访问数据。
+
+DataFrame是一种二维的数据结构，类似于电子表格或SQL表格，由多个Series组成，每个Series代表一列数据。DataFrame可以处理结构化、半结构化和非结构化的数据。
+
+Pandas提供了丰富的数据操作和处理方法，包括数据选择、过滤、分组、聚合、合并、重塑、填充、插值、缺失值处理、日期处理等。
+
+下面是一些Pandas的基本操作示例：
+
+```python
+import pandas as pd
+
+# 创建Series
+s = pd.Series([1, 2, 3, 4, 5], index=['a', 'b', 'c', 'd', 'e'])
+print(s)
+
+# 创建DataFrame
+data = {'name': ['Alice', 'Bob', 'Charlie', 'David'], 'age': [25, 30, 35, 40]}
+df = pd.DataFrame(data)
+print(df)
+
+# 选择数据
+print(s['b'])
+print(df['name'])
+print(df.loc[1:2, ['name', 'age']])
+
+# 过滤数据
+print(df[df['age'] > 30])
+
+# 分组聚合
+grouped = df.groupby('age')
+print(grouped.mean())
+
+# 合并数据
+data1 = {'name': ['Alice', 'Bob'], 'age': [25, 30]}
+data2 = {'name': ['Charlie', 'David'], 'age': [35, 40]}
+df1 = pd.DataFrame(data1)
+df2 = pd.DataFrame(data2)
+merged = pd.concat([df1, df2])
+print(merged)
+
+# 填充缺失值
+df = pd.DataFrame({'A': [1, 2, None, 4], 'B': [5, None, 7, 8]})
+print(df.fillna(method='ffill'))
+
+# 插值
+df = pd.DataFrame({'A': [1, 2, 3, 4], 'B': [5, 6, 7, None]})
+print(df.interpolate())
+
+# 日期处理
+df = pd.DataFrame({'date': pd.date_range('2022-01-01', periods=3), 'value': [1, 2, 3]})
+print(df)
+```
+
+**Pandas的索引操作**
+
+在Pandas中，索引操作是非常重要的一部分，因为它可以让我们方便地获取、修改和删除数据。
+
+Pandas提供了两种类型的索引操作：
+
+- 利用标签进行索引：可以使用标签或标签范围选择数据。例如，使用.loc方法或.iloc方法（后者是基于整数位置的索引），可以访问DataFrame或Series对象中的元素。这两个方法的参数可以是单个标签，标签列表或切片。
+- 利用位置进行索引：可以使用位置或位置范围选择数据。例如，使用.iloc方法，可以使用整数索引访问DataFrame或Series对象中的元素。这种方法的参数可以是单个整数，整数列表或切片。
+
+下面是一些常见的索引操作示例：
+
+```python
+import pandas as pd
+
+# 创建一个DataFrame
+df = pd.DataFrame({
+    'name': ['Alice', 'Bob', 'Charlie', 'David', 'Emily'],
+    'age': [25, 30, 35, 40, 45],
+    'city': ['New York', 'Paris', 'London', 'Tokyo', 'Sydney']
+})
+
+# 使用标签进行索引
+print(df.loc[0])  # 选择第一行
+print(df.loc[[0, 2]])  # 选择第一行和第三行
+print(df.loc[1:3, 'name':'age'])  # 选择第二行到第四行和第一列到第三列
+
+# 使用位置进行索引
+print(df.iloc[0])  # 选择第一行
+print(df.iloc[[0, 2]])  # 选择第一行和第三行
+print(df.iloc[1:3, 0:2])  # 选择第二行到第四行和第一列到第三列
+```
+
+输出：
+
+```lua
+name        Alice
+age            25
+city     New York
+Name: 0, dtype: object
+       name  age     city
+0     Alice   25  New York
+2   Charlie   35   London
+       name  age
+1       Bob   30
+2   Charlie   35
+3     David   40
+       name        Alice
+age            25
+city     New York
+Name: 0, dtype: object
+       name  age     city
+0     Alice   25  New York
+2   Charlie   35   London
+       name  age
+1       Bob   30
+2   Charlie   35
+```
+
+**Pandas的对齐操作**
+
+在 Pandas 中，对齐操作是指通过索引和列名来对齐两个数据集。当两个数据集进行运算时，如果它们的索引和列名不一致，Pandas 会自动进行对齐操作，将它们对齐后再进行运算。
+
+例如，给定两个 Series：
+
+```python
+import pandas as pd
+
+s1 = pd.Series([1, 2, 3], index=['a', 'b', 'c'])
+s2 = pd.Series([4, 5, 6], index=['b', 'c', 'd'])
+```
+
+它们的索引不完全相同。如果要将这两个 Series 相加，则可以直接相加：
+
+```lua
+s3 = s1 + s2
+```
+
+得到的结果如下：
+
+```lua
+a    NaN
+b    6.0
+c    8.0
+d    NaN
+dtype: float64
+```
+
+可以看到，Pandas 在相加时自动对齐了两个 Series，将它们的索引对齐后再进行加法运算。对于没有对应的索引的值，Pandas 会用 NaN（Not a Number）来填充。
+
+类似地，对于 DataFrame 的对齐操作，Pandas 会同时对齐行索引和列索引。例如：
+
+```python
+import numpy as np
+
+df1 = pd.DataFrame(np.random.randn(3, 2), columns=['A', 'B'])
+df2 = pd.DataFrame(np.random.randn(2, 3), columns=['B', 'C', 'D'])
+```
+
+两个 DataFrame 的列名不完全相同，行数也不一致。如果要将这两个 DataFrame 相加，则可以直接相加：
+
+```lua
+df3 = df1 + df2
+```
+
+得到的结果如下：
+
+```lua
+          A         B         C   D
+0 -0.459740  0.486874 -1.764863 NaN
+1 -0.377821  0.308109  1.131165 NaN
+2  0.276932 -0.224009 -0.595954 NaN
+```
+
+可以看到，Pandas 在相加时自动对齐了两个 DataFrame，将它们的行索引和列索引对齐后再进行加法运算。对于没有对应的行或列的值，Pandas 会用 NaN 来填充。
+
+需要注意的是，对齐操作只在二元运算时才会进行。如果想要对两个数据集进行拼接、合并等操作，需要使用 join、concat 等方法。
+
+**Pandas的函数应用**
+
+在 Pandas 中，我们可以使用函数将一个数据集中的某些值进行更改、替换、计算等操作。Pandas 的函数应用有三种常见方式：使用 NumPy 函数、使用 Pandas 的函数、使用自定义函数。
+
+- 使用 NumPy 函数
+
+可以使用 NumPy 中的许多通用函数（universal functions）对 Pandas 对象进行操作。这些函数会自动适用于整个 Pandas 对象，而不需要像在 NumPy 中一样进行显式循环。以下是一些常见的 NumPy 函数在 Pandas 中的使用示例：
+
+```python
+import pandas as pd
+import numpy as np
+
+# 创建一个 DataFrame
+df = pd.DataFrame(np.random.randn(4,3), columns=['a', 'b', 'c'])
+
+# 使用 np.abs() 函数对 df 中的所有元素取绝对值
+abs_df = np.abs(df)
+
+# 使用 np.exp() 函数对 df 中的所有元素进行指数运算
+exp_df = np.exp(df)
+```
+
+- 使用 Pandas 的函数
+
+Pandas 提供了一些常用的函数，可以在 Pandas 对象上进行操作。以下是一些常见的 Pandas 函数在 Pandas 中的使用示例：
+
+```python
+import pandas as pd
+import numpy as np
+
+# 创建一个 Series
+s = pd.Series(np.random.randn(5))
+
+# 使用 pd.isnull() 函数检查 s 中的元素是否为缺失值
+null_s = pd.isnull(s)
+
+# 使用 pd.cut() 函数将 s 中的值划分为两个区间
+cut_s = pd.cut(s, 2)
+```
+
+- 使用自定义函数
+
+除了使用 NumPy 和 Pandas 的函数，我们还可以自定义函数对 Pandas 对象进行操作。使用 Pandas 的 apply() 函数可以将自定义函数应用于 Pandas 对象的每一行或每一列。以下是使用自定义函数的示例：
+
+```python
+import pandas as pd
+import numpy as np
+
+# 创建一个 DataFrame
+df = pd.DataFrame(np.random.randn(4,3), columns=['a', 'b', 'c'])
+
+# 定义一个自定义函数，计算每个元素的平方
+def square(x):
+    return x ** 2
+
+# 使用 apply() 函数将自定义函数应用于 df 的每一行
+square_df_row = df.apply(square, axis=1)
+
+# 使用 apply() 函数将自定义函数应用于 df 的每一列
+square_df_col = df.apply(square, axis=0)
+```
+
+在使用自定义函数时，需要注意函数的输入和输出。apply() 函数默认将每一行或每一列作为输入传递给自定义函数，因此自定义函数的输入是一个一维数组。输出的格式也需要注意，通常需要输出一个 Pandas 对象（如 Series 或 DataFrame）。
+
+**Pandas的层级索引**
+
+Pandas中的层级索引（MultiIndex）是一种用于在单个轴上拥有多个（两个或多个）索引级别的方法。这种索引方式在数据处理和分析中非常有用，因为它可以帮助我们处理复杂的数据结构。
+
+在Pandas中，我们可以使用多种方式创建层级索引。其中一种方式是通过将一个由元组组成的列表传递给pandas.MultiIndex()函数来创建一个多级索引。例如：
+
+```python
+import pandas as pd
+
+# 创建一个二级索引
+index = pd.MultiIndex.from_tuples([('a', 1), ('a', 2), ('b', 1), ('b', 2)])
+
+# 创建一个包含随机数据的Series
+data = pd.Series([0.25, 0.5, 0.75, 1.0], index=index)
+
+# 显示Series
+print(data)
+```
+
+这段代码将创建一个由4个元素组成的Series对象，其中每个元素都具有二级索引。输出结果如下：
+
+```lua
+a  1    0.25
+   2    0.50
+b  1    0.75
+   2    1.00
+dtype: float64
+```
+
+在这个Series中，每个元素都由两个索引级别组成：一个用于标识字母（a或b），另一个用于标识数字（1或2）。我们可以使用这些索引级别来选择、操作和汇总数据。
+
+例如，我们可以使用.loc[]方法根据索引选择数据。例如，要选择索引为('a', 1)的元素，我们可以使用以下代码：
+
+```python
+print(data.loc[('a', 1)])
+```
+
+输出结果为：
+
+```lua
+0.25
+```
+
+我们也可以使用.loc[]方法选择整个索引层。例如，要选择所有字母为'a'的元素，我们可以使用以下代码：
+
+```python
+print(data.loc['a'])
+```
+
+输出结果为：
+
+```lua
+1    0.25
+2    0.50
+dtype: float64
+```
+
+此外，层级索引还可以用于Pandas的分组、透视表、重塑等操作，使得数据分析更加高效和灵活。
+
+**Pandas的缺失值处理**
+
+在pandas中，缺失值用NaN表示。pandas提供了很多方法来处理缺失值。
+
+1. 检测缺失值：使用`isna()`或`isnull()`方法来检测缺失值。这两个方法的作用是一样的，都会返回一个布尔型的DataFrame或Series。
+2. 填充缺失值：使用`fillna()`方法可以用指定的值或方法来填充缺失值。常用的方法包括用前面的值填充（`ffill`）和用后面的值填充（`bfill`）。
+3. 删除缺失值：使用`dropna()`方法可以删除缺失值所在的行或列。可以使用`how`参数来指定删除行还是列，使用`thresh`参数来指定非缺失值的最小数量。
+
+下面是一些示例代码：
+
+```python
+import pandas as pd
+import numpy as np
+
+# 创建包含缺失值的DataFrame
+df = pd.DataFrame({'A': [1, 2, np.nan, 4],
+                   'B': [5, np.nan, np.nan, 8],
+                   'C': [9, 10, 11, 12]})
+print(df)
+
+# 检测缺失值
+print(df.isna())
+print(df.isnull())
+
+# 填充缺失值
+print(df.fillna(0))  # 用0填充缺失值
+print(df.fillna(method='ffill'))  # 用前面的值填充
+print(df.fillna(method='bfill'))  # 用后面的值填充
+
+# 删除缺失值
+print(df.dropna())  # 删除包含缺失值的行
+print(df.dropna(axis=1))  # 删除包含缺失值的列
+print(df.dropna(thresh=2))  # 至少需要2个非缺失值才保留行
 ```
