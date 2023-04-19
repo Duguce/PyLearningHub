@@ -4,6 +4,9 @@ Welcome to my PyLearningHub! 🎉 Here, I store code and notes that I have writt
 
 欢迎来到我的 PyLearningHub！🎉 这里我存储了我写的代码和笔记，以加强我的 Python 编程技能。🔥 你会找到我对编程问题的解决方案、算法实现和学习笔记。🤓 这些资源有助于巩固我的学习，我希望它们也能对你有所帮助。感谢你的光临！🙏
 
+<p align="center"><img src=".\images\py_learning_fig.png" width="80%">
+<p align="center"><b>Python技能图谱</b></p>
+
 ## Table of Contents
 
 - [Usage](#usage)
@@ -17,8 +20,6 @@ In this repo, you will find my solutions to programming problems, algorithm impl
 
 在这个仓库中，你将会找到我的编程问题解决方案、算法实现、编程项目和学习笔记。请随意探索不同的目录和文件，将它们作为增强你 Python 编程技能的资源。如果你有任何问题或建议，请随时联系我。
 
-<p align="center"><img src=".\images\py_learning_fig.png" width="80%">
-<p align="center"><b>Python技能图谱</b></p>
 
 You can either clone the entire repo using the command:
 
