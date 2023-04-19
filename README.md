@@ -17,6 +17,9 @@ In this repo, you will find my solutions to programming problems, algorithm impl
 
 在这个仓库中，你将会找到我的编程问题解决方案、算法实现、编程项目和学习笔记。请随意探索不同的目录和文件，将它们作为增强你 Python 编程技能的资源。如果你有任何问题或建议，请随时联系我。
 
+<p align="center"><img src=".\images\py_learning_fig.png" width="80%">
+<p align="center"><b>Python技能图谱</b></p>
+
 You can either clone the entire repo using the command:
 
 你可以使用以下命令克隆整个仓库：
