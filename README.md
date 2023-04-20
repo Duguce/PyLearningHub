@@ -4,8 +4,9 @@ Welcome to my PyLearningHub! 🎉 Here, I store code and notes that I have writt
 
 欢迎来到我的 PyLearningHub！🎉 这里我存储了我写的代码和笔记，以加强我的 Python 编程技能。🔥 你会找到我对编程问题的解决方案、算法实现和学习笔记。🤓 这些资源有助于巩固我的学习，我希望它们也能对你有所帮助。感谢你的光临！🙏
 
-<p align="center"><img src=".\images\py_learning_fig.png" width="80%">
+<p align="center"><img src=".\images\py_learning_fig.png" width="100%">
 <p align="center"><b>Python技能图谱</b></p>
+
 
 ## Table of Contents
 
@@ -44,6 +45,7 @@ git clone https://github.com/Duguce/PyLearningHub.git
 |   9   |          [Django学习笔记](./Django学习笔记.md)           |  notes  | This document summarizes the notes I made while learning about the Django framework.<br />该文总结了我在学习Django框架相关知识所作的笔记。 |
 |  10   |      [Python高级学习笔记](./Python高级学习笔记.md)       |  notes  | This document summarizes some advanced features of Python that I have learned during my daily study, such as regular expressions, decorators, and so on. It provides a summary and organization of these topics.<br />该文总结了我在日常学习Python过程中所掌握的一些高级功能特性，例如正则表达式、装饰器等内容。 |
 |  11   |  [Python数据分析学习笔记](./Python数据分析学习笔记.md)   |  notes  | This document summarizes what I learned about data analysis based on Python.<br />该文总结了我基于Python学习数据分析的相关内容。 |
+|  12   |              [DataAnalytix](./DataAnalytix)              | project | This project is based on NumPy, Pandas, matplotlib and other third-party libraries for data analysis in Python, and implements data cleaning and statistical analysis on several examples of data.<br />该项目是基于Python的NumPy, Pandas和matplotlib等数据分析相关的第三方库，实现对几个实例数据进行了数据清洗及统计分析等相关操作。 |
 
 
 
