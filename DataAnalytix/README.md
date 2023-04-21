@@ -4,10 +4,10 @@
 
 ## 项目结构
 
-| 序号 |                       项目名称                       |                            数据集                            | 数据来源 |
-| :--: | :--------------------------------------------------: | :----------------------------------------------------------: | :------: |
-|  1   | [E-commerceSalesAnalysis](./E-commerceSalesAnalysis) | [e-commerce_data](./E-commerceSalesDataAnalysis/data/e-commerce_data.csv) |   未知   |
-|  2   |                                                      |                                                              |          |
+| 序号 |                           项目名称                           |                          数据集来源                          |
+| :--: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|  1   |  [E-commerceDataAnalysis](./ecommerce_data_analysis.ipynb)   | [E-Commerce Data（kaggle）](https://www.kaggle.com/datasets/carrie1/ecommerce-data) |
+|  2   | [TaobaoUserBehaviorAnalysis](./taobao_user_behavior_analysis.ipynb) | [UserBehavior（TIANCHI）](https://tianchi.aliyun.com/dataset/649?spm=5176.12281976.J_3941670930.10.278012c4DsfWE6) |
 
 
 
