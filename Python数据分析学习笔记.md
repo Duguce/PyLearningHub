@@ -6,9 +6,19 @@ Author： Duguce
 
 Email：zhgyqc@163.com
 
-Datetime:  2022-04-11 19:41 —— 2022-04-17 21:45
+Datetime:  2022-04-11 19:41 —— 2022-04-23 13:30
 
+--------------------------
 
+- [1 数据分析概述](#1-数据分析概述)
+  - [1.1 基本概念](#11-基本概念)
+  - [1.2 指标体系](#12-指标体系)
+- [2 常用第三方库](#2-常用第三方库)
+  - [2.1 Matplotlib](#21-matplotlib)
+  - [2.2 NumPy](#22-numpy)
+  - [2.3 Pandas](#23-pandas)
+
+--------------------------
 
 ## 1 数据分析概述
 
@@ -1213,4 +1223,112 @@ print(df.fillna(method='bfill'))  # 用后面的值填充
 print(df.dropna())  # 删除包含缺失值的行
 print(df.dropna(axis=1))  # 删除包含缺失值的列
 print(df.dropna(thresh=2))  # 至少需要2个非缺失值才保留行
+```
+
+**Pandas的重复值处理**
+
+下面是一些常用的 pandas 处理重复值的方法：
+
+- 检测重复值：使用 `duplicated()` 方法可以检测 DataFrame 中的重复值。该方法返回一个布尔型的 Series，其中重复值为 True，非重复值为 False。可以通过传递列名参数来指定基于哪些列进行重复值的检测，默认检测所有列。
+
+```python
+import pandas as pd
+
+# 创建一个包含重复值的 DataFrame
+df = pd.DataFrame({'A': [1, 2, 3, 4, 2],
+                   'B': [4, 5, 6, 7, 8],
+                   'C': [7, 8, 9, 10, 11]})
+
+# 检测重复值
+duplicates = df.duplicated()
+print(duplicates)
+```
+
+- 删除重复值：使用 `drop_duplicates()` 方法可以删除 DataFrame 中的重复值。该方法默认基于所有列进行重复值的检测，可以通过传递列名参数来指定基于哪些列进行检测。可以选择保留第一个出现的重复值，或者保留最后一个出现的重复值，也可以删除所有重复值。
+
+```python
+import pandas as pd
+
+# 创建一个包含重复值的 DataFrame
+df = pd.DataFrame({'A': [1, 2, 3, 4, 2],
+                   'B': [4, 5, 6, 7, 8],
+                   'C': [7, 8, 9, 10, 11]})
+
+# 删除重复值
+df = df.drop_duplicates()
+print(df)
+```
+
+- 替换重复值：使用 `replace()` 方法可以将 DataFrame 中的重复值替换为指定的值。可以通过传递 `inplace=True` 参数来在原地进行替换，或者将结果赋值给一个新的 DataFrame。
+
+```python
+import pandas as pd
+
+# 创建一个包含重复值的 DataFrame
+df = pd.DataFrame({'A': [1, 2, 3, 4, 2],
+                   'B': [4, 5, 6, 7, 8],
+                   'C': [7, 8, 9, 10, 11]})
+
+# 将重复值替换为 -1
+df.replace(2, -1, inplace=True)
+print(df)
+```
+
+**Pandas的数据连接**
+
+数据连接是将多个数据集合并为一个数据集的操作，pandas 提供了多种方法来进行数据连接，包括以下几种常用的方式：
+
+- `concat()` 函数：`concat()` 函数可以将两个或多个 DataFrame 沿着指定的轴（如行轴或列轴）进行连接。可以通过传递 `axis` 参数来指定连接的轴，默认为 0 行轴。可以通过传递 `keys` 参数来给连接后的数据集添加层次化的索引，便于标识来源。
+
+```python
+import pandas as pd
+
+# 创建两个 DataFrame
+df1 = pd.DataFrame({'A': [1, 2, 3],
+                    'B': [4, 5, 6]})
+
+df2 = pd.DataFrame({'A': [7, 8, 9],
+                    'B': [10, 11, 12]})
+
+# 使用 concat() 进行连接
+result = pd.concat([df1, df2], axis=0)  # 沿着行轴进行连接
+print(result)
+```
+
+- `merge()` 函数：`merge()` 函数可以基于一个或多个共同的列将两个 DataFrame 进行连接，类似于 SQL 中的 join 操作。可以通过传递 `on` 参数来指定连接的列，也可以根据多个列进行连接。还可以通过 `how` 参数来指定连接方式（如内连接、左连接、右连接、全外连接等）。
+
+```python
+import pandas as pd
+
+# 创建两个 DataFrame
+df1 = pd.DataFrame({'A': [1, 2, 3],
+                    'B': [4, 5, 6],
+                    'key': ['X', 'Y', 'Z']})
+
+df2 = pd.DataFrame({'C': [7, 8, 9],
+                    'D': [10, 11, 12],
+                    'key': ['X', 'Y', 'W']})
+
+# 使用 merge() 进行连接
+result = pd.merge(df1, df2, on='key')  # 基于 'key' 列进行连接
+print(result)
+```
+
+- `join()` 方法：`join()` 方法是 DataFrame 对象的方法，可以将两个 DataFrame 进行连接。可以通过传递 `on` 参数来指定连接的列，也可以根据多个列进行连接。还可以通过 `how` 参数来指定连接方式。
+
+```python
+import pandas as pd
+
+# 创建两个 DataFrame
+df1 = pd.DataFrame({'A': [1, 2, 3],
+                    'B': [4, 5, 6],
+                    'key': ['X', 'Y', 'Z']})
+
+df2 = pd.DataFrame({'C': [7, 8, 9],
+                    'D': [10, 11, 12],
+                    'key': ['X', 'Y', 'W']})
+
+# 使用 join() 进行连接
+result = df1.join(df2.set_index('key'), on='key')  # 基于 'key' 列进行连接
+print(result)
 ```
