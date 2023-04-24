@@ -46,6 +46,7 @@ git clone https://github.com/Duguce/PyLearningHub.git
 |  10   |      [Python高级学习笔记](./Python高级学习笔记.md)       |  notes  | This document summarizes some advanced features of Python that I have learned during my daily study, such as regular expressions, decorators, and so on. It provides a summary and organization of these topics.<br />该文总结了我在日常学习Python过程中所掌握的一些高级功能特性，例如正则表达式、装饰器等内容。 |
 |  11   |  [Python数据分析学习笔记](./Python数据分析学习笔记.md)   |  notes  | This document summarizes what I learned about data analysis based on Python.<br />该文总结了我基于Python学习数据分析的相关内容。 |
 |  12   |              [DataAnalytix](./DataAnalytix)              | project | This project is based on NumPy, Pandas, matplotlib and other third-party libraries for data analysis in Python, and implements data cleaning and statistical analysis on several examples of data.<br />该项目是基于Python的NumPy, Pandas和matplotlib等数据分析相关的第三方库，实现对几个实例数据进行了数据清洗及统计分析等相关操作。 |
+|  13   |      [Python机器学习笔记](./Python机器学习笔记.md)       |  notes  | This document summarizes my notes on learning machine learning based on Python.<br />该文总结了我基于Python学习机器学习相关内容所作的笔记。 |
 
 
 
