@@ -1,8 +1,9 @@
-# PyLearningHub
-
-Welcome to my PyLearningHub! 🎉 Here, I store code and notes that I have written to strengthen my Python programming skills. 🔥 You'll find my solutions to programming problems, algorithm implementations, and study notes. 🤓 These resources help me solidify my learning, and I hope they can be helpful to you as well. Thank you for stopping by! 🙏
-
-欢迎来到我的 PyLearningHub！🎉 这里我存储了我写的代码和笔记，以加强我的 Python 编程技能。🔥 你会找到我对编程问题的解决方案、算法实现和学习笔记。🤓 这些资源有助于巩固我的学习，我希望它们也能对你有所帮助。感谢你的光临！🙏
+<h1 align="center">
+    PyLearningHub
+</h1>
+<p align="center">Welcome to my PyLearningHub! 🎉 Here, I store code and notes that I have written to strengthen my Python programming skills. 🔥 You'll find my solutions to programming problems, algorithm implementations, and study notes. 🤓 These resources help me solidify my learning, and I hope they can be helpful to you as well. Thank you for stopping by! 🙏
+<p align="center">欢迎来到我的 PyLearningHub！🎉 这里我存储了我写的代码和笔记，以加强我的 Python 编程技能。🔥 你会找到我对编程问题的解决方案、算法实现和学习笔记。🤓 这些资源有助于巩固我的学习，我希望它们也能对你有所帮助。感谢你的光临！🙏
+<p align="center"><img src="https://img.shields.io/github/stars/Duguce/PyLearningHub" alt="stars">&nbsp&nbsp&nbsp<img src="https://img.shields.io/github/issues/Duguce/PyLearningHub" alt="stars">&nbsp&nbsp&nbsp<img src="https://img.shields.io/github/license/Duguce/PyLearningHub" alt="issues"></p>
 
 <p align="center"><img src=".\images\py_learning_fig.png" width="100%">
 <p align="center"><b>Python技能图谱</b></p>

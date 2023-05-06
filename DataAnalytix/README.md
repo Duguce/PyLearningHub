@@ -1,8 +1,11 @@
-# DataAnalytix
+<h1 align="center">
+    DataAnalytix
+</h1>
+<p align="center">🚀 欢迎来到 DataAnalytix 数据分析项目！本项目旨在通过几个实际案例，巩固练习使用 Python 进行数据分析和数据可视化的相关技能。
 
-欢迎来到 DataAnalytix 数据分析项目！本项目旨在通过几个实际案例，巩固练习使用 Python 进行数据分析和数据可视化的相关技能。
-
-## 🔥 项目结构
+<h2 align="center">
+    🔥 项目结构
+</h2>
 
 | 序号 |                       项目名称                       |                          数据集来源                          |
 | :--: | :--------------------------------------------------: | :----------------------------------------------------------: |
@@ -12,15 +15,18 @@
 
 
 
-## ❄ 数据理论
+<h2 align="center">
+    ❄ 数据理论
+</h2>
 
 ### 🌽 分析思维
 
-<p align="center"><img src="..\images\数据分析思维.png" width="50%">
+<p align="center"><img src="..\images\数据分析思维.png" width="60%">
 <p align="center"><b>图1 数据分析思维</b></p>
+
 
 ### 🍓 指标体系
 
-<p align="center"><img src="..\images\通用指标体系.png" width="90%">
+<p align="center"><img src="..\images\通用指标体系.png" width="100%">
 <p align="center"><b>图2 通用指标体系</b></p>
 
