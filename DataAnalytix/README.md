@@ -30,3 +30,10 @@
 <p align="center"><img src="..\images\通用指标体系.png" width="100%">
 <p align="center"><b>图2 通用指标体系</b></p>
 
+
+<h2 align="center">
+    🏝 常见问题
+</h2>
+
+### 1 A/B实验
+
